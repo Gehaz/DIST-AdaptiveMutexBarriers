@@ -1,0 +1,27 @@
+\section{Discussion}
+\label{sec:discussion}
+
+We establish a time complexity separation between adaptive and non-adaptive implementations of mutual-exclusion locks, counters, stacks and queues, thus capturing an inherent cost incurred by adaptive algorithms in the TSO model.
+
+This separation follows from a tradeoff that we prove between fence complexity and the growth rate of adaptivity functions. Specifically, we prove that the fence complexity of any read/write $n$-process algorithm with a linear (or sub-linear) adaptivity function is $\Omega(\log \log n)$. Our results apply for both the cache-coherent (CC) and the distributed shared-memory (DSM) models.
+
+A corollary of our tradeoff is that constant fence-complexity adaptive implementations for these objects do not exist. Moreover,  the impossibility result holds regardless of the RMR complexity of the algorithm.
+Following~\cite{DBLP:conf/podc/AttiyaHL13,DBLP:journals/dc/GolabHHW12},
+our tradeoff applies also to algorithms that may use
+comparison primitives, such as \emph{compare-and-swap} (CAS),
+in addition to reads and writes.
+
+Kim and Anderson presented an adaptive mutual exclusion algorithm whose RMR complexity is $O\big(min(k,\log n)\big)$, where $k$ is point contention \cite{DBLP:journals/dc/KimA07}, hence it is $f$-adaptive for a linear $f$. The fence complexity of their algorithm is logarithmic. However, our tradeoff only implies $\log \log n$ fence complexity (see Corollary \ref{corollary:linear}). Finding the tight tradeoff between fence complexity and the adaptivity function growth rate is an interesting research direction.
+
+The memory model considered by this work is TSO. We remind the reader that TSO ensures that writes are not reordered, but it is possible to perform a read from address $a$ before a write to address $b \neq a$ that is earlier in program order is performed.
+The \emph{partial store ordering} (PSO) model, supported by older SPARC, is weaker than TSO, as it also allows the reordering of writes to different locations. 
+
+Recent work by Attiya, Hendler and Woelfel~\cite{PSOLowerBound} showed that one cannot win on both the fence and RMR complexities of read/write PSO algorithms for many fundamental objects,
+including locks, counters and queues. They proved the following lower bound: let $f$ and $r$ respectively denote the numbers of fences and RMRs performed in an operation on such an object, then
+\begin{equation}\label{equation:X}
+  f \cdot \log \frac{r}{f} + 1\in \Omega(\log n).
+\end{equation} 
+
+\noindent They also showed that the bound is tight.
+
+Attiya et al. \cite{DBLP:conf/podc/AttiyaHL13} presented a TSO read/write mutual exclusion algorithm where each passage incurs a logarithmic number of RMRs and a constant number of fences. Inequality \ref{equation:X} establishes a complexity separation between the TSO and PSO models, since it follows from it that no such algorithm exists for the PSO model. Another interesting research direction is to find a tight tradeoff between the RMR-complexity and fence-complexity of adaptive PSO algorithms.

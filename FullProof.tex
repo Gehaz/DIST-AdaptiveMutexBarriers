@@ -1,0 +1,628 @@
+\section{Full Lower Bound Proofs}
+\label{sec:FullProof}
+
+We start by stating a few lemmas and claims that are required for arguing about the properties of our construction, which we specify in a formal manner later. The proofs are technical and appear in the appendix.
+
+\begin{claim-num}  \label{claim: maintain-criticalness}
+	Let $E$ be an execution fragment and $e \in E$ be an event issued by some process $p$.
+	\begin{itemize}
+		\item Assume $e$ is a non-special event in $E$. Then for any execution fragment $F \preceq E$ such that $F \mid p = E \mid p$, $e$ is a non-special event in $F$.
+		\item Assume $e$ is a special event in $E$. Then for any execution fragment $F$ such that $E \preceq F$ and $F \mid p = E \mid p$, $e$ is a special event in $F$.
+	\end{itemize}
+\end{claim-num}
+
+\begin{lemma} \label{lem: sub-execution}
+	Let $E$ be an execution and let $p \in P$ be a process such that $p \notin AW(q,E)$ for any $q \neq p$. Then $E^{-p}$ is an execution.
+\end{lemma}
+
+\begin{lemma}  \label{lem: access-visible-variable}
+	Let $E$ be an execution and let $\mathit{INV}$ be an IN-set of $E$. Let $e$ be a $read(v)$ or $write(v)$ event. Assume $writer(v,E) \notin \mathit{INV}$ and $owner(v) \notin Act(E)$. Then $\mathit{INV}$ satisfies IN1-IN4 of Definition \ref{def:inv} in $E e$.
+\end{lemma}
+
+\begin{claim} \label{claim: local-event-extension}
+	Let $E$ be an execution and let $\mathit{INV}$ be an IN-set of $E$. Let $e$ be an extension of $E$ by some process $p$ such that $e$ is a local event in $E e$. Then $\mathit{INV}$ is an IN-set of $E e$.
+\end{claim}
+
+\begin{lemma} \label{lem: non-critical-extension}
+	Let $E$ be an execution and let $\mathit{INV}$ be an IN-set of $E$. Let $F$ be an extension of $E$ such that $F$ contains no critical or transition event in $E F$. Then $\mathit{INV}$ is an IN-set of $E F$.
+\end{lemma}
+
+\begin{lemma} \label{lem: remove-invisibale-processes}
+	Let $E$ be an execution, $\mathit{INV}$ be an IN-set of $E$ and $Y \subseteq \mathit{INV}$.
+	\newline Define $E' = E^{-Y}$. Then the following hold:
+	\begin{enumerate}
+		\item $E'$ is an execution;
+		\item $Act(E') = Act(E) \setminus Y$ and $Fin(E') = Fin(E)$;
+		\item $\mathit{INV} \setminus Y$ is an IN-set of $E'$;
+		\item Each $p \in Act(E')$ executes the same critical events in $E'$ and in $E$;
+		\item If $p \in Act(E')$ is about to execute a special event $f_p$ after $E$, then $p$ is about to execute a special event $e_p \sim f_p$ after $E'$.
+	\end{enumerate}
+\end{lemma}
+
+\begin{lemma} \label{lem: next-critical-extension}
+	Let $E$ be a regular execution. Then there exists an extension $F$ such that the following hold:
+	\begin{itemize}
+		\item $F$ contains no special events in $E F$;
+		\item $E F$ is a regular execution;
+		\item Each $p \in Act(E)$ is about to execute a special event $f_p$ after $E F$. Moreover, at most one process $p \in Act(E)$ is about to execute $f_p=CS_p$ after $E F$.
+	\end{itemize}
+\end{lemma}
+
+The proof of the following theorem appears in \cite{Bollobas2004}.
+
+\begin{theorem} [Tur\'{a}n] ~\label{th: turan}
+	Let $\mathcal{G} = (V,E)$ be an undirected graph, with vertex set $V$ and edge set $E$. If the average degree of $\mathcal{G}$ is $d$, then an independent set exists with at least $\lceil |V|/(d+1) \rceil$ vertices.
+\end{theorem}
+	
+We now prove a tradeoff between the fence complexity and the adaptivity function $f$.
+We start with the regular execution $H_0$ in which each process $p$ have executed the $Enter_p$ event only, hence $Act(H_0)=P$ and $Fin(H_0)=\emptyset$. We then build longer executions $H_1,H_2,...$ inductively. At each induction step, we construct $H_{i+1}$ from $H_i$ using three phases: read, write, and regularization. Each phase consists of a sequence of executions.
+
+Every induction step starts with an execution $H_i$ that meets the following conditions:
+
+\begin{enumerate}[(a)]
+	\item $H_i$ is a regular execution;
+	\item Each $p \in Act(H_i)$ executes $\ell_i$ critical events in $H_i$, for some $\ell_i \leq f(i)$;
+	\item $|Fin(H_i)| = i$;
+	\item Each $p \in Act(H_i)$ completes $i$ fences in $H_i$ and $mode(p,H_i) = read$.
+\end{enumerate}
+
+For simplicity, we slightly abuse notation and write $\ell$ instead of $\ell_i$ in the rest of this section.
+
+
+
+
+\subsection{Read phase}
+\label{subsec:read-phase}
+In the course of the read phase, we construct a sequence of executions $H_i=G_0,G_1,G_2,\ldots,G_s, J_0$.
+
+\begin{lemma} \label{read-phase-lemma}
+	At each step during the read phase we have an execution $G_k$ satisfying the following conditions:
+	\begin{enumerate}[(1)]
+		\item $G_k$ is a regular execution;
+		\item Each $p \in Act(G_k)$ executes $\ell+k$ critical events in $G_k$;
+		\item Each $p \in Act(G_k)$ completes $i$ fences in $G_k$ and $mode(p,G_k) = read$;
+		\item $Fin(G_k) = Fin(H_i)$;
+		\item $|Act(G_k)| \geq (|Act(G_{k-1})|-1)/10$.
+	\end{enumerate}
+\end{lemma}
+
+\vspace{3mm} First notice that $G_0 = H_i$ satisfies all the conditions in Lemma \ref{read-phase-lemma}. Assume we already constructed $G_{k-1}$ satisfying the conditions in Lemma \ref{read-phase-lemma}. We let $G=G_{k-1}$ and $n=|Act(G_{k-1})|$ in the rest of this section (\ref{subsec:read-phase}), in which we specify the construction of the read phase and prove Lemma \ref{read-phase-lemma}.
+
+\subsubsection{Construction: stage 1}
+By Lemma \ref{lem: next-critical-extension}, there exists an extension $F$ of $G$ such that the following hold:
+\begin{enumerate}
+	\item $F$ contains no special events in $G F$;
+	\item $G F$ is a regular execution;
+	\item $F$ contains no transition events, therefore $Act(G F) = Act(G)$ and $Fin(G F) = Fin(G) = Fin(H_i)$;
+	\item Each $p \in Act(G)$ executes $\ell+k-1$ critical events in $G F$;
+	\item $F$ contains no fence events, hence each $p \in Act(G)$ completes $i$ fences in $G F$ and $mode(p,G F) = mode(p,G) = read$;
+	\item Each $p \in Act(G)$ is about to execute a special event $f_p$ after $G F$. Moreover, at most a single process $q \in Act(G)$ is about to execute $f_q=CS_q$.
+\end{enumerate}
+Denote by $Y$ the set of processes in $Act(G)$ such that $f_p \neq CS_p$. We have $n-1 \leq |Y| \leq n$. For each $p \in Y$, since $status(p,G F) = entry$ and $f_p \neq CS_p$ we get that $f_p$ is not a transition event, and since $mode(p,G F) = read$ we get that $f_p$ is either a read event or a $BeginFence$ event.
+\\ We define: $Z_1 = \{p \in Y \mid f_p = BeginFence\}$, $Z_2 = \{p \in Y \mid f_p \text{ is a read event}\}$.
+\\ It follows that $Y = Z_1 \cup Z_2$ and $Z_1 \cap Z_2 = \emptyset$, thus $|Y|=|Z_1|+|Z_2|$.
+
+\subsubsection*{\hspace{5mm} Case I: $\bf |Z_1| > |Y|/2$}
+We define $W = Z_1$. We have $|W| > |Y|/2 \geq (n-1)/2$, thus $|W| \geq n/2$.
+
+\subsubsection*{\hspace{5mm} Case\ II: $\bf |Z_2| \geq |Y|/2$}
+We construct an undirected graph $\mathcal{G}$ as follows: the vertices of $\mathcal{G}$ are the processes in $Z_2$. Consider $p \in Z_2$ and denote $f_p = read(v)$. We add an edge $\{p,q\}$ if there exists $q \in Z_2$ such that $v$ is local to $q$ or $writer(v, G F) = q$.
+\\ Since $v$ is local to at most one process and has at most one last writer, $p$ accounts for at most 2 edges in $\mathcal{G}$, thus the average degree in $\mathcal{G}$ is at most 4. By Theorem \ref{th: turan}, there exists an independent set $W \subseteq Z_2$ in $\mathcal{G}$ such that:
+$$|W| \geq |Z_2|/5 \geq |Y|/10 \geq (n-1)/10$$
+
+\subsubsection{Construction: stage 2}
+We have a set of processes $W \subseteq Act(G F)$. Define $\overline{W} = Act(G F) \setminus W$. By Lemma \ref{lem: remove-invisibale-processes} with $'E' \leftarrow G F$ and $'Y' \leftarrow \overline{W}$, we have an execution $N = (G F)^{-\overline{W}}$ such that the following hold:
+\begin{enumerate}
+	\item $W = Act(G F) \setminus \overline{W}$ is an IN-set of $N$;
+	\item $Act(N) = Act(G F) \setminus \overline{W} = W$, and $Fin(N) = Fin(G F) = Fin(H_i)$;
+	\item From 1 and 2: $N$ is a regular execution;
+	\item Each $p \in W$ executed the same critical events in $N$ and in $G F$, thus $p$ executed $\ell+k-1$ critical events in $N$;
+	\item For each $p \in W$, since $N \mid p = (G F) \mid p$ we get that $p$ completed $i$ fences in $N$ and $mode(p,N) = mode(p, G F) = read$;
+	\item Each $p \in W$ is about to execute a special event $e_p \sim f_p$ after $N$.
+\end{enumerate}
+
+We extend $N$ by letting each $p \in W$ execute its next event in an arbitrary order. Denote this extension by $D$, and define $G_k = N D$. Notice that $Act(G_k) = Act(N) = W$ and $Fin(G_k) = Fin(N) = Fin(H_i)$ since $D$ contains no transition events.
+
+We now analyze the resulting execution, $G_k$, according to the cases defined in stage 1.
+\subsubsection*{\hspace{5mm} Case I}
+Define $s=k-1$ and $J_0 = G_k$. For each $p \in W$ we have $e_p \sim f_p = BeginFence$. The following conditions hold.
+\begin{enumerate}
+	\item $D$ contains fence events only, thus by Lemma \ref{lem: non-critical-extension}, $W$ is an IN-set of $J_0 = N D$, i.e. $J_0$ is a regular execution;
+	\item Each $p \in Act(J_0)$ executed $\ell+s$ critical events in $N$ and thus in $J_0$;
+	\item Each $p \in Act(J)$ completed $i$ fences in $J_0$, and the last event by $p$ in $J_0$ is BeginFence, i.e. $mode(p,J_0) = write$;
+	\item $Fin(J_0) = Fin(H_i)$;
+	\item $|Act(J_0)| = |W| \geq |Act(G_s)|/2$;
+\end{enumerate}
+
+We are done with the read phase, and we proceed to the write phase.
+
+\subsubsection*{\hspace{5mm} Case II}
+By the definition of $W$, each $p \in W$ executed a single read event $e_p$ in $D$.
+
+\begin{claim-subsection} \label{claim: G_k-is-regular}
+	$G_k$ is a regular execution.
+\end{claim-subsection}
+
+\begin{proof}	
+	Consider $p \in W$, and denote $e_p = read(v)$.
+	
+	property 1: $writer(v,N) \notin W$.
+	\\ Denote $q = writer(v, G F)$. If $q \notin Act (G F)$ then after removing the events by processes in $\overline{W} \subseteq Act(G F)$ we still have $writer(v,N) = writer(v,G F) = q$ and $q \notin W \subseteq Act(G F)$. Otherwise  $q \in Act(G F)$. $G F$ is a regular execution in which $q$ accessed $v$ and $writer(v, G F) \in Act(G F)$, thus by IN5 $q$ is the only process in $Act(G F)$ to access $v$. Notice that $q \notin W$ since there is an edge $\{p,q\}$ in $\mathcal{G}$, and $p \in W$, an independent set of $\mathcal{G}$. Therefore $q \in \overline{W}$, and after removing events by processes in $\overline{W}$ there is no process in $Act(G F)$ (and thus in $W$) to access $v$ in $N$, that is $writer(v,N) \notin W$.
+	
+	property 2: $owner(v) \notin W$:
+	\\ Denote $q_v = owner(v)$. If $q_v \notin Z_2$ the claim clearly hold. Otherwise $q_v \in Z_2$ and $f_p \sim e_p = read(v)$, thus $\mathcal{G}$ contains an edge $\{p,q_v\}$ (notice that $p \neq q_v$ since $p$ remotely reads $v$). Since $p \in W$ and $W$ is an independent set we have $q_v \notin W$.
+	
+	Denote by $D_j$ the prefix of $D$ that contains exactly $j$ events. We prove by induction on $j$ ($0 \leq j \leq |D|$) that $W$ is an IN-set of $N D_j$:
+	\\ induction base $j=0$: by our construction $W$ is an IN-set of $N$.
+	\\ Assume we already proved the claim for $j < |D|$. Notice that $N D_{j+1} = N D_j e_p$ for some $p \in W$, and denote $e_p = read(v)$. Since $D_j$ contains no transition events, we have $Act(N D_j) = Act(N) = W$. $D_j$ contains only read events, thus no write to $v$ occurs in $D_j$, i.e. $writer(v, N D_j) = writer(v, N) \notin W$. Together with the fact that $owner(v) \notin W$, the conditions for Lemma \ref{lem: access-visible-variable} holds, and $W$ satisfies IN1-IN4 in $N D_j e_p = N D_{j+1}$. As IN5 holds for $W$ in $N D_j$ it clearly holds for any variable $u \neq v$ in $N D_{j+1}$. Since $e_p$ is a read event to $v$ we get $writer(v, N D_{j+1}) = writer(v, N D_j) \notin W$ and IN5 holds for $v$ in $N D_{j+1}$.
+	
+	Using the last claim with $j = |D|$ we have that $W$ is an IN-set of $N D = G_k$, and thus $G_k$ is a regular execution.
+\end{proof}
+	
+We now prove that $G_k$ satisfies all the conditions in Lemma \ref{read-phase-lemma}:
+\begin{enumerate}[(1)]
+	\item $G_k$ is a regular execution;
+	\item Consider $p \in W = Act(G_k)$. $p$ executed $\ell+k-1$ critical events in $N$ and a single event $e_p$ in $D$. By our construction $e_p$ is a critical event in $N e_p$, $N e_p \preceq G_k$, and $(N e_p) \mid p = G_k \mid p$. Therefore, by claim \ref{claim: maintain-criticalness}, $e_p$ is a critical event in $G_k$. Altogether $p$ executed $\ell+k$ critical events in $G_k$;
+	\item Consider $p \in W$. $p$ completed $i$ fences in $N$ and $mode(p,N) = read$. Since $D$ contains a single read event by $p$ we get that $p$ completed $i$ fences in $G_k$ and $mode(p,G_k) = read$;
+	\item $Fin(G_k) = Fin(N) = Fin(H_i)$;
+	\item $|Act(G_k)| = |W| \geq (n-1)/10$.
+\end{enumerate}
+
+\begin{claim-section} \label{claim: read-upper-bound}
+	The number of steps in the read phase is bounded by $f(i+1)-\ell$, that is, $\ell+s \leq f(i+1)$.
+\end{claim-section}
+
+\begin{proof}
+	Assume towards a contradiction that during the read phase we build an execution $G_k$ such that $\ell+k > f(i+1)$. Then $G_k$ satisfies:
+	\begin{itemize}
+		\item $G_k$ is a regular execution;
+		\item Each $p \in Act(G_k)$ executed $\ell+k$ critical events in $G_k$;
+		\item $Fin(G_k) = Fin(H_i)$, thus $|Fin(G_k)| = i$.
+	\end{itemize}
+	We choose an arbitrary $p \in Act(G_k)$ and denote $Y = Act(G_k) \setminus \{p\}$. Using Lemma \ref{lem: remove-invisibale-processes} with $'E' \leftarrow G_k$ and $'Y' \leftarrow Y$, we have an execution $G'_k = G_k^{-Y}$ such that: $Act(G'_k) = \{p\}$ and $Fin(G'_k) = Fin(G_k) = Fin(H_i)$; $p$ executes the same critical events in $G_k$ and in $G'_k$, thus $p$ executes $\ell+k$ critical events in $G'_k$. Hence, at most $i+1$ processes issue events in $G'_k$, i.e. the total contention of $G'_k$ is at most $i+1$. However, $p$ executes $\ell+k > f(i+1)$ critical events during a single passage in $G'_k$, a contradiction to our assumption that the algorithm is $f$-adaptive.
+\end{proof}
+
+
+
+
+\subsection{Write phase}
+In the course of the write phase, we consider semi-regular executions. In order to guarantee the ability to transform the resulting execution at the end of the write phase into a regular execution, we consider the following new condition on execution fragments.
+
+\begin{definition}
+\label{def:ordered-exec}
+	Let $E$ be an execution fragment. We say that $E$ is an \emph{ordered} execution if for any variable $v$ one of the following holds:
+	\begin{enumerate}[(a)]
+		\item $writer(v,E) \notin Act(E)$;
+		\item $writer(v,E) = p$ for some $p \in Act(E)$, and $p$ is the only process in $Act(E)$ to access $v$ in $E$.
+		\item There is a sequence $C$ in $E$ of successive commit writes to $v$ by all the processes in $Act(E)$ in an increasing ID order. Moreover, all these processes are executing a fence after $E$, that is, none of them completes in $E$ the fence in the course of which it committed its write in $C$.
+	\end{enumerate}
+\end{definition}
+
+Informally, we replace condition IN5 in the definition of a regular execution by a more relaxed condition. In a regular execution, each variable satisfies either (a) or (b) in the definition of an ordered execution (that is, any regular execution is also ordered). In a semi-regular ordered execution, we allow \emph{a single} process to be visible on (one or more) variables that are accessed by all the active processes. This is the process with the maximum ID among all active processes that are executing the current write phase. As we prove, a semi-regular ordered execution possesses similar properties to a regular execution, and more specifically, extending it with non-critical write events and erasing active processes results in another semi-regular ordered execution.
+
+
+\begin{claim-num} \label{claim: pseudo-regular ordered execution}
+	Let $E$ be a semi-regular ordered execution.
+	\begin{enumerate}
+		\item Let $F$ be an extension of $E$ such that $F$ consists of non-critical write events in $E F$. Then $E F$ is a semi-regular ordered execution;
+		\item For any $X \subseteq Act(E)$: $E^{-X}$ is a semi-regular ordered execution.
+	\end{enumerate}
+\end{claim-num}
+
+\begin{proof}
+	$ $
+	
+	1. We first prove that $E F$ is a semi-regular execution. First notice that $Act(E F) = Act(E)$, since there are no transition events in $F$. As $F$ contains only write events, no process changes its awareness-set during $F$, thus IN1 clearly holds in $E F$. Lemma \ref{lem: non-critical-extension} is an analog version to our claim for the regular case. A careful examination of the proof reveals that the proof for propositions IN2-IN4 is valid for our case as well (in order to prove that IN$i$ holds in $E F$ (for $i=2,3,4$), it is sufficient to assume that IN$i$ holds in $E$).
+	
+	We now prove that $E F$ is ordered. Consider a variable $v$. If either of conditions (a) or (b) of Definition \ref{def:ordered-exec} holds for $v$, then we are done. Otherwise, $writer(v,E F) = p$ for some $p \in Act(E F)$, and $p$ is not the only process in $Act(E F)$ to access $v$. Let $q$ be another process in $Act(E F)$ to access $v$. $v$ is remote to at least one of $p$ or $q$, and thus by IN4 $owner(v) \notin Act(E F)$, and in particular $p,q \neq owner(v)$. Notice that both $p$ and $q$ access $v$ in $E$, otherwise at least one of them accesses $v$ in $F$ for the first time, in which case this access is critical, a contradiction. In addition, $writer(v,E) = p$, otherwise it must be that $p$ writes to $v$ in $F$ (since $writer(v,E F) = p$), and the first such write is critical, a contradiction. Altogether, we get that neither (a) nor (b) hold for $v$ in $E$. Since $E$ is an ordered execution, (c) holds for $v$ in $E$. Thus, there is a sequence $C$ in $E$ of successive write commits to $v$ by the processes in $Act(E)$, in an increasing ID order, and therefore $C$ is such a sequence in $E F$ as well (recall that $Act(E F) = Act(E)$). Moreover, none of the processes of $Act(E)$ complete in $E F$ the fence in the course of which they committed their writes in $C$. As a result, (c) holds for $v$ in $E F$.
+	
+	2. We first prove that $E^{-X}$ is a semi-regular execution. Since IN1 holds is $E$, and using Lemma \ref{lem: sub-execution} (by induction on the size of $X$), we get that $E^{-X}$ is an execution. Lemma \ref{lem: remove-invisibale-processes} establishes that after erasing a subset of an IN-set, the remaining set of processes is itself an IN-set of the resulting execution. The proof that each proposition IN$i$ ($1 \leq i \leq 4$) holds in $E^{-X}$ relies only on the assumption that IN$i$ holds in $E$. Thus, the same proof holds for our case as well.
+	
+	We now prove that $E^{-X}$ is ordered. Notice that $Act(E^{-X}) = Act(E) \setminus X$. Consider a variable $v$. Since $E$ is ordered, one of the following holds:
+	\begin{enumerate}[(a)]
+		\item $p = writer(v,E) \notin Act(E)$. Since $p \notin X$, the events by $p$ are not removed, thus $writer(v,E^{-X}) = writer(v,E) = p$ and $p \notin Act(E^{-X})$.
+		\item $writer(v,E) = p$ for some $p \in Act(E)$, and $p$ is the only process in $Act(E)$ to access $v$ in $E$. If $p \in X$, then the events by $p$ have all been removed, thus there is no process in $Act(E^{-X})$ to access $v$ in $E^{-X}$, that is $writer(v,E^{-X}) \notin Act(E^{-X})$ and (a) holds. Otherwise $p \notin X$, thus $writer(v,E^{-X}) = writer(v,E) = p$, and $p$ is the only process in $Act(E^{-X})$ to access $v$ in $E^{-X}$.
+		\item There is a sequence $C$ in $E$ of successive commit writes to $v$ by the processes in $Act(E)$ in an increasing ID order. Thus $C^{-X}$ is a sequence of successive commit writes to $v$ in $E^{-X}$, by the processes in $Act(E^{-X})$ in an increasing ID order.
+		\\ Moreover, any process $p \in Act(E^{-X})$ is executing a fence after $E$, and it has committed its write in $C$ during the current fence is is performing in $E$. Since $E^{-X} \mid p = E \mid p$, $p$ is executing a fence after $E^{-X}$, and it has committed its write in $C^{-X}$ during the current fence it is performing in $E^{-X}$.
+	\end{enumerate}
+\end{proof}
+
+
+In the course of the write phase we construct a sequence of executions $J_0,J_1,\ldots,J_t, L_0$. Denote $\delta = \ell+s$.
+
+\begin{lemma} \label{write-phase-lemma}
+	At each step during the write phase we have an execution $J_k$ satisfying the following conditions:
+	\begin{enumerate}[(1)]
+		\item $J_k$ is a semi-regular ordered execution;
+		\item Each $p \in Act(J_k)$ executed $\delta+k$ critical events in $J_k$;
+		\item Each $p\in Act(J_k)$ completed $i$ fences in $J_k$, and $mode(p, J_k) = write$;
+		\item $Fin(J_k) = Fin(H_i)$;
+		\item $|Act(J_k)| \geq \sqrt{|Act(J_{k-1})|}/4(\delta+k)$.
+	\end{enumerate}
+\end{lemma}
+
+First notice that $J_0$ satisfies all the conditions in Lemma \ref{write-phase-lemma}, since $J_0$ is a regular execution (any regular execution is also ordered, as one of (a) or (b) holds for any variable). Assume we already constructed $J_{k-1}$ satisfying the conditions of Lemma \ref{write-phase-lemma}. We denote $J=J_{k-1},\ n=|Act(J_{k-1})|$ throughout the rest of this section, in which we define the construction of the write phase, and prove Lemma \ref{write-phase-lemma}.
+
+\subsubsection{Construction: stage 1}
+Since $mode(p,J) = write$ for any $p \in Act(J)$, $p$ is executing a fence after $J$, thus $p$ can continue to execute commit write events independently of other processes. We extend $J$ in the following manner: we let each $p \in Act(J)$, in an increasing ID order, run until it reaches its next special event $e_p$ (such an event must exist, since $p$ is executing a fence). Denote this extension by $F$. Then $J F$ is an execution and the following hold:
+\begin{enumerate}
+	\item $F$ contains no transition events, thus $Act(J F) = Act(J)$ and $Fin(J F) = Fin(J) = Fin(H_i)$.
+	\item Since $F$ consists of non-critical commit writes in $J F$, by claim \ref{claim: pseudo-regular ordered execution}, $J F$ is a semi-regular ordered execution.
+	\item Each $p \in Act(J)$ executed $\delta+k-1$ critical events in $J F$.
+	\item $F$ contains no fence events, thus each $p \in Act(J F)$ completed $i$ fences in $J F$.
+	\item For any $p \in Act(J)$, since $F$ contains no fence events, $mode(p,J F) = mode(p,J) = write$.
+	\\ Therefore $e_p$ is either a commit write event or an $EndFence$ event. Moreover, as $e_p$ is a special event in $J F' e_p$, for some prefix $F'$ of $F$, and since we extend $F'$ with events by processes other than $p$ to form $F$, by claim \ref{claim: maintain-criticalness} we have that $e_p$ is a special event in $J F e_p$, i.e. $p$ is about to execute a special event $e_p$ after $J F$.
+\end{enumerate}
+We define: $Z_1 = \{p \in Act(J) \mid e_p = EndFence\}$, $Z_2 = \{p \in Act(J) \mid e_p \text{ is a commit write event}\}$.
+\\It follows that $Act(J) = Z_1 \cup Z_2$ and $Z_1 \cap Z_2 = \emptyset$, thus $n = |Z_1|+|Z_2|$.
+\\ Denote $V_{next} = \{v \in V \mid \exists p \in Z_2 \text{ such that } e_p \text{ remotely writes v}\}$
+
+\subsubsection*{\hspace{5mm} Case I: $\bf |Z_1| \geq n/2$}
+We define $W = Z_1$.
+
+\subsubsection*{\hspace{5mm} Case II: $\bf |Z_2| > n/2$ and $\bf |V_{next}| \geq \sqrt{|Z_2|}$}
+For each $v \in V_{next}$, we select an arbitrary $p \in Z_2$ such that $e_p = write(v)$. Denote the set of these processes by $Z$. Then, $|Z|=|V_{next}| \geq \sqrt{|Z_2|}$.
+\newline We construct an undirected graph $\mathcal{G}$ as follows: the vertices of $\mathcal{G}$ are the processes in $Z$. Consider $p \in Z$, and denote $e_p = write(v)$. For $q \in Z$, we add an edge $\{p,q\}$ in $\mathcal{G}$ if either
+\begin{inparaenum}[\itshape a\upshape)]
+	\item $v$ is local to $q$; or
+	\item there exists a critical event $e \in J F$ by $q$ such that $e$ remotely accesses $v$.
+\end{inparaenum}
+\newline Since each $p$ executs exactly $\delta+k-1$ critical events in $J F$, $p$ can introduce at most $\delta+k-1$ edges in $\mathcal{G}$ by rule b). Since each variable is local to at most one process, at most one edge is introduced by rule a) in $\mathcal{G}$. As each edge is counted twice (once per each direction), the average degree in $\mathcal{G}$ is at most $2(\delta+k)$. By Theorem \ref{th: turan}, there exists an independent set $W \subseteq Z$ in $\mathcal{G}$ such that:
+\begin{align*}
+|W| \geq \frac{|Z|}{2(\delta+k)+1} \geq & \dfrac{\sqrt{|Z_2|}}{2(\delta+k)+1} \geq \\
+& \frac{\sqrt{n/2}}{2(\delta+k)+1} \geq \dfrac{\sqrt{n}}{4(\delta+k)}
+\end{align*}
+
+\subsubsection*{\hspace{5mm} Case III: $\bf |Z_2| > |Y|/2$ and $\bf |V_{next}| < \sqrt{|Z_2|}$}
+By the pigeonhole principle, there exists a variable $v$ and a set $W \subseteq Z_2$ of size $|W| \geq \sqrt{|Z_2|} \geq \sqrt{n/2}$, such that $e_p$ is a critical commit write to $v$ for any $p \in W$.
+
+\subsubsection{Construction: stage 2}
+In all of the above cases of stage 1 we have a set $W \subseteq Act(J F)$. Define $\overline{W} = Act(J F) \setminus W$, and denote $N = (J F)^{-\overline{W}}$. Then the following hold:
+\begin{enumerate}
+	\item $J F$ is a semi-regular ordered execution and $\overline{W} \subseteq Act(J F)$, thus, by claim \ref{claim: pseudo-regular ordered execution}, $N$ is a semi-regular ordered execution as well.
+	\item $Act(N) = Act(J F) \setminus \overline{W} = W$ and $Fin(N) = Fin(J F) = Fin(H_i)$.
+	\item By IN3, each $p \in Act(N)$ executed the same critical events in $N$ and in $J F$, thus $p$ executed $\delta+k-1$ critical events in $N$.
+	\item For any $p\in Act(N)$, as $N \mid p = (J F) \mid p$, $p$ completed $i$ fences in $N$ and $mode(p,N) = write$.
+	\item Each $p \in Act(N)$ is about to execute $e_p$ after $N$.
+\end{enumerate}
+
+We extend $N$ by letting each process $p \in W$ execute its next event $e_p$ in an increasing ID order. Denote this extension by $D$, and define $J_k = N D$. Notice that no event in $D$ is a transition event, thus $Act(J_k) = Act(N) = W$ and $Fin(J_k) = Fin(N) = Fin(H_i)$.
+
+We now analyze the resulting execution, $J_k$, according to the cases defined in stage 1.
+\subsubsection*{\hspace{5mm} Case I}
+Define $t = k-1$ and $L_0= J_k$. We have an execution $L_0 = N D$ where in $D$ each process in $Act(L_0)$ executes a single $EndFence$ event. The following conditions hold:
+\begin{enumerate}
+	\item $N$ is a semi-regular execution. It is easy to verify that fence events do not violate any of IN1-IN4, thus $L_0$ is a semi-regular execution as well;
+	\item $N$ is an ordered execution.
+	\item $D$ contains no critical events in $N D$, thus each $p \in Act(L_0)$ executes $\delta+t$ critical events in $L_0$;
+	\item Each $p \in Act(L_0)$ completes $i$ fences in $N$, and the only event by $p$ in $D$ is $EndFence$. Therefore $p$ completes $i+1$ fences in $L_0$ and $mode(p,L_0) = read$;
+	\item $Fin(L_0) = Fin(H_i)$;
+	\item $|Act(L_0)| = |W| \geq |Act(J_t)|/2$.
+\end{enumerate}
+
+We are done with the write phase, and we proceed to the regularization phase.
+
+\subsubsection*{\hspace{5mm} Case II + III}
+By our construction, $D$ is a sequence of commit write events by processes in $W$ in an increasing ID order.
+
+\begin{claim-subsection} \label{claim: writer-v-not-in-W}
+	Let $e_p \in D$ be a commit write event and denote $e_p = write(v)$. Then $writer(v,N) \notin W$.
+\end{claim-subsection}
+
+\begin{proof}
+	Since $J F$ is an ordered execution, one of (a)-(c) holds for $v$ in $J F$.
+	
+	If (a) holds, then $writer(v,J F) \notin Act(J F)$. Thus after removing events by processes in $\overline{W}$ we still have $writer(v,N) = writer(v,J F) \notin Act(J F)$. In particular, $writer(v,N) \notin W$.
+	
+	If (b) holds, then $writer(v,J F) = q$ for some $q \in Act(J F)$, and this is the only process in $Act(J F)$ to access $v$. Notice that $p \neq q$, as $e_p$ is critical in $J F e_p$. Assume towards a contradiction that $q \in W$. If case III holds, then $e_q$ accesses the same variable as $e_p$, that is, $e_q$ is a commit write to $v$, contradicting the fact that $e_q$ is critical in $J F e_q$. If case II holds, then either $q = owner(v)$, or $q$ remotely accessed $v$ in $J F$, and the first such event is critical. In both cases, $\mathcal{G}$ contains an edge $\{p,q\}$, contradicting the fact that $W$ is an independent set. Hence we have $q \in \overline{W}$, and after removing the events by $q$ there is no access to $v$ by any process in $Act(J F)$. In particular, $writer(v,N) \notin W$.
+	
+	If (c) holds, then $p$ already committed a write to $v$ during the current fence it is executing in $J F$, and $p$ is about to commit a write to $v$ after $J F$, contradicting the fact that a process is allowed to commit a write to a variable at most once during a single fence execution. Thus, (c) does not hold for $v$.
+\end{proof}
+
+Consider $p \in Act(J_k)$. Claim \ref{claim: writer-v-not-in-W} implies that $e_p$ is critical in $N e_p$. As the only event $p$ executes in $D$ is $e_p$, we get $(N e_p) \mid p = J_k \mid p$. Clearly $N e_p \preceq J_k$, thus, by Claim \ref{claim: maintain-criticalness}, $e_p$ is critical in $J_k$, that is, $D$ consists of critical commit writes in $J_k = N D$ by the processes in $W$ in an increasing ID order.
+
+\begin{claim-subsection} \label{J_k-semi-regular}
+	$J_k$ is a semi-regular execution.
+\end{claim-subsection}
+
+\begin{proof}
+	$N$ is a semi-regular execution, therefore IN1-IN4 hold for $W$ in $N$.
+	
+	IN1: $D$ consists of commit writes only, thus no process changes its awareness set during $D$, that is $AW(p,J_k) = AW(p,N)$ for any process $p$, and IN1 holds in $J_k$.
+	
+	IN2: $D$ contains no transition events, thus for any $p \in W$: $status(p,J_k) = status(p,N) = entry$.
+	
+	IN3: Consider $X \subseteq Act(J_k)$. IN3 holds in $N$, thus it is enough to consider an event $e_p \in D^{-X}$. If $e_p$ is an $EndFence$ event, then it is non-critical in both $J_k$ and $J_k^{-X}$. Otherwise, $e_p$ is a critical write in $J_k$ to some variable $v$ by process $p \in W$. Denote $D = D_1 e_p D_2$. By claim \ref{claim: writer-v-not-in-W}, $writer(v,N) \notin W$, thus after removing events by processes in $X$ we still have $writer(v,N^{-X}) = writer(v,N) \notin W$. As $e_p$ is the only event by $p$ in $D$, we get that there is no event by $p$ in $D_1$, and thus in $D_1^{-X}$. Hence, either $D_1^{-X}$ contains a commit write to $v$ by a process different from $p$, and thus $writer(v,(N D_1)^{-X}) \neq p$, or there is no commit write to $v$ in $D_1$, and thus $writer(v, (N D_1)^{-X}) = writer(v, N^{-X}) \neq p$. In both cases, we get that $e_p$ is a critical write in $J_k^{-X}$.
+		
+	IN4: Consider an event $e \in J_k$ by process $p$ accessing a remote variable $v$. If $e \in N$, then, by IN4, $owner(v) \notin Act(N) = Act(J_k)$ and we are done. Thus assume $e \in D$. We prove the claim for each case separately. Notice that $p \in W$, since $e \in D$.
+	\\ Case II: If $owner(v) \in Act(J_k) = W$, then $\mathcal{G}$ contains an edge $\{p,owner(v)\}$, contradicting the fact that $W$ is an independent set in $\mathcal{G}$. Therefore $owner(v) \notin Act(J_k)$.
+	\\ Case III: all the events in $D$ commit writes to the same variable $v$. Each $q \in Act(J_k) = W$ commits a critical write to $v$ in $D$, hence $q \neq owner(v)$, so $owner(v) \notin Act(J_k)$.
+\end{proof}
+
+\begin{claim-subsection} \label{J_k-ordered}
+	$J_k$ is an ordered execution.
+\end{claim-subsection}
+
+\begin{proof}
+	First, consider a variable $v$ such that $v$ is not accessed in $D$. Since $N$ is an ordered execution, one of the following holds for $v$:
+	\begin{enumerate} [(a)]
+		\item $writer(v,N) \notin Act(N)$, thus $writer(v,J_k) = writer(v,N) \notin Act(J_k)$.
+		\item $writer(v,N) = p$ for some $p \in Act(N)$, and $p$ is the only process in $Act(N)$ to access $v$ in $N$. Since there is no access of $v$ in $D$, $writer(v,J_k) = writer(v,N) = p$, and $p$ is the only process in $Act(J_k)$ to access $v$ in $J_k$.
+		\item There is a sequence $C$ in $N$, such that $C$ is a sequence of successive commit writes to $v$ by all the processes in $Act(N)$ in an increasing ID order. Therefore $C$ is such a sequence in $J_k$ as well.
+		\\ Moreover, any process $p \in Act(N)$ is executing a fence in $N$ in which it committed its write in $C$. Since $p$ executes a single write event $e_p$ is $D$, $p$ is executing the same fence in $J_k$. That is, $p$ is executing in $J_k$ the fence in which it committed its write in $C$.
+	\end{enumerate}
+	Consider now a variable $v$ that is accessed in $D$. We prove the claim for each case separately.
+	
+	Case II: By the definition of $W$, each event in $D$ is a commit write to a different variable, thus there is a unique event $e_p \in D$ accessing $v$, namely $writer(v,J_k) = p \in Act(J_k)$. Assume there is another process $q \in Act(J_k)$ that accessed $v$ in $J_k$. Since $e_p$ is the only event in $D$ to access $v$, $q$ accessed $v$ in $N$, and thus in $J F$. Either $q = owner(v)$ or $q$ executed a critical event accessing $v$ in $J F$ (the first such event). In both cases, $\mathcal{G}$ contains an edge $\{p,q\}$, contradicting the fact that $W = Act(J_k)$ is an independent set. Therefore $p$ is the only process in $Act(J_k)$ to access $v$ in $J_k$.
+	
+	Case III: By the definition of $W$, $D$ is a sequence of successive commit write events by all the processes in $Act(J_k)$, in an increasing ID order, all of which to the same variable $v$. Moreover, each $p \in Act(J_k)$ is executing a fence in $J_k$ and the last event by $p$ is the commit write to $v$ in $D$, that is, it executed this event during the current fence it is executing.
+\end{proof}
+
+We now prove that $J_k, 1 \leq k \leq t,$ satisfies all the conditions of Lemma \ref{write-phase-lemma}:
+\begin{enumerate}[(1)]
+	\item By Claims \ref{J_k-semi-regular} and \ref{J_k-ordered}, $J_k$ is a semi-regular ordered execution;
+	\item Each $p \in Act(J_k)$ executes $\delta+k-1$ critical events in $N$, and a single critical event $e_p$ in $D$, thus $p$ executes $\delta+k$ critical events in $J_k$.
+	\item Consider $p \in Act(J_k)$. $p$ completes $i$ fences in $N$ and $mode(p,N) = write$. The only event by $p$ in $D$ is a commit write, thus $p$ completes $i$ fences in $J_k$ and $mode(p,J_k) = write$;
+	\item $Fin(J_k) = Fin(H_i)$;
+	\item $|Act(J_k)| = |W| \geq \sqrt{n}/4(\delta+k)$.
+\end{enumerate}
+
+\begin{claim-section} \label{claim: write-upper-bound}
+	The number of steps in the read and write phases is bounded by $f(i+1)-\ell$. In other words: $\ell+s+t \leq f(i+1)$.
+\end{claim-section}
+
+\begin{proof}
+	Assume towards a contradiction that during the write phase we build an execution $J_k$ such that $\ell+s+k = \delta+k > f(i+1)$. Then $J_k$ satisfies:
+	\begin{itemize}
+		\item $J_k$ is a semi-regular ordered execution;
+		\item Each $p \in Act(J_k)$ executes $\delta+k$ critical events in $J_k$;
+		\item $Fin(J_k) = Fin(H_i)$, thus $|Fin(J_k)| = i$;
+	\end{itemize}
+	We choose an arbitrary $p \in Act(J_k)$, and denote $W = Act(J_k) \setminus \{p\}$. Using Claim \ref{claim: pseudo-regular ordered execution}, we have an execution $J'_k = J_k^{-W}$. Notice that $Act(J'_k) = Act(J_k) \setminus W = \{p\}$ and $Fin(J'_k) = Fin(J_k) = Fin(H_i)$. By IN3 applied to $J_k$, we get that $p$ executes the same critical events in both $J'_k$ and in $J_k$, that is, $p$ executes $\delta+k$ critical events in $J'_k$.
+Hence, at most $i+1$ processes issue events in $J'_k$, i.e. the total contention of $J'_k$ is at most $i+1$. However, $p$ executes $\delta+k > f(i+1)$ critical events during a single passage in $J'_k$, a contradiction.
+\end{proof}
+
+
+
+
+\subsection{Regularization phase}
+We have a semi-regular execution $L_0$. Moreover, $L_0 = N D$ where $N$ is an ordered execution and $D$ is a sequence of $EndFence$ events by the processes in $Act(L_0)$. Let $p_{max}$ be the process with the largest ID in $Act(L_0)$, and define $W_0 = Act(L_0) \setminus \{p_{max}\}$.
+
+\begin{claim-subsection} \label{claim: W_0-is-an-IN-set}
+	$W_0$ is an IN-set of $L_0$.
+\end{claim-subsection}
+
+\begin{proof}
+	As $L_0$ is a semi-regular execution, IN1-IN4 hold for $Act(L_0)$. Since $W_0 \subset Act(L_0)$, IN1-IN4 hold for $W_0$ in $L_0$. We now prove that IN5 holds in $L_0$.
+	
+	Consider a variable $v$. Since $D$ contains only fence events, $Act(N) = Act(L_0)$ and $writer(v,L_0) = writer(v,N)$. As $N$ is an ordered execution, one of the following holds for $v$:
+	\begin{enumerate} [(a)]
+		\item $writer(v,N) \notin Act(N)$, thus $writer(v,L_0) \notin W_0$.
+		\item $writer(v,N) = p$ for some $p \in Act(N)$, and $p$ is the only process in $Act(N)$ to access $v$ in $N$. Since there is no access of $v$ in $D$, $p$ is the only process in $Act(L_0)$ to access $v$ in $L_0$, that is $|Accessed(v,L_0) \cap Act(L_0)| = 1$.
+		\item There is a sequence $C$ in $N$, such that $C$ is a sequence of successive commit writes to $v$ by all the processes in $Act(N)$ in an increasing ID order. Therefore, $p_{max}$ is the last process to commit write to $v$ in $C$. For any $p \in Act(N)$, $p$ is executing a fence after $N$, in which it executed its write in $C$. A process commits at most a single write to any specific variable during a fence execution, therefore there is no write by $p$ to $v$ after $C$ in $N$. Thus, either there is a commit write to $v$ after $C$ by a process not in $Act(N)$, and thus $writer(v,N) \notin Act(N)$, or there is no commit write to $v$ after $C$, in which case $writer(v,N) = p_{max}$. In both cases, we have $writer(v,L_0) \notin W_0$.
+	\end{enumerate}
+\end{proof}
+
+In the regularization phase, we construct a sequence of executions $L_0,L_1, \ldots, L_m, H_{i+1}$. Denote $\ell_{i+1} = \ell+s+t$.
+
+\begin{lemma} \label{regularization-phase-lemma}
+	In each step, we have an execution $L_k$ such that the following conditions hold:
+	\begin{enumerate}[(1)]
+		\item $Act(L_k)$ can be written as $W_k \cup \{p_{max}\}$ (where $p_{max} \notin W_k$);
+		\item $W_k$ is an IN-set of $L_k$;
+		\item $p_{max}$ executed $\ell_{i+1}+k$ critical events in $L_k$;
+		\item Each $p \in W_k$ executes $\ell_{i+1}$ critical events in $L_k$;
+		\item Each $p \in W_k$ completes $i+1$ fences in $L_k$ and $mode(p,L_k) = read$;
+		\item $Fin(L_k) = Fin(H_i)$;
+		\item $|Act(L_k)| \geq |Act(L_{k-1})|-1$.
+	\end{enumerate}
+\end{lemma}
+
+First notice that $L_0$ satisfies all the conditions of Lemma \ref{regularization-phase-lemma}. Assume we already constructed $L_{k-1}$ satisfying the conditions of Lemma \ref{regularization-phase-lemma}. We denote $L=L_{k-1},\ n=|Act(L_{k-1})|$ throughout the rest of this section, in which we define the construction of the regularization phase and prove Lemma \ref{regularization-phase-lemma}.
+
+Lemma \ref{lem: non-critical-extension} implies that an extension containing no critical or transition events does not effect the IN-set, that is the IN-set remains the same after the extension. It is easy to verify that a transition event by a process not in the IN-set does not affect it as well (no variable is accessed, and the only process that changes its state is not in the IN-set). We therefore conclude that an extension by processes not in the IN-set which contains no critical events does not change the IN-set, and the next corollary follows.
+\begin{corollary} \label{claim: q-extension}
+	Let $F$ be an extension of $L$ by $p_{max}$ such that $F$ contains no critical events in $L F$. Then $W_{k-1}$ is an IN-set of $L F$.
+\end{corollary}
+
+Let $F$ be a solo extension of $L$ by $p_{max}$, where $p_{max}$ executes until it either terminates (that is, executes $Exit_{p_{max}}$), or until it is about to issue a critical event $f$. First, we prove that such an extension exists.
+
+Assume towards a contradiction that the solo run $F$ by $p_{max}$ after $L$ is infinite, where $p_{max}$ does not finish a passage in $F$, and $F$ contains no critical events in $L F$. Consider a finite prefix $F'$ of $F$. $p_{max}$ does not finish a passage in $F$, thus $Act(L F') = Act(L)$. $F'$ contains no critical events in $L F'$, thus, by Corollary \ref{claim: q-extension}, $W_{k-1}$ is an IN-set of $L F'$. Using Lemma \ref{lem: remove-invisibale-processes} with $'E' \leftarrow L F'$, $'INV' \leftarrow W_{k-1}$ and $'Y' \leftarrow W_{k-1}$, we get an execution $L' = (L F')^{-W_{k-1}}$ such that $Act(L') = Act(L F') \setminus W_{k-1} = \{p_{max}\}$. Notice that $L'$ can be written as $L^{-W_{k-1}} F'$, since $F'$ is a solo run by $p_{max} \notin W_{k-1}$. We have an execution $L'$ in which there is a solo run $F'$ by $p_{max}$, where $p_{max}$ is the only active process along $F'$, and $p_{max}$ does not finish a passage. Since this holds for any prefix of $F$, $F'$ can be as long as we wish, thus contradicting the global progress property.
+
+\subsubsection*{\hspace{5mm} Case I}
+$p_{max}$ finishes a passage in $F$.
+\\ Define $m = k-1$ and $H_{i+1} = L F$. The following conditions hold:
+\begin{enumerate}
+	\item Since $p_{max}$ finishes its passage in $F$, $Act(H_{i+1}) = Act(L) \setminus \{p_{max}\} = W_m$, thus $|Act(H_{i+1})| = |Act(L_m)|-1$;
+	\item By Corollary \ref{claim: q-extension}, $W_m$ is an IN-set of $H_{i+1}$, thus $H_{i+1}$ is a regular execution;
+	\item Each $p \in Act(H_{i+1})$ executes $\ell_{i+1}$ critical events in $L$, and thus in $H_{i+1}$;
+	\item Since $p_{max}$ finishes its passage in $F$, we get $Fin(H_{i+1}) = Fin(L) \cup \{p_{max}\} = Fin(H_i) \cup \{p_{max}\}$. Therefore $|Fin(H_{i+1})| = i+1$;
+	\item Each $p \in Act(H_{i+1})$ completes $i+1$ fences in $H_{i+1}$ and $mode(p,H_{i+1}) = read$.
+\end{enumerate}
+We are done with the regularization phase, and thus with the entire inductive step.
+
+\subsubsection*{\hspace{5mm} Case II}
+$p_{max}$ is about to execute a critical event $f$ after $L F$.
+\\ Since $p_{max}$ does not finish its passage, $Act(L F) = Act(L)$ and $Fin(L F) = Fin(L) = Fin(H_i)$. $F$ contains no critical events in $L F$, thus by corollary \ref{claim: q-extension}, $W_{k-1}$ is an IN-set of $L F$. Let $u$ be the remote variable $p_{max}$ accesses in $f$. We define:
+
+\begin{align*}
+q & = \begin{cases}
+	writer(u, L F) & ,writer(u, L F) \in W_{k-1}
+	\\ \perp & ,otherwise
+	\end{cases}
+\\
+q_u & = \begin{cases}
+	owner(u) & ,owner(u) \in W_{k-1}
+	\\ \perp & ,otherwise
+	\end{cases}
+\end{align*}
+
+Denote $Q = \{q,q_u\}$ and $W_k = W_{k-1} \setminus Q$.
+\begin{claim-subsection}
+\label{claim:subsection}
+	$|Q| \leq 1$ (where we do not count $\perp$).
+\end{claim-subsection}
+\begin{proof}
+	Assume $|Q| = 2$, then $q,q_u \in W_{k-1}$ and $q \neq q_u$. Since $writer(u, L F) = q$ and $q \neq owner(u)$, $q$ remotely accessed $u$ in $L F$. $W_{k-1}$ is an IN-set of $L F$, thus by IN4 $q_u \notin Act(L F)$ - a contradiction.
+\end{proof}
+
+Since $Q \subseteq W_{k-1}$, by Lemma \ref{lem: remove-invisibale-processes} with $'E' \leftarrow L F$, $'INV' \leftarrow W_{k-1}$ and $'Y' \leftarrow Q$, we have: $N = (L F)^{-Q}$ is an execution, and the following hold:
+\begin{enumerate}
+	\item $W_k = W_{k-1} \setminus Q$ is an IN-set of $N$.
+	\item $Act(N) = Act(L F) \setminus Q = W_k \cup \{p_{max}\}$, thus $|Act(N)| \geq |Act(L)| - 1$.
+	\item $Fin(N) = Fin(L F) = Fin(H_i)$.
+	\item Each $p \in W_k$ executes the same events in $N$ and in $L F$, thus $p$ completes $i+1$ fences in $N$ and $mode(p,N) = read$.
+	\item Each $p \in Act(N)$ executes the same critical events in $N$ and in $L F$. Since $F$ contains no critical events in $L F$, each $p \in W_k$ executes $\ell_{i+1}$ critical events in $N$, and $p_{max}$ executes $\ell_{i+1}+k-1$ critical events in $N$.
+	\item $p_{max}$ is about to execute a critical event $e \sim f$ after $N$.
+\end{enumerate}
+
+We extend $N$ by letting $p_{max}$ execute $e$, and denote the resulting execution $L_k = N e$.
+
+\begin{claim-subsection} \label{claim: W_k-is-an-IN-set}
+	$W_k$ is an IN-set of $L_k$.
+\end{claim-subsection}
+
+\begin{proof}
+
+We start by proving two properties relating to variable $u$.
+
+\begin{itemize}
+
+\item property 1: $writer(u,N) \notin W_k$. If $writer(u, L F) \notin W_{k-1}$ then $q = \perp$, thus the events by $writer(u, L F)$ have not been removed from $N$ and we get $writer(u, N) = writer(u, L F) \notin W_k \subseteq W_{k-1}$. Otherwise, $writer(u, L F) = q \in W_{k-1}$. $W_{k-1}$ is an IN-set of $L F$, hence, by IN5, $q$ is the only process in $Act(L F)$ to access $u$ in $L F$ (otherwise $writer(u, L F) \notin W_{k-1}$, a contradiction). Therefore, after removing the events by $q \in Q$ there is no process in $W_{k-1}$ that accesses $u$ in $N$, i.e. $writer(u, N) \notin W_k \subseteq W_{k-1}$.
+    
+\item property 2: $owner(u,N) \notin Act(N)$. If $owner(u) \notin Act(L F)$, then $owner(u) \notin Act(N) \subseteq Act(L F)$. Otherwise, $owner(u) \in Act(L F)$. Since $p_{max}$ remotely accesses $u$ in $f$, we have $owner(u) \neq p_{max}$, thus  $owner(u) \in W_{k-1}$. From our construction, $owner(u) \in Q$, and therefore $owner(u) \notin Act(N)$.
+    
+\end{itemize}
+	
+	$W_k$ is an IN-set of $N$, thus, by the last two properties and by Lemma \ref{lem: access-visible-variable}, IN1-IN4 hold for $W_k$ in $N e = L_k$. As IN5 holds for $W_k$ in $N$, it clearly holds for any variable $v \neq u$ in $L_k$. Consider now variable $u$. Either $e$ does not commit a write to $u$, and thus $writer(u,L_k) = writer(u,N) \notin W_k$, or $e$ is a commit write to $u$, and thus $writer(u,L_k) = p_{max} \notin W_k$. In both cases, IN5 holds for $u$ in $L_k$. As a result, $W_k$ is an IN-set of $L_k$.
+\end{proof}
+
+We now prove that $L_k$ satisfies all the conditions of Lemma \ref{regularization-phase-lemma}:
+\begin{enumerate} [(1)]
+	\item $e$ is not a transition event, thus $Act(L_k) = Act(N) = W_k \cup \{p_{max}\}$ (where $p_{max} \notin W_k$);
+	\item By claim \ref{claim: W_k-is-an-IN-set} $W_k$ is an IN-set of $L_k$;
+	\item $p_{max}$ eamxecutes $\ell_{i+1}+k-1$ critical events in $N$, and $e$ is a critical event in $N e$. Therefore $p_{max}$ executes $\ell_{i+1}+k$ critical events in $L_k$;
+	\item Each $p \in W_k$ executes $\ell_{i+1}$ critical events in $L_k$;
+	\item Each $p \in W_k$ executes the same events in $L_k$ and in $N$, thus $p$ completed $i+1$ fences in $L_k$, and $mode(p,L_k) = read$;
+	\item $Fin(L_k) = Fin(N) = Fin(H_i)$;
+	\item $|Act(L_k)| = |Act(N)| \geq |Act(L)|-1$.
+\end{enumerate}
+
+\begin{claim-section} \label{claim: regularization-upper-bound}
+	The number of steps in the regularization phase is bounded by $f(i+1)$. \\ (In other words, $m \leq f(i+1)$.)
+\end{claim-section}
+\begin{proof}
+	Assume towards a contradiction that during the regularization phase we build an execution $L_k$ such that $k > f(i+1)$. Then $L_k$ satisfies:
+	\begin{itemize}
+		\item $Act(L_k)$ can be written as $W_k \cup \{p_{max}\}$ (where $p_{max} \notin W_k$);
+		\item $W_k$ is an IN-set of $L_k$;
+		\item $Fin(L_k) = Fin(H_i)$, thus $|Fin(L_k)| = i$.
+		\item $p_{max}$ executes $\ell_{i+1}+k$ critical events in $L_k$.
+	\end{itemize}
+	Using Lemma \ref{lem: remove-invisibale-processes} with $'E' \leftarrow L_k$ and $'INV','Y' \leftarrow W_k$, we have an execution $L'_k = L_k^{-W_k}$ such that: $Act(L'_k) = Act(L_k) \setminus W_k = \{p_{max}\}$ and $Fin(L'_k) = Fin(L_k) = Fin(H_i)$; $p_{max}$ executes the same critical events in $L'_k$ and in $L_k$, thus $p_{max}$ executes $\ell_{i+1}+k$ critical events in $L'_k$.
+	\\ Hence, at most $i+1$ processes issue events in $L'_k$, i.e. the total contention of $L'_k$ is at most $i+1$. However, $p_{max}$ executed $\ell_{i+1}+k > f(i+1)$ critical events during a single passage in $L'_k$, contradicting our assumption that the algorithm is $f$-adaptive.
+\end{proof}
+
+
+
+
+\subsection{Construction Bounds}
+We now present an analysis for the size of $Act(H_i)$ based on the upper bounds on the number of steps in for each phase. We will prove a lower bound under some restriction on the growth rate of the adaptivity function $f$.
+
+\begin{theorem} \label{theorem: Act-lower-bound}
+	Let $i \in \mathbb{N}$ be such that $f(i) \leq \dfrac{N^{2^{-f(i)}}} {f(i)! \cdot 4^{f(i)+2i}}$. Then the following lower bound holds:
+	$$|Act(H_i)| \geq \frac{N^{2^{-\ell_i}}}{\ell_i! \cdot 4^{\ell_i+2i}}$$
+\end{theorem}
+
+
+
+\begin{proof}
+	$ $ \newline
+We assume WLOG that the adaptivity function $f$ is non-decreasing. We prove the theorem by induction on $i$. For $i=0$, we have $|Act(H_0)| \geq N$ which is trivially true.
+
+Let $i+1$ be such that:
+ $$f(i+1) \leq \dfrac{N^{2^{-f(i+1)}}} {f(i+1)! \cdot 4^{f(i+1) + 2(i+1)}}$$
+ Since $f$ is non-decreasing:
+\begin{align*}
+	& f(i) \leq f(i+1) \leq \\
+	& \qquad \dfrac{N^{2^{-f(i+1)}}} {f(i+1)! \cdot 4^{f(i+1)+2(i+1)}} \leq \dfrac{N^{2^{-f(i)}}} {f(i)! \cdot 4^{f(i)+2i}}.
+\end{align*}
+Hence $i$ satisfies the condition in Theorem \ref{theorem: Act-lower-bound}, and by the induction hypothesis, $|Act(H_i)| \geq \frac{N^{2^{-\ell_i}}}{\ell_i! \cdot 4^{\ell_i+2i}}$.
+	
+The induction step is partitioned into several sub-steps, corresponding to the phases in the construction of $H_{i+1}$ from $H_i$. In each sub-step, we establish a lower bound on the number of active processes in the intermediate executions during the respective phase, based on the lower bound established for the phases preceding it.
+	
+	Read phase: $|Act(G_k)| \geq \dfrac{N^{2^{-(\ell_i+k)}}}{(\ell_i+k)! \cdot 4^{\ell_i+k+2i}}$.
+	\\ By induction on $k$.
+	\\ Base case $k=0$: then $G_0 = H_i$ and the claim holds.
+	\\ Induction step: assume we proved the claim for $k-1$. By condition (5) of Lemma \ref{read-phase-lemma}:
+	\begin{align*}
+	& |Act(G_k)| \geq \dfrac{|Act(G_{k-1})|-1}{10} \geq \\
+	& \qquad \dfrac{\frac{N^{2^{-(\ell_i+k-1)}}}{(\ell_i+k-1)! \cdot 4^{\ell_i+k-1+2i}}-1}{10} \geq \dfrac{N^{2^{-(\ell_i+k)}}}{(\ell_i+k)! \cdot 4^{\ell_i+k+2i}}
+	\end{align*}
+	where the last inequality holds as long as $\ell_i+k \geq 3$, which may be assumed since $\ell_i$ increases from phase
+    to phase and $k$ increases in the course of the read phase.
+	
+	Write phase: $|Act(J_k)| \geq \dfrac{N^{2^{-(\ell_i+s+k)}}}{(\ell_i+s+k)! \cdot 4^{\ell_i+s+k+2i} \cdot 2}$
+	\\ By induction on $k$.
+	\\ Base case $k=0$: 
+	\\ $|Act(J_0)| \geq \dfrac{|Act(G_s)|}{2} \geq \dfrac{N^{2^{-(\ell_i+s)}}}{(\ell_i+s)! \cdot 4^{\ell_i+s+2i} \cdot 2}$.
+	\\ Induction step: assume we proved the claim for $k-1$. By condition (5) of Lemma \ref{write-phase-lemma}:
+	\begin{align*}
+	& |Act(J_k)| \geq \dfrac {\sqrt{|Act(J_{k-1})|}} {4(\delta+k)} \geq \\
+	& \quad \dfrac {\sqrt{\dfrac{N^{2^{-(\ell_i+s+k-1)}}} {(\ell_i+s+k-1)! \cdot 4^{\ell_i+s+k-1+2i} \cdot 2}}} {4(\ell_i+s+k)} \geq \\
+	& \qquad \dfrac {\dfrac{\sqrt{N^{2^{-(\ell_i+s+k-1)}}}} {(\ell_i+s+k-1)! \cdot 4^{\ell_i+s+k-1+2i} \cdot 2}} {4(\ell_i+s+k)} = \\
+	& \qquad \quad \dfrac{N^{2^{-(\ell_i+s+k)}}}{(\ell_i+s+k)! \cdot 4^{\ell_i+s+k+2i} \cdot 2}
+	\end{align*}
+	
+	Regularization phase:	
+	 $$|Act(L_k)| \geq \dfrac{N^{2^{-\ell_{i+1}}}}{\ell_{i+1}! \cdot 4^{\ell_{i+1}+2i+1}} - k$$
+	\\ By induction on $k$.
+	\\ Base case $k=0$:
+	\begin{align*}
+	& |Act(L_0)| \geq \dfrac{|Act(J_t)|}{2} \geq \\
+	& \quad \dfrac{\dfrac{N^{2^{-(\ell_i+s+t)}}}{(\ell_i+s+t)! \cdot 4^{\ell_i+s+t+2i} \cdot 2}}{2} = \dfrac{N^{2^{-\ell_{i+1}}}}{\ell_{i+1}! \cdot 4^{\ell_{i+1}+2i+1}}
+	\end{align*}
+	\\ Induction step: assume we proved the claim for $k-1$. By condition (7) of Lemma \ref{regularization-phase-lemma}:
+	$$|Act(L_k)| \geq |Act(L_{k-1})|-1 \geq \dfrac{N^{2^{-\ell_{i+1}}}}{\ell_{i+1}! \cdot 4^{\ell_{i+1}+2i+1}} - k$$.
+	
+	Therefore we have:
+	\begin{equation} \label{eq: Act(H_i)-bound}
+		\begin{aligned}
+			& |Act(H_{i+1})| = |Act(L_m)| - 1 \geq \\
+			& \qquad \dfrac{N^{2^{-\ell_{i+1}}}} {\ell_{i+1}! \cdot 4^{\ell_{i+1}+2i+1}}-(m+1)
+		\end{aligned}
+	\end{equation}
+	
+	From claim \ref{claim: regularization-upper-bound} and our assumption,
+	$$m \leq f(i+1) \leq \dfrac{N^{2^{-f(i+1)}}} {f(i+1)! \cdot 4^{f(i+1) + 2(i+1)}}$$
+	\\ By Claim \ref{claim: write-upper-bound}, $\ell_{i+1} \leq f(i+1)$. Therefore, we can replace $f(i+1)$ with $\ell_{i+1}$ to get:
+	\begin{equation} \label{eq: m-bound}
+		\begin{aligned}
+			& m \leq \dfrac{N^{2^{-f(i+1)}}} {f(i+1)! \cdot 4^{f(i+1) + 2(i+1)}} \leq \\
+			& \qquad \dfrac{N^{2^{-\ell_{i+1}}}} {\ell_{i+1}! \cdot 4^{\ell_{i+1} + 2(i+1)}} = \qquad \dfrac{1}{4} \cdot \dfrac{N^{2^{-\ell_{i+1}}}} {\ell_{i+1}! \cdot 4^{\ell_{i+1}+2i+1}}
+		\end{aligned}
+	\end{equation}
+	
+	
+	Plugging Inequality \ref{eq: m-bound} into Inequality \ref{eq: Act(H_i)-bound} yields the required lower bound:
+	\begin{align*}
+		& |Act(H_{i+1})| \geq
+		\dfrac{N^{2^{-\ell_{i+1}}}} {\ell_{i+1}! \cdot 4^{\ell_{i+1}+2i+1}}-(m+1) \geq \\
+		& \quad \dfrac{N^{2^{-\ell_{i+1}}}} {\ell_{i+1}! \cdot 4^{\ell_{i+1}+2i+1}}-\dfrac{1}{2} \cdot \dfrac{N^{2^{-\ell_{i+1}}}} {\ell_{i+1}! \cdot 4^{\ell_{i+1}+2i+1}} = \\
+		& \qquad \dfrac{1}{2} \cdot \dfrac{N^{2^{-\ell_{i+1}}}} {\ell_{i+1}! \cdot 4^{\ell_{i+1}+2i+1}} \geq
+		\dfrac{N^{2^{-\ell_{i+1}}}} {\ell_{i+1}! \cdot 4^{\ell_{i+1}+2(i+1)}}
+	\end{align*}
+\end{proof}
+
+We can now prove our main result.
+
+\begin{theorem-repeat} {main-theorem}
+	Let $\mathcal{A}$ be an $N$-process weak obstruction-free $f$-adaptive implementation of a mutual-exclusion lock and let $i \in \mathbb{N}$ be such that $f(i) \leq \dfrac{N^{2^{-f(i)}}} {f(i)! \cdot 4^{f(i)+2i}}$.
+	Then there exists an execution $H$ whose total contention is $i+1$ and a process $p$ such that $p$ executes $i$ fences in $H$ during a single passage of its CS.\end{theorem-repeat}
+
+\begin{proof}
+Since $l_i < f(i)$, it follows from Theorem \ref{theorem: Act-lower-bound} that $|Act(H_i)| \geq f(i) \geq 1$. This implies that our construction results in an execution $H_i$, in which there is a process $p \in Act(H_i)$ and, from the properties of $H_i$, $p$ is in a middle of a passage in which it executed (and completed) $i$ fences.
+Moreover, from Lemma \ref{lem: remove-invisibale-processes}, we are able to erase all active processes but $p$ from $H_i$ and obtain an execution $H$, in which $p$ executes $i$ fences in the course of a single passage, and the total contention of $H$ is $i+1$, that is, the number of fences $p$ executes is linear in the total contention of the execution.
+\end{proof}
+
+

@@ -1,0 +1,209 @@
+
+\section{Proofs Omitted from Paper Body}
+
+\begin{claim-repeat} {claim: maintain-criticalness}
+		Let $E$ be an execution fragment, and $e \in E$ an event issued by some process $p$.
+		\begin{itemize}
+			\item Assume $e$ is a non-special event in $E$. Then for any execution fragment $F \preceq E$ such that $F \mid p = E \mid p$, $e$ is a non-special event in $F$.
+			\item Assume $e$ is a special event in $E$. Then for any execution fragment $F$ such that $E \preceq F$ and $F \mid p = E \mid p$, $e$ is a special event in $F$.
+		\end{itemize}
+\end{claim-repeat}
+
+\begin{proof}
+	$ $
+	
+\begin{itemize}
+	\item Assume $e$ is not a special event in $E$, then $e$ is either a read or a write event.
+	\\ If $e$ is a local event in $E$ then $e$ is a local event in $F$ and the claim clearly holds. Otherwise, $e$ is a remote event in both $E$ and $F$. The following two cases exist.
+\begin{itemize}
+\item $e = read(v)$: then, since $e$ is not a critical event in $E$, $e$ is not the first remote read of $v$ by $p$ in $E$, and since $F \mid p = E \mid p$, $e$ is not the first remote read of $v$ by $p$ in $F$, thus $e$ is a non-critical read in $F$.
+\item $e = write(v)$: then, since $e$ is not a critical event in $E$, $p$ is the last process to commit a write to $v$ before $e$ in $E$, denote this write event by $e'$. Since $F \mid p = E \mid p$, $e'$ occurs in $F$ as well. There is no write commit between $e'$ and $e$ in $E$, and since $F \preceq E$ there is no write commit between $e'$ and $e$ in $F$ as well. Therefore $p$ is the last process to commit a write to $v$ before $e$ in $F$, thus $e$ is a non-critical write in $F$ as well.
+\end{itemize}
+	
+	\item Assume $e$ is a special event in $E$. If $e$ is a transition or a fence event in $E$, then it is also a transition or a fence event in $F$ and we are done. Assume, then, that $e$ is either a critical read or a critical write event in $E$.
+\begin{itemize}
+
+\item If $e = read(v)$, then $e$ is the first remote read of $v$ by $p$ in $E$. Since $F \mid p = E \mid p$, $e$ is the first remote read of $v$ by $p$ in $F$, thus a critical read in $F$ as well.
+\item If $e = write(v)$, then the last process to commit a write to $v$ before $e$ in $E$ (if any) is not $p$. Since $F \mid p = E \mid p$, no write commit by $p$ has been added to $F$, and since $E \preceq F$, no write commit by another process has been removed, thus the last process to commit a write to $v$ before $e$ in $F$ (if any) is not $p$, so $e$ is a critical write in $F$ as well.
+\end{itemize}
+\end{itemize}
+\end{proof}
+
+\begin{lemma-repeat} {lem: sub-execution}
+	Let $E$ be an execution and let $p \in P$ be a process such that $p \notin AW(q,E)$ for any $q \neq p$. Then $E^{-p}$ is an execution.
+\end{lemma-repeat}
+
+\begin{proof}
+	We prove the claim by induction on the number of events in $E^{-p}$. The base case $E^{-p} = \langle \rangle$ is trivial. For the induction, let $E^{-p} = F f$ such that $E = E_1 f E_2$, $F = E_1^{-p}$, and $E_2$ is a (possibly empty) solo execution by $p$. Assume that $F$ is an execution, and let $q$ be the process that executes $f$.
+	
+	Process $q$ executes the same events in $E_1$ and in $F$, thus it is in the same state after both executions and about to execute the same event $f$. If $f$ is a transition or fence event, then $Ff$ is clearly an execution. This is the case also if $f$ is a write event. Otherwise, assume $f = read(v)$. The following two cases exist.
+\begin{itemize}
+\item Event $f$ reads a copy of $v$ from $q$'s write buffer in execution $E$. In this case, since $q$ is in the same state after $F$ and $E_1$, it will read the same value from its write buffer after $F$.
+\item Otherwise, $f$ reads $v$ from the shared memory. Since $p \notin AW(q,E)$, the last process that commits a write to $v$ before $f$ in $E_1$ is not $p$. Hence, since all the processes except $p$ execute the same events in $E_1$ and in $F$, $v$ has the same writer and value after both executions. Consequently, $f$ reads the same value in $Ff$ and in $E_1 f$, so $Ff$ is an execution.
+\end{itemize}
+\end{proof}
+
+
+\begin{lemma-repeat} {lem: access-visible-variable}
+	Let $E$ be an execution and let $\mathit{INV}$ be an IN-set of $E$. Let $e$ be a $read(v)$ or $write(v)$ event. Assume $writer(v,E) \notin \mathit{INV}$ and $owner(v) \notin Act(E)$.
+	\\ Then $\mathit{INV}$ satisfies IN1-IN4 of Definition \ref{def:inv} in $E e$.\end{lemma-repeat}
+\begin{proof}
+	Denote $F = E e$. First notice that $p \in Act(E)$, otherwise the only event $p$ may execute after $E$ is $Enter_p$. Thus we get $Act(F) = Act(E)$.
+	
+	IN1: For any $p' \neq p$ we have $AW(p',F) = AW(p',E)$, thus IN1 holds for $p'$ in $F$. Denote $q = writer(v,E)$, then $q \notin INV$ and, by IN1 $AW(q,E), \cap INV = \emptyset$. Writing $v$ does not change $p$'s awareness-set. Reading $v$ expands $p$'s awareness-set with $AW(q,E)$ at most, and thus $p$ cannot become aware of any invisible process by reading $v$. Altogether, $p$ does not become aware of any invisible process by accessing $v$, i.e., $AW(p,F) \cap INV \subseteq \{p\}$, and IN1 holds for $p$ in $F$.
+	
+	IN2: IN2 holds in $E$. Since $e$ is not a transition event, no process changes its status during $e$ and so IN2 holds in $F$.
+	
+	IN3: Consider $Y \subseteq INV$. IN3 holds for any event in $E$, thus it suffices to prove that it holds for $e$ as well. Assume $e \in F^{-Y}$, that is $p \notin Y$ and therefore $F \mid p = F^{-Y} \mid p$. If $e$ is a local event in $F$, then $e$ is a local event in $F^{-Y}$ as well, and thus a non-critical event in both. Otherwise, assume $e$ is a remote event in $F$. The following cases exist.
+\begin{itemize}
+\item If $e = read(v)$, then $e$ is the first remote read of $v$ by $p$ in $F$ if and only if it is the first remote read of $v$ by $p$ in $F^{-Y}$. Therefore $e$ is a critical event in $F$ if and only if it is a critical event in $F^{-Y}$.
+\item If $e = write(v)$, denote $q = writer(v,E)$. As $q \notin INV$ and $Y \subseteq INV$, we have $q \notin Y$, thus after removing all the events by processes in $Y$, we still have $writer(v,E^{-Y}) = writer(v,E) = q$. Consequently, either $q \neq p$ and $e$ is critical in both $F$ and $F^{-Y}$, or $p = q$ and $e$ is non-critical in both executions.
+\end{itemize}
+	
+	IN4: IN4 holds in $E$ and $Act(E) = Act(F)$, thus it holds for any variable $u \neq v$ in $F$. The only remote variable that may be accessed in $e$ is $v$, and $owner(v) \notin Act(E) = Act(F)$.
+\end{proof}
+
+\begin{claim-repeat} {claim: local-event-extension}
+	Let $E$ be an execution and let $\mathit{INV}$ be an IN-set of $E$. Let $e$ be an extension of $E$ by some process $p$ such that $e$ is a local event in $E e$. Then $\mathit{INV}$ is an IN-set of $E e$.
+\end{claim-repeat}
+
+\begin{proof}
+	Denote $F = E e$. First notice that $p \in Act(E)$, otherwise the only event $p$ may execute after $E$ is $Enter_p$, which is not a local event after $E$. Thus we get $Act(F) = Act(E)$.
+	
+	IN1: For any $q \neq p$ we have $AW(q,F) = AW(q,E)$, thus IN1 holds for $q$ in $F$. If $v$ is remote to $p$, then, since $e$ is a local event and does not access any remote variable, $e$ either stores a write to $p$'s write buffer or reads a copy of $v$ from $p$'s write buffer. In both cases, $p$'s awareness set does not change as a result of executing $e$. Otherwise, $v$ is local to $p$. In this case, since $p = owner(v) \in Act(E)$, we have by IN4 that $p$ is the only process that accesses $v$ in $E$ (otherwise there is a remote access to $v$, thus by IN4 $p = owner(v) \notin Act(E)$, a contradiction). Hence, after accessing $v$ (by either a read or a write event), $p$'s awareness set does not change. It follows that $AW(p,F) = AW(p,E)$ and IN1 holds for $p$ in $F$.
+	
+	IN2: IN2 holds in $E$. Since $e$ is not a transition event, no process changes its status after $e$, and IN2 holds in $F$.
+	
+	IN3: Consider $Y \subseteq INV$. IN3 holds for all of $E$'s events, thus it is sufficient to prove that it holds for $e$ as well. If $e \in F^{-Y}$, then $p \notin Y$, thus $F \mid p = F^{-Y} \mid p$. Therefore $e$ is a local event in both $F$ and $F^{-Y}$ and thus a non-critical event in both.
+	
+	IN4: Since IN4 holds in $E$ and no remote variable is accessed in $e$, and since $Act(F) = Act(E)$, IN4 holds in $F$ as well.
+	
+	IN5: IN5 holds in $E$, thus it holds in $F$ for any variable that is not local to $p$, since $p$ does not access any of these in $e$. Let $v$ be a local variable of $p$ accessed in $e$. Since IN4 holds in $F$ and $p \in Act(F)$, there is no remote access to $v$ in $F$. That is, $p$ is the only process to access $v$ in $F$, therefore $|Accessed(v,F)| = 1$, and IN5 holds for $v$ in $F$.	
+\end{proof}
+
+
+\begin{lemma-repeat} {lem: non-critical-extension}
+	Let $E$ be an execution and let $\mathit{INV}$ be an IN-set of $E$. Let $F$ be an extension of $E$ such that $F$ contains no critical or transition event in $E F$. Then $\mathit{INV}$ is an IN-set of $E F$.
+\end{lemma-repeat}
+
+\begin{proof}
+	We first prove the claim for the case of a single event, $F = f$. The general case can be then proven by induction on the number of events in $F$. Let $p$ be the process that executes $f$, then $p \in Act(E)$, otherwise the only event $p$ may execute after $E$ is $Enter_p$, which is a transition event. Thus $Act(E f) = Act(E)$.
+	
+	If $f$ is a fence event, then $f$ does not access any variable and no process changes its status. It is easily verified that in such case IN1-IN5 holds for $INV$ in $E f$ as well, thus $INV$ is an IN-set of $E f$. If $f$ is a local event, then by Claim \ref{claim: local-event-extension}, $INV$ is an IN-set of $E f$.
+	
+	Assume, then, that $f$ is a remote event and let $v$ be the variable accessed in $f$. As $f$ is not critical in $E f$, this is not the first access of $v$ by $p$, so $p$ accesses $v$ in $E$. Therefore, by IN4 applied to $E$, we have $owner(v) \notin Act(E)$. Denote $q = writer(v,E)$. If $q \notin INV$, then by Lemma \ref{lem: access-visible-variable}, IN1-IN4 hold in $E f$. Otherwise $q \in INV$, and by IN5 applied to $E$, $q$ is the only active process that accessed $v$ in $E$, so $p=q$. To conclude the proof, we now prove that IN1-IN4 hold in the latter case ($q \in INV$) and that IN5 holds in both cases.
+	
+	IN1: For any $p' \neq p$ we have $AW(p',E f) = AW(p',E)$, thus IN1 holds for $p'$ in $E f$. As for $p$, since $p = writer(v,E)$, accessing $v$ does not change its awareness-set, that is $AW(p,E f) = AW(p,E)$, and so IN1 holds for $p$ in $E f$ as well.
+	
+	IN2: As $f$ is not a transition event, for any $p \in INV$: $status(p,E f) = status(p,E) = entry$.
+	
+	IN3: Consider $Y \subseteq INV$. As IN3 holds for $E$, it is sufficient to prove that it holds for $f$. Assume $f \in (E f)^{-Y}$, that is $p \notin Y$ and $E \mid p = E^{-Y} \mid p$. If $f$ is a remote read, then, from our assumption that it is not critical in $Ef$,  $f$ is not the first remote read by $p$ of $v$ in $E f$ and thus in $(E f)^{-Y}$, that is, $f$ is non-critical in both. Otherwise, since $p = writer(v,E)$ holds, $p = writer(v,E^{-Y})$ holds as well, therefore $f$ is a non-critical write in both $E f$ and $(E f)^{-Y}$.
+	
+	IN4: IN4 holds in $E$ and $Act(E) = Act(E f)$, thus it holds for any variable $u \neq v$ accessed in $E f$. The only variable accessed in $f$ is $v$, and we already know that $owner(v) \notin Act(E) = Act(E f)$.
+	
+	IN5: IN5 holds in $E$, thus it holds for any variable $u \neq v$. As for $v$, if $q \notin INV$ then $f=read(v)$, otherwise $f$ would have been a critical write, a contradiction. Hence $writer(v,Ef) = writer(v,E) = q \notin INV$, and we are done. Otherwise, $p = q \in INV$, and by IN5 applied to $E$ we get that $p$ is the only process to access $v$ in $E$ (otherwise $p = writer(v,E) \notin INV$, contradicting our assumption). Therefore $p$ is the only process to access $v$ in $E f$, and IN5 holds for $v$ in $E f$.
+\end{proof}
+
+
+\begin{lemma-repeat} {lem: remove-invisibale-processes}
+	Let $E$ be an execution, $\mathit{INV}$ be an IN-set of $E$ and $Y \subseteq \mathit{INV}$.
+	\newline Define $E' = E^{-Y}$. Then the following hold:
+	\begin{enumerate}
+		\item $E'$ is an execution;
+		\item $Act(E') = Act(E) \setminus Y$ and $Fin(E') = Fin(E)$;
+		\item $\mathit{INV} \setminus Y$ is an IN-set of $E'$;
+		\item Each $p \in Act(E')$ executes the same critical events in $E'$ and in $E$;
+		\item If $p \in Act(E')$ is about to execute a special event $f_p$ after $E$, then $p$ is about to execute a special event $e_p \sim f_p$ after $E'$.
+	\end{enumerate}
+\end{lemma-repeat}
+
+
+\begin{proof}
+	
+	We first prove the claim for the case $Y = \{p\}$, a single process.
+\begin{enumerate}
+	
+\item
+	Consider $q \in P$ different from $p$. Since $p \in INV$, by IN1 $q$ is not aware of $p$ in $E$, i.e. $p \notin AW(q,E)$. By Lemma \ref{lem: sub-execution} $E^{-p}$ is an execution.
+	
+\item
+	We removed the events of $p \in Act(E)$, thus $Act(E') = Act(E) \setminus \{p\}$ and $Fin(E') = Fin(E)$.
+	
+\item
+	We prove $INV \setminus \{p\}$ is an IN-set of $E'$:
+	
+	IN1: Consider $q \neq p$. Since $E \mid q = E' \mid q$, we have $AW(q,E) = AW(q,E')$. By IN1, $AW(q,E) \cap INV \subseteq \{q\}$, in particular $AW(q,E') \cap INV \setminus \{p\} \subseteq \{q\}$. $p$ executes no events in $E'$, thus $AW(p,E') = \emptyset$ and IN1 holds for $p$ in $E'$.
+	
+	IN2: For any $q \in INV \setminus \{p\}$, we have $E' \mid q = E \mid q$, thus $status(q,E') = status(q,E) = entry$.
+	
+	IN3: Consider $Z \subseteq INV \setminus \{p\}$, and $e \in E^{'-Z} = E^{-Z \cup \{p\}}$. Notice that $e \in E, E^{-p}, E^{'-Z}$.  Since $Z, \{p\} \subseteq INV$ and $INV$ is an IN-set of $E$, by IN3 applied to $E$ we have: $e$ is a critical event in $E^{-Z \cup \{p\}} = E^{'-Z}$ if and only if $e$ is a critical event in $E$ if and only if $e$ is a critical event in $E' = E^{-p}$.
+	
+	IN4: Consider an event $e \in E'$ by process $q$ accessing a remote variable $v$. Since $e \in E$ accesses a remote variable $v$, by IN4 $owner(v) \notin Act(E)$, and thus $owner(v) \notin Act(E') \subseteq Act(E)$.
+	
+	IN5: Assume $|Accessed(v,E') \cap Act(E')| > 1$ for some $v$. Since $E' \preceq E$ and $Act(E') \subseteq Act(E)$ we get $|Accessed(v,E) \cap Act(E)| > 1$, and by IN5 applied to $E$, $writer(v,E) \notin INV$. The only events removed are by $p \in INV$, thus $writer(v,E') = writer(v,E) \notin INV$, and in particular $writer(v,E') \notin INV \setminus \{p\}$.
+	
+\item
+	Follows directly from IN4 in $E$ and the fact that $p \in INV$.
+	
+\item
+	Assume $q \in Act(E')$ is about to execute a special event $f_q$ after $E$. Notice that $E' \mid q = E \mid q$, thus $q$ is about to execute an event $e_q \sim f_q$ after $E'$. We now prove that $e_q$ is a special event in $E' e_q$:
+	\\ If $f_q$ is a fence or transition event then so is $e_q$ and we are done. If $f_q$ is the first access by $q$ to some remote variable $v$ (either read or write) in $E e_q$, then $e_q$ is also so in $E' e_q$, and is therefore critical. If $f_q$ is a critical write to a remote variable $v$, and this is not the first write committed by $q$ to $v$ in $E e_q$, then $q$ accessed $v$ in $E$. Notice that $writer(v,E) \neq p$, otherwise $p,q \in Accessed(v,E) \cap Act(E)$ and by IN5 $writer(v,E) = p \notin INV$, a contradiction. The only events removed are by $p$, therefore we have $writer(v,E') = writer(v,E)$. Since $f_q$ is critical event in $E f_q$, we have $writer(v,E) \neq q$. Altogether $writer(v,E') \notin \{p,q\}$, hence $e_q$ is a critical write in $E' e_q$ as well.
+\end{enumerate}	
+
+	For the general case we prove the claim by induction on $|Y|$. The base case $|Y| = 1$ has just been proven. Assume we proved the claim for any $|Y|=n$, and consider $Y \subseteq INV$ such that $|Y| = n+1$. Fix an arbitrary $p \in Y$, and denote $Z = Y \setminus \{p\}$. Then $Z \subseteq INV$ and $|Z|=n$. Denote $E_Z = E^{-Z}$, then by induction hypothesis:
+	\begin{enumerate}
+		\item $E_Z$ is an execution;
+		\item $Act(E_Z) = Act(E) \setminus Z$, and $Fin(E_Z) = Fin(E)$;
+		\item $INV \setminus Z$ is an IN-set of $E_Z$;
+		\item Each $q \in Act(E_Z)$ executed the same critical events in $E_Z$ and in $E$;
+		\item If $q \in Act(E_Z)$ is about to execute a special event $f_q$ after $E$, then $q$ is about to execute a special event $f'_q \sim f_q$ after $E_Z$.
+	\end{enumerate}
+	Notice that $E' = E_Z^{-p}$ and $p \in INV \setminus Z$, thus using the induction base with $E_Z$ and $\{p\}$ we get:
+	\begin{itemize}
+		\item $E'$ is an execution;
+		\item $Act(E') = Act(E_Z) \setminus \{p\} = Act(E) \setminus Y$, and $Fin(E') = Fin(E_Z) = Fin(E)$;
+		\item $(INV \setminus Z) \setminus \{p\} = INV \setminus Y$ is an IN-set of $E'$;
+		\item Each $q \in Act(E')$ executed the same critical events in $E'$ and in $E_Z$, and thus the same critical events in $E'$ and in $E$.
+		\item If $q \in Act(E') \subseteq Act(E_Z)$ is about to execute a special event $f_q$ after $E$, then $q$ is about to execute a special event $f'_q \sim f_q$ after $E_Z$, thus $q$ is about to execute a special event $e_q \sim f'_q \sim f_q$ after $E'$.
+	\end{itemize}
+\end{proof}
+
+
+\begin{lemma-repeat} {lem: next-critical-extension}
+	Let $E$ be a regular execution. Then there exists an extension $F$ such that the following hold:
+	\begin{itemize}
+		\item $F$ contains no special events in $E F$;
+		\item $E F$ is a regular execution;
+		\item Each $p \in Act(E)$ is about to execute a special event $f_p$ after $E F$. Moreover, at most one process $p \in Act(E)$ is about to execute $f_p=CS_p$ after $E F$.
+	\end{itemize}
+\end{lemma-repeat}
+
+\begin{proof}
+	First we prove the following claim: Consider $p \in Act(E)$. Then there is a solo extension $F_p$ by $p$ such that $F_p$ contains no special event in $E F_p$, and $p$ is about to execute a special event $f_p$ after $E F_p$.
+	\\ We let $p$ run solo after $E$ until $p$'s first special event $f_p$. Assume towards a contradiction that such an extension does not exist, i.e. $p$ executes an infinite run $F_p$ after $E$ such that $F_p$ contains no special event in $E F_p$ (notice that $p$ cannot finish running without executing the special event $Exit_p$). For any finite prefix $H$ of $F_p$, $H$ contains no special events in $E H$, thus $Act(E H) = Act(E)$, and by Lemma \ref{lem: non-critical-extension} $Act(E H)$ is an IN-set of $E H$.  Denote $Y = Act(E H) \setminus \{p\}$. Using Lemma \ref{lem: remove-invisibale-processes} with $'E' \leftarrow E H$, $'INV' \leftarrow Act(E H)$ and $'Y' \leftarrow Y$, we have an execution $E_p = (E H)^{-Y}$ such that $Act(E_p) = Act(E H) \setminus Y = \{p\}$. Since $H$ is a solo-execution by $p \notin Y$, $E_p$ can be written as $E^{-Y} H$. Therefore $p$ executes a solo-execution $H$ after $E^{-Y}$, where $p$ is the only active process along $H$, and $p$ does not finish a passage in $H$. Since this holds for any prefix of $F_p$, $H$ can be as long as we wish, contradicting the global progress property.
+	
+	Denote $Act(E) = {p_1, p_2, \ldots, p_n}$. We prove by induction on $i = 0,1,2,\ldots,n$ that there is an extension $F_i$ of $E$ such that:
+	\begin{enumerate}
+		\item $F_i$ contains no special events in $E F_i$;
+		\item $E F_i$ is a regular execution;
+		\item For every $1 \leq j \leq i$, $p_j$ is about to execute a special event $f_{p_j}$ after $E F_i$;
+	\end{enumerate}
+	
+	The base case $i=0$ is trivial ($F_0 = \langle \rangle$). Assume we already constructed $F_i$ as above for $i < n$. We now construct $F_{i+1}$:
+	\\ Denote $p = p_{i+1}$. $F_i$ contains no transition events, thus $Act(E F_i) = Act(E)$, and as a result $p \in Act(E F_i)$. Since $E F_i$ is a regular execution, we can use the claim proven above for a single process: there is an extension $F_p$ by $p$ such that $F_p$ contains no special events in $E F_i F_p$, and $p$ is about to execute a special event $f_p$ after $E F_i F_p$. Denote $F_{i+1} = F_i F_p$, then the following hold:
+	\begin{enumerate}
+		\item $F_{i+1}$ contains no special events in $E F_{i+1}$;
+		\item Since $F_{i+1}$ contains no special events, we have $Act(E F_{i+1}) = Act(E)$, and using Lemma \ref{lem: non-critical-extension} we have that $Act(E)$ is an IN-set of $E F_{i+1}$, therefore $E F_{i+1}$ is a regular execution;
+		\item We already know that $p$ is about to execute a special event $f_p$ after $E F_{i+1}$. Consider $q = p_j$ for some $j \leq i$. By our assumption $q$ is about to execute an event $f_q$ after $E F_i$, and since $(E F_i) \mid q = (E F_{i+}) \mid q$, it is about to execute $f_q$ after $E F_{i+1}$. As $f_q$ is a special event in $E F_i f_q$, and $(E F_{i+1} f_q) \mid q = (E F_i f_q) \mid q$, by claim \ref{claim: maintain-criticalness} $f_q$ is a special event in $E F_{i+1} f_q$.
+	\end{enumerate}
+	
+	Substituting $i$ with $n$ we get an extension $F$ such that:
+	\begin{itemize}
+		\item $F$ contains no special events in $E F$;
+		\item $E F$ is a regular execution;
+		\item Each $p \in Act(E)$ is about to execute a special event $f_p$ after $E F$.
+		\\ At most one process $p \in Act(E)$ is about to execute $f_p = CS_p$, otherwise there are two distinct processes about to execute $CS$ event after $E F$, contradicting the exclusion property.
+	\end{itemize}
+\end{proof}
+
+

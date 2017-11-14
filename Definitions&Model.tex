@@ -1,0 +1,186 @@
+
+\section{Model and Definitions}
+\label{sec:model}
+We assume the standard asynchronous shared memory model \cite{HerlihyWingLinearizability}, in which a set of processes $P$ communicate by applying operations to a set of shared variables \emph{V}, each of which is assigned an initial value.
+%and each process $p \in P$ is assigned an algorithm to apply operations.
+We consider both the \emph{cache-coherent} (CC) and the \emph{distributed shared-memory} (DSM) computation models \cite{jand:surv}.
+%At any given time, a variable is remote to a processor if the corresponding cache does not contain an up-to-date copy %of the variable.
+
+In the DSM model, each processor owns a segment of shared memory that can be locally accessed without traversing the processor-to-memory interconnect. Thus, every variable is permanently \textit{local} to a single processor and \emph{remote} to all others.\footnote{For simplicity and without loss of generality, we assume that each of the processes participating in the algorithms we consider runs on a unique processor.}
+An access of a remote variable is a \emph{remote memory reference} (RMR).
+
+In the CC model, each processor maintains copies of shared variables inside its private cache, whose consistency is ensured by a coherence protocol. Our results apply to both the \textit{write-through} and \textit{write-back} \cite{DBLP:books/mk/PattersonH94} CC coherence protocols.
+Quoting from \cite{DBLP:conf/podc/GolabHHW07}: "In a write-through protocol, to read a variable $v$ a process $p$ must have a (valid) cached copy of $v$. If it does, $p$ reads that copy without causing an RMR; otherwise, $p$ causes an RMR that creates a cached copy of $v$. To write $v$, $p$ causes an RMR that invalidates (i.e., effectively deletes) all other cached copies of $v$ and writes $v$ to main memory. In a write-back protocol, each cached copy is held in either “shared” or “exclusive” mode. To read a variable $v$, a process $p$ must hold a cached copy of $v$ in either mode. If it does, $p$ reads that copy without causing an RMR. Otherwise, $p$ causes an RMR that: (a) eliminates any copy of $v$ held in exclusive mode, typically by downgrading the status to shared and, if the exclusive copy was modiﬁed, writing $v$ back to memory; and (b) creates a cached copy of $v$ held in shared mode. To write $v$, $p$ must have a cached copy of $v$ held in exclusive mode. If it does, $p$ writes that copy without causing RMRs. Otherwise, $p$ causes an RMR that: (a) invalidates all other cached copies of $v$ and writes any modiﬁed copy held in exclusive mode back to memory; and (b) creates a cached copy of $v$ held in exclusive mode."
+
+
+Our model assumes that each variable is permanently local to \emph{at most} a single process (and remote to all others) and thus applies to both DSM and CC systems.
+For variable $v$, we denote by $owner(v)$ the process to which $v$ is local.
+We write $owner(v) = \perp$ if $v$ is remote to all processes, which is always the case in the CC model.
+
+
+An \emph{event} $e$ is a read or write operation by some $p \in P$ issued to a variable $v \in V$.
+The event $e$ includes the value read or written. We write $e = read(v)$ ($write(v)$) if $e$ is a read (write)
+operation issued to variable $v$. Later we extend the definition of an event by defining
+new types of special events, that are used for modelling the mutual exclusion problem in the TSO model.
+
+An \emph{execution fragment} is a (finite or infinite) sequence of events. We use $\langle \rangle$ to denote the empty execution fragment. An \emph{execution} is an execution fragment that starts from the initial configuration, resulting when processes apply operations to the implemented object as they execute their algorithm. If a process has not completed its operation, it has exactly one enabled event, which is the next event it will execute, as specified by the algorithm it is using. We consider finite execution fragments, unless otherwise specified.
+Let $E$ and $F$ be two execution fragments. The execution fragment $E F$ denotes the concatenation of $E$ and $F$. If $E$ and $E F$ are executions, we say that $F$ is an extension of $E$.
+We say that $F$ is a \emph{sub-execution} of $E$, and write $F \preceq E$, if $F$ is a (possibly non-contiguous)
+subsequence of $E$'s events. For a set of processes \emph{Y}, we denote by $E^{-Y}$
+the execution fragment obtained from $E$ by removing all the events issued by processes in \emph{Y}
+and say that the processes of $Y$ are \emph{erased} from $E$. We denote by $E \mid Y$ the execution fragment obtained from $E$ by removing all the events issued by processes not in $Y$ (i.e., only the events issued by processes in $Y$ are retained). When $Y = \{p\}$, we use the notation $E^{-p}$ and $E \mid p$.
+
+\begin{fact}
+	$ $
+	\begin{enumerate}
+		\item $(E_1 E_2)^{-Y} = E_1^{-Y} E_2^{-Y}$
+		\item $(E^{-Y})^{-Z} = E^{-Y \cup Z}$
+	\end{enumerate}
+\end{fact}
+
+
+\subsubsection*{TOTAL STORE ORDERING (TSO)}
+We now present an operational model for the behavior of a shared-memory system with relaxed memory ordering, which is a simplified version of the model used by Park and Dill \cite{DBLP:journals/tc/ParkD99}.
+%The model is tailored to describe TSO, but it can also be extended to describe other memory models (see %\cite{DBLP:journals/sigact/KupersteinVY12}, \cite{DBLP:journals/tc/ParkD99}, \cite{DBLP:journals/cacm/SewellSONM10}).
+
+A set of $n$ processes, $p_1,\ldots, p_n$, each with its own abstract \emph{write buffer}, execute read and write memory operations in the order specified by their algorithm, called \emph{program order}. Write operations may be delayed and executed after read operations following them in program order. This is modeled by having write operations go to the write buffer rather than directly to shared memory.
+
+A \emph{configuration} describes the state of a system: It contains the local state of each process, including its location in its algorithm and the contents of its write buffer. It also contains the value of each shared variable. In the \emph{initial configuration}, all processes are in their initial state and their write buffers are empty; all shared variables hold their initial values.
+
+In each step, a scheduling adversary picks a process and then decides whether to let it execute another event
+according to its algorithm or to \emph{commit} the first write operation in its write buffer (if any).
+In the latter case, the write is committed by changing the value of the respective shared variable to the parameter
+of the write (we say that the write \emph{becomes visible}) and removing the write operation from the buffer.
+We say that the write operation is \emph{committed} at this step and the execution is extended by a \emph{write commit event}.
+
+What happens when a process $p$ issues an event depends on the type of the event:
+\begin{enumerate}
+	\item A \emph{fence} event $e$ forces the adversary to commit all the writes in $p$'s write buffer (if any) in the order they were issued. That is, whenever the adversary schedules $p$, it commits the next write from $p$'s write buffer, as long as the buffer is not empty. We say that process \emph{p completes fence e in execution E} if all the writes that were in $p$'s write buffer when $e$ was issued by $p$ were committed in $E$.
+	\item A write operation is placed at the write buffer. If there is already a write operation to this variable in $p$'s write buffer, then the older write in the write buffer is replaced with the new one; otherwise, the write is placed at the end of the write buffer.
+The write operation is \emph{issued} at this event but is not yet made visible to other processes. It will only be made
+visible once the execution is extended by a corresponding commit event.
+	\item A read operation returns the value of the variable and the process changes its local state accordingly. If there is a write to this variable in the write buffer, the value is read from that write; otherwise, if there is a (valid) cached copy
+of the variable in the process' private cache, the value is read from that copy; otherwise, the value of the variable is read from shared memory. The read operation is \emph{issued} at this event.
+\end{enumerate}
+
+For simplicity, we split the fence instruction into two successive \emph{fence events}: a $BeginFence$ event, immediately followed (in program order) by an $EndFence$ event. $BeginFence$ initiates the execution of a fence as described above. $EndFence$ signifies that the fence execution has finished, that is, the write buffer of the process that performed the fence is now empty. For execution $E$ and process $p$, we say that \emph{$p$ is
+%\emph{fence-active} after $E$ or that \emph{$p$} is
+executing a fence after $E$}, if the last fence event by $p$ in $E$ is $BeginFence$. Note that if $p$ is executing a fence after $E$, then the only event $p$ is allowed to execute is the next write in its write buffer, or $EndFence$ if the buffer is empty. Hence, if $p$ is executing a fence after $E$, we write $mode(p,E) = write$, otherwise we write $mode(p,E) = read$. We say that $p$ \emph{completed} $i$ fences in $E$ if $p$ executed $i$ $EndFence$ events in $E$, that is $p$ executed to completion $i$ fences in $E$.
+
+The TSO model allows a process to have at most a single write operation per variable in its write buffer at any given time. As a result, during a fence execution,
+a process can commit at most a single write to any distinct variable.
+
+In our construction, we only consider executions in which, whenever the scheduler picks a process $p$ for the next step,
+it will always let it execute another event rather than commit a write from its write buffer,
+as long as $p$ is in between fences (i.e., not executing a fence). That is, the scheduler delays committing writes
+from the write buffer as long as possible. Hence, a process' mode indicates whether it is executing a fence
+(if the process is in write mode), in which case it may only commit writes from its write buffer,
+or it is in between fences (if the process is in read mode), in which case all its writes are delayed
+and the only shared memory operations performed on its behalf are reads.
+%In other words, if $mode(p,E) = read$, then the next event $p$ is about to execute does not commit a write to any remote %variable.
+
+Let $E$ be an execution fragment. We write $p = writer(v,E)$, and say that $p$ is \emph{visible} on $v$ after $E$, if $p$ is the last process
+to \emph{commit} a write to $v$ in $E$. We write $writer(v,E) = \perp$ if there exists no such $p$.
+%Let $e$ be a read event by process $p$ to variable $v$. We say that $e$ \emph{reads from the write-buffer} if there is a copy of $v$ in $p$'s write-buffer when $e$ is performed. We say that $e$ \emph{reads from the cache} if $e$ does not read from the write-buffer and there is a (valid) copy of $v$ in $p$'s write-buffer when $e$ is performed.
+We say that an event $e \in E$ by process $p$ \emph{accesses} a variable $v$ if either 1) $e$ commits a write to $v$,
+or 2) $e$ is a read event to $v$ that is performed when $p$'s write-buffer does not contain a copy of $v$.
+%In other words, events that are served by the write-buffer are not considered accesses.
+Thus, events that issue writes to the write-buffer or read from
+the write-buffer are not considered variable accesses.
+%This may only strengthen our lower bound.
+We say that process $p$ \emph{accesses} variable $v$ in $E$ if there is an event by $p$ in $E$ that accesses $v$.
+We denote by $Accessed(v,E)$ the set of processes that accessed $v$ in $E$.
+A (read or write) event $e \in E$, executed by process $p$, is a \emph{remote event} in $E$ if it accesses a variable that
+is remote w.r.t.
+$p$, otherwise it is a \emph{local event}. Whether or not an event is a remote access is determined based on the history
+of the process executing $e$, as stated below.
+
+\begin{fact}
+	Let $E$ and $F$ be two execution fragments and let $p$ be a process such that $E \mid p = F \mid p$. Then for any event $e \in E$ by $p$, $e$ is a remote event in $E$ if and only if $e$ is a remote event in $F$.
+\end{fact}
+
+We now capture the extent by which processes are aware of the participation of other processes in an execution. We do so by adapting a definition used for this purpose by \cite{Attiya05timeand}.
+
+\begin{definition}
+	We say that $p$ is \emph{aware} of $q$ after $E$ if either $p=q$ or if there is an event $e \in E$ by $p$ that reads a variable $v$ such that one of the following holds:
+	\begin{enumerate}
+		\item the last process to commit write to $v$ before $e$ is $q$;
+		\item the last process to commit write to $v$ before $e$ is $r$, and $r$ is aware of $q$ at the time it issued that write.
+	\end{enumerate}
+The \emph{awareness-set} of $p$ after $E$, denoted by $AW(p,E)$, is the set of processes that $p$ is aware of after $E$.
+\label{def:awareness}
+\end{definition}
+
+Intuitively, a process $p$ is aware of the participation of another process $q$ in an execution if there is (either direct or indirect) information flow from $q$ to $p$ in that execution via shared memory. For simplicity and without loss of generality, we assume that different write events write different values. Notice that the awareness-set of a process can only be extended along an execution. Moreover, it follows from Definition \ref{def:awareness} that whenever a process $p$ reads a variable $v$ last written by some process $q$, all the processes that belonged to $q$'s awareness set when it issued its last write to $v$ are added to $p$'s awareness set.
+
+\begin{comment} %%% Possibly say something about this in the discussion?
+We consider a model in which all the writes (to both local and remote variables) are placed in the write buffer. Our proof, on the other hand, relies only on the assumption that all writes to remote variables may be delayed until a fence is performed, thus the same construction can be used in a model where operations to local variable are committed instantly (at the time they are issued). In such a model, a process is allowed to perform any powerful operation on its local variables (such as CAS and swap). A closer inspection of the construction reviles that we do not interleave local events of different processes, thus any powerful operation can be seen as an atomic serious of reads and writes, and the same proof holds.
+\end{comment}
+
+\subsubsection*{Mutual Exclusion Systems}
+
+Each process $p$ has a private variable $section_p$ that signifies which section in the mutual exclusion algorithm $p$ is currently in. $section_p$ is initially $ncs$, indicating that $p$ is in the non-critical section.
+There are three \emph{transition events} which each process $p$ may execute:
+\begin{enumerate}
+	\item $Enter_p$ causes $p$ to transit from its non-critical section to its entry section and sets $section_p = entry$. This event is enabled if and only if $section_p = ncs$.
+	\item $CS_p$ causes $p$ to transit from its entry section to its exit section and updates $section_p = exit$. (For notational simplicity and WLOG, we assume that the execution of the critical section is instantaneous.)
+	This event is enabled only if $section_p = entry$.
+	\item $Exit_p$ causes $p$ to transit from its exit section to its non-critical section and updates $section_p = ncs$. This event is enabled only if $section_p = exit$.
+\end{enumerate}
+
+For execution $E$ and process $p$, we let $status(p,E)$ denote the value of $section_p$ after $E$.
+A mutual exclusion system is required to satisfy the following properties:
+
+\begin{enumerate}
+	\item[\textbf{Exclusion}] For any execution $E$, if both $CS_p$ and $CS_q$ are extensions of $E$, then $p = q$.
+	\item[\textbf{Progress}] Given an execution $E$, let $X = \{q \in P | \penalty 0 status(q,E)$ $\neq ncs\}$. If $X = \{p\}$, then there exists a solo extension $F$ by $p$ such that $E F Exit_p$ is an execution.
+\end{enumerate}
+
+The exclusion property prevents multiple critical-section events from being simultaneously enabled. If two events $CS_p$ and $CS_q$ are simultaneously enabled after an execution $E$, then mutual exclusion may be violated. The exclusion property states that such a situation does not arise.
+The progress property we use was defined in \cite{DBLP:conf/stoc/AttiyaHW08} and is called \emph{weak obstruction-freedom}. It is implied by deadlock-freedom and obstruction-freedom \cite{HLM03}, although it is strictly weaker than both. In particular, it permits livelock. This weaker progress condition is sufficient for our proofs.
+
+Next, we define the notion of a \emph{critical event} and explain the relation between a critical event and an RMR in different cache-coherence protocols.
+
+\begin{definition}
+	Let $E=E_1 e E_2$ be an execution fragment, where $e$ is an event by process $p$. We say that $e$ is a \emph{critical event} in $E$ if one of the following holds:
+	\begin{description}
+		\item[critical read:] $e$ is a remote read of $v$ and this is the first remote read of $v$ by $p$ (i.e., $E_1$ does not contain a remote read of $v$ by $p$).
+		\item[critical write:] $e$ commits a remote write to $v$ and $writer(v,E_1)$ $\neq p$ (i.e., $e$ is the first
+remote write commit to $v$ by $p$ in $E$, or $e$ overwrites a value committed to $v$ by another process).
+	\end{description}
+\end{definition}
+
+In the DSM model, each critical event generates an RMR since it accesses a remote variable.
+In the CC model with a write-through coherence protocol, write commits always generate an RMR. In the CC model
+with a write-back protocol, if $writer(v,E_1) = q \neq p$ then a copy of $v$ is stored in the local cache of $q$,
+thus $p$ must invalidate or update the cached copy of $v$, generating an RMR. It follows that in both the write-through
+and write-back protocols, a critical write and a critical read that is the first access of $v$ by $p$ are both RMRs.
+A first write followed by a first read are two critical events, but the read does not necessarily generate a cache miss.
+Nevertheless, since the first write is always an RMR, at least half of all critical events are RMRs.
+Consequently, if $A$ is $f$-adaptive then each process may encounter at most $2f(k)$ critical events during a single passage,
+where $k$ is total contention. We therefore assume in the following for simplicity that $f(k)$ bounds the
+number of critical events incurred by a process during a single passage.
+
+Observe that whether an event is considered critical depends on the particular execution that contains the event, and specifically on the process that executes the event and the prefix of the execution preceding the event. Consequently, when saying that an event is (or is not) critical , the execution containing the event must be specified.
+
+We now define the notion of a \emph{special} event. This is an extension to the notion of a critical event, used for capturing events of importance for our construction.
+
+\begin{definition}
+	Let $E$ be an execution such that $E$ can be written as $E_1 e E_2$. We say that $e$ is a \emph{special event} in $E$ if one of the following holds:
+	\begin{description}
+		\item[Critical event:] $e$ is a critical event in $E$.
+		\item[Transition event:] $e$ is one of $Enter_p$, $CS_p$ or $Exit_p$.
+		\item[Fence event:] $e$ is one of BeginFence or EndFence.
+	\end{description}
+\end{definition}
+
+
+We say that two events $e$ and $f$ are \emph{congruent}, and write $e \sim f$, if $e$ and $f$ are executed by the same process and either $e = f$ or both apply the same operation to the same variable.
+Informally, two events are congruent if they either execute the same transition or fence event, or if both are reads or both are writes of the same variable $v$ (although the values they both read or write may differ).
+
+\begin{comment}%%% This fact is not used and I also don't understand its current phrasing...
+As a special event depends only on the prefix of the execution preceding it, the type of operation, and the remote variable it accesses (if any), we have:
+\begin{fact}
+	Let $E=E_1 e E_2$ be an execution fragment, where $e$ is a special event in $E$. Then for any $f \sim e$, $f$ is a special event in $E_1 f E_2$.
+\end{fact}
+\end{comment}

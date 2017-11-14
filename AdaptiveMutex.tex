@@ -1,0 +1,96 @@
+%\documentclass[letterpaper, 11pt, notitlepage]{article}
+\documentclass[twocolumn]{svjour3}
+
+\smartqed  % flush right qed marks, e.g. at end of proof
+
+\let\proof\relax
+\let\endproof\relax
+
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{amsthm}
+%\usepackage{xspace}
+%\usepackage{theoremref}
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+\usepackage{caption}
+\usepackage{appendix}
+\usepackage{multicol}
+\usepackage{enumerate}
+\usepackage{paralist}
+\usepackage{breqn}
+\usepackage{comment}
+\usepackage{todonotes}
+\usepackage[numbers]{natbib}
+\usepackage{cuted}
+
+
+% theorem styles
+
+\newtheorem{claim-subsection}{Claim}[subsection]
+\newtheorem{claim-section}{Claim}[section]
+\numberwithin{claim-section}{section}
+\numberwithin{claim-subsection}{subsection} 
+\newtheorem{claim-num}{Claim}
+\newtheorem{observation}{Observation}
+\newtheorem{cor}{Corollary}
+\newtheorem*{definition*}{Definition}
+\newtheorem{obs}{Observation}
+\newtheorem{prop}{Proposition}
+\newtheorem{fact}{Fact}
+\newtheorem{invariant}{Invariant}
+\newtheorem{ru}{Rule}
+
+
+\def\notfirstuse{\textit{repeated}}
+\newenvironment{lemma-repeat}[1]{\begin{trivlist}
+\item[\hspace{\labelsep}{\bf\noindent Lemma~\ref{#1} (repeated) }]\it}%
+{\end{trivlist}}
+
+\def\notfirstuse{\textit{repeated}}
+\newenvironment{theorem-repeat}[1]{\begin{trivlist}
+\item[\hspace{\labelsep}{\bf\noindent Theorem~\ref{#1} (repeated) }]\it}%
+{\end{trivlist}}
+
+
+\newenvironment{claim-repeat}[1]{\begin{trivlist}
+\item[\hspace{\labelsep}{\bf\noindent Claim~\ref{#1} (repeated) }]\it}%
+{\end{trivlist}}
+
+\newenvironment{corollary-repeat}[1]{\begin{trivlist}
+\item[\hspace{\labelsep}{\bf\noindent Corollary~\ref{#1} (repeated) }]\it}%
+{\end{trivlist}}
+
+\newenvironment{tolerant}[1]{%
+  \par\tolerance=#1\relax
+}{%
+  \par
+}
+
+\begin{document}\sloppy
+
+\input{Title}
+\input{Introduction}
+\input{Definitions&Model}
+\input{ProofOverview}
+\input{FullProof}
+\input{AdditionalObjects}
+\input{Discussion}
+
+\newpage
+
+%\bibliographystyle{abbrv}
+\bibliographystyle{spbasic} 
+\bibliography{references}
+
+\appendixtitleon
+\begin{appendices}
+	\newpage
+	
+	\input{Appendix}
+	
+	\newpage
+\end{appendices}
+
+\end{document}

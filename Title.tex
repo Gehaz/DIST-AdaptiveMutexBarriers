@@ -1,0 +1,46 @@
+
+\title{The Price of being Adaptive\thanks{
+				An extended abstract of this paper appeared at PODC \cite{DBLP:conf/podc/Ben-BaruchH15}.
+                Partially supported by the Israel Science Foundation
+                (grant 1749/14) and by the Lynne and William Frankel Center for Computing Science at Ben-Gurion University.}}
+
+\author{Ohad Ben-Baruch         \and
+	Danny Hendler
+}
+
+\institute{Ohad Ben-Baruch \at
+	Department of Computer-Science, Ben-Gurion University \\
+	Tel.: +972(0)524261187\\
+	%Fax: +123-45-678910\\
+	\email{bbohad@gmail.com}           %  \\
+	%             \emph{Present address:} of F. Author  %  if needed
+	\and
+	Danny Hendler \at
+	Department of Computer-Science, Ben-Gurion University \\
+	Tel.: +972(0)864280387\\
+	\email{hendlerd@cs.bgu.ac.il}
+}
+
+		
+\maketitle
+
+\begin{abstract}
+
+\emph{Mutual exclusion} is a fundamental distributed coordination problem.
+Shared-memory mutual exclusion research focuses on \emph{local-spin} algorithms and uses the \emph{remote memory references} (RMRs) metric. To ensure the correctness of concurrent algorithms in general, and mutual exclusion algorithms in particular, it is often required to prohibit certain re-orderings of memory instructions that may compromise correctness, by inserting \emph{memory fence} (a.k.a. \textit{memory barrier}) instructions. Memory fences incur non-negligible overhead and may significantly increase time complexity.
+
+A mutual exclusion algorithm is \emph{adaptive to total contention} (or simply adaptive), if the time complexity of every passage (an entry to the critical section and the corresponding exit) is a function of \textit{total contention}, that is, the number of processes, $k$,  that participate in the execution in which that passage is performed. We say that an algorithm $A$ is \emph{f-adaptive} (and that $f$ is an \emph{adaptivity function} of $A$), if the time complexity of every passage in $A$ is $O\big(f(k)\big)$. Adaptive implementations are desirable when contention is much smaller than the total number of processes, $n$, sharing the implementation.
+
+Recent work \cite{DBLP:conf/podc/AttiyaHL13} presented the first read/write mutual exclusion
+algorithm with asymptotically optimal complexity under
+both the RMRs and fences metrics: each passage through
+the critical section incurs O(log n) RMRs and a constant
+number of fences. The algorithm works in the popular
+Total Store Ordering (TSO) model. The algorithm of \cite{DBLP:conf/podc/AttiyaHL13} is non-adaptive, however, and the authors posed the question of whether there exists an adaptive mutual exclusion algorithm with the same complexities.
+
+We provide a negative answer to this question, thus capturing an inherent cost of adaptivity. In fact, we prove a stronger result: adaptive read/write mutual exclusion algorithms with constant fence complexity do not exist, regardless of their RMR complexity. This result follows from a general tradeoff that we establish for such algorithms, between the fence complexity and the growth rate of adaptivity functions. Specifically, we prove that the fence complexity of any such algorithm with a linear (or sub-linear) adaptivity function is $\Omega(\log \log n)$. The tradeoff holds for implementations that may use compare-and-swap operations, in addition to reads and writes.
+
+We show that our results apply also to obstruction-free implementations of well-known objects, such as counters, stacks and queues.
+\end{abstract}
+
+\keywords{Mutual exclusion, shared-memory, lower bounds, total store ordering, time complexity, remote memory reference (RMR)}

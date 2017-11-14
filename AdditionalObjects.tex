@@ -1,0 +1,81 @@
+	
+	\section{Additional Objects}
+	\label{sec:AdditionalObjects}
+	
+	A \emph{counter} is an object whose domain is $\mathbb{N}$. It supports a single operation, $fetch \& increment$. The state of a counter is a natural number. The $fetch \& increment$ operation atomically increments $C$ and returns its previous value. An \emph{m-limited-use} counter allows at most $m$ operation instances of $fetch \& increment$. Notice that any counter is also an $m$-limited-use counter, for any $m$.
+
+	A \emph{queue} object supports two operations: \emph{enqueue} and \emph{dequeue}. Each enqueue operation receives input $v$ from a non-empty set of values $V$. Each dequeue operation applied to a non-empty queue returns a value $v \in V$. The state of a queue is a sequence of items $S = \langle v_0; \cdots ; v_k \rangle$, each of which is a value from $V$. The semantics of the enqueue and dequeue operations is the following.
+	\begin{itemize}
+		\item $enqueue(v_{new})$ changes $S$ to be the sequence $S = \langle v_0; \cdots ; v_k ; v_{new} \rangle$.
+		\item if $S$ is not empty, a dequeue operation changes $S$ to be the sequence $S = \langle v_1; \cdots ; v_k \rangle$ and returns $v_0$. If $S$ is empty, dequeue returns the special value empty.
+	\end{itemize}
+
+	A \emph{stack} object supports two operations: \emph{push} and \emph{pop}. Each push operation receives input $v$ from a non-empty set of values $V$. Each pop operation applied to a non-empty stack returns a value $v \in V$. The state of a stack is a sequence of items $S = \langle v_0; \cdots ; v_k \rangle$, each of which is a value from $V$. The semantics of the push and pop operations is the following.
+	\begin{itemize}
+		\item $push(v_{new}$) changes $S$ to be the sequence $S = \langle v_0; \cdots ; v_k ; v_{new} \rangle$.
+		\item if $S$ is not empty, a pop operation changes $S$ to be the sequence $S = \langle v_0; \cdots ; v_{k-1} \rangle$ and returns $v_k$. If $S$ is empty, pop returns the special value empty.
+	\end{itemize}
+	
+	A \emph{one-time} mutual exclusion algorithm is a ME algorithm that allows each process to complete a passage at most once. Since our proofs consider executions in which each process is allowed to complete a passage at most once, our results can be applied to one-time mutual exclusion algorithms.
+	
+	\begin{lemma} \label{lem: ME-using-object}
+		Let $\mathcal{C}$ be a weak obstruction-free object of one of one the following types: counter, stack or queue. Then, for any $N \in \mathbb{N}$, there exists an $N$-process one-time mutual exclusion algorithm $\mathcal{A}$, using $\mathcal{C}$ and read/write variables, such that each passage through the CS invokes a single ($fetch \& increment$, $dequeue$, or $pop$ respectively) operation on $\mathcal{C}$, and that has the same RMR and fence complexities (in both DSM and CC models) as the operation it invokes, up to a constant additive factor.
+	\end{lemma}
+	
+	\begin{proof}
+		We first prove the lemma for an $N$-limited-use counter (hence also for a regular counter), by presenting Algorithm \ref{ME-algorithm} for an $N$-process one-time mutual exclusion.
+		
+		\begin{algorithm}[b]
+			\caption{One-time mutual exclusion from counter.}
+			\label{ME-algorithm}
+			\begin{enumerate}[\textbf{Shared Data:}]
+				\parskip0pt
+				\item $release[N]$: a boolean array, initially $[1,0,\cdots,0]$
+				
+				$waiting[N]$: an integer array, initially $[\perp,\perp,\cdots,\perp]$
+				
+				$spin[N]$: a boolean array, initially $[0,0,\cdots,0]$
+				
+				$\mathcal{C}$: an $N$-limited-use counter, initially 0
+			\end{enumerate}
+			
+			program for process $p$:
+			\begin{algorithmic}[1]
+				\State $v \leftarrow \mathcal{C}.fetch \& increment()$;
+				\State $waiting[v] \leftarrow p$;
+				\If {$release[v] = 0$}
+				\State \textbf{wait} ($spin[p] \neq 0$)
+				\EndIf
+				\Statex $CS$
+				\State $release[v+1] \leftarrow 1$;
+				\State $q \leftarrow waiting[v+1]$;
+				\If {$q \neq \perp$}
+				\State $spin[q] \leftarrow 1$;
+				\EndIf
+			\end{algorithmic}
+		\end{algorithm}
+		
+		The correctness of the algorithm follows easily from the properties of the counter object.
+		
+		We assume that each write in Algorithm \ref{ME-algorithm} (lines 2-8) is followed by a fence instruction, and omit these fences from the code for presentation simplicity. Consequently, Algorithm \ref{ME-algorithm} has the same fence complexity of the $fetch\&increment$ operation, up to a constant additive factor.
+		
+		In the DSM model, process $p$ will hold $spin[p]$ in its local memory segment. Since the only busy-waiting $p$ may perform is on $spin[p]$, the ME algorithm has the same RMR complexity as that of the $fetch\&increment$ operation, up to a constant additive factor. In the CC model (with either write-back or write-through), since once $spin[p]$ is updated to 1 its value does not change again, $p$ may encounter at most 2 RMRs during the wait in line 4, hence the ME algorithm has the same RMR complexity as of the $fetch\&increment$ operation, up to a constant additive factor.
+		
+		An $N$-limited-use counter can be implemented using a single queue or stack $S$ in the following manner:
+		\begin{enumerate}
+			\item[Queue:] initialize $S = \langle 0; \cdots ; N \rangle$.\\
+			The $fetch \& increment$ operation is simply invoking $S.dequeue()$.
+			\item[Stack:] initialize $S = \langle N; \cdots ; 0 \rangle$. \\
+			The $fetch \& increment$ operation is simply invoking $S.pop()$.
+		\end{enumerate}
+		Using Algorithm \ref{ME-algorithm} with any of these implementations yields the required result.
+	\end{proof}
+	
+	Counter, stack and queue objects can be easily implemented using the mutual exclusion algorithm presented by Attia et al \cite{DBLP:conf/podc/AttiyaHL13}. Thus, each operation on these objects incurs $O(\log N)$ RMRs and a constant number of fences, and this is optimal ~\cite{DBLP:conf/stoc/AttiyaHW08}. On the other hand, Lemma \ref{lem: ME-using-object} implies that given an $f$-adaptive algorithm for any of these objects, an $f$-adaptive mutual exclusion algorithm can be obtained. Moreover, each passage through the CS invokes a single operation on the respective object, and has the same asymptotic fence complexity of the object. Hence, any lower bound on the fence complexity of the resulting mutual exclusion algorithm implies a lower bound on the fence complexity for the operation of the respective object.
+	
+	\begin{comment}	
+	\begin{theorem}
+		Let $\mathcal{C}$ be a weak obstruction-free $N$-process $f$-adaptive algorithm for any of the following objects: counter, stack or queue. Let $i \in \mathbb{N}$ be such that $f(i) \leq \dfrac{N^{2^{-f(i)}}} {f(i)! \cdot 4^{f(i)+2i}}$.
+		Then there exists an execution $H$ and a process $p$ such that $p$ executes $i$ fences in $H$ during a single operation ($fetch \& increment$, $dequeue$, or $pop$ respectively).
+	\end{theorem}
+	\end{comment}

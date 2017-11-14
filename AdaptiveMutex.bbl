@@ -1,0 +1,150 @@
+\begin{thebibliography}{28}
+\providecommand{\natexlab}[1]{#1}
+\providecommand{\url}[1]{{#1}}
+\providecommand{\urlprefix}{URL }
+\expandafter\ifx\csname urlstyle\endcsname\relax
+  \providecommand{\doi}[1]{DOI~\discretionary{}{}{}#1}\else
+  \providecommand{\doi}{DOI~\discretionary{}{}{}\begingroup
+  \urlstyle{rm}\Url}\fi
+\providecommand{\eprint}[2][]{\url{#2}}
+
+\bibitem[{Adve and Gharachorloo(1996)}]{DBLP:journals/computer/AdveG96}
+Adve SV, Gharachorloo K (1996) Shared memory consistency models: A tutorial.
+  computer 29(12):66--76
+
+\bibitem[{Anderson et~al(2003)Anderson, Kim, and Herman}]{jand:surv}
+Anderson JH, Kim Y, Herman T (2003) Shared-memory mutual exclusion: major
+  research trends since 1986. Distributed Computing 16(2-3):75--110,
+  \doi{10.1007/s00446-003-0088-6},
+  \urlprefix\url{http://dx.doi.org/10.1007/s00446-003-0088-6}
+
+\bibitem[{Attiya and Hendler(2005)}]{Attiya05timeand}
+Attiya H, Hendler D (2005) Time and space lower bounds for implementations
+  using k-cas. In: In DISC, pp 169--183
+
+\bibitem[{Attiya et~al(2008)Attiya, Hendler, and
+  Woelfel}]{DBLP:conf/stoc/AttiyaHW08}
+Attiya H, Hendler D, Woelfel P (2008) Tight {RMR} lower bounds for mutual
+  exclusion and other problems. In: STOC, pp 217--226
+
+\bibitem[{Attiya et~al(2011)Attiya, Guerraoui, Hendler, Kuznetsov, Michael, and
+  Vechev}]{DBLP:conf/popl/AttiyaGHKMV11}
+Attiya H, Guerraoui R, Hendler D, Kuznetsov P, Michael MM, Vechev MT (2011)
+  Laws of order: expensive synchronization in concurrent algorithms cannot be
+  eliminated. In: POPL, pp 487--498
+
+\bibitem[{Attiya et~al(2013)Attiya, Hendler, and
+  Levy}]{DBLP:conf/podc/AttiyaHL13}
+Attiya H, Hendler D, Levy S (2013) An {O}(1)-barriers optimal {RMR}s mutual
+  exclusion algorithm: extended abstract. In: {ACM} Symposium on Principles of
+  Distributed Computing, {PODC} '13, Montreal, QC, Canada, July 22-24, 2013, pp
+  220--229, \doi{10.1145/2484239.2484255},
+  \urlprefix\url{http://doi.acm.org/10.1145/2484239.2484255}
+
+\bibitem[{Attiya et~al(2015)Attiya, Hendler, and Woelfel}]{PSOLowerBound}
+Attiya H, Hendler D, Woelfel P (2015) Trading fences with rmrs and separating
+  memory models. In: Proceedings of the 2015 {ACM} Symposium on Principles of
+  Distributed Computing, {PODC} 2015, Donostia-San Sebasti{\'{a}}n, Spain, July
+  21 - 23, 2015, pp 173--182, \doi{10.1145/2767386.2767427},
+  \urlprefix\url{http://doi.acm.org/10.1145/2767386.2767427}
+
+\bibitem[{Ben{-}Baruch and Hendler(2015)}]{DBLP:conf/podc/Ben-BaruchH15}
+Ben{-}Baruch O, Hendler D (2015) The price of being adaptive. In: Proceedings
+  of the 2015 {ACM} Symposium on Principles of Distributed Computing, {PODC}
+  2015, Donostia-San Sebasti{\'{a}}n, Spain, July 21 - 23, 2015, pp 183--192,
+  \doi{10.1145/2767386.2767428},
+  \urlprefix\url{http://doi.acm.org/10.1145/2767386.2767428}
+
+\bibitem[{Bollobas(2004)}]{Bollobas2004}
+Bollobas B (2004) Extremal Graph Theory. Dover Publications, Incorporated
+
+\bibitem[{Corporation(2009)}]{intelsys}
+Corporation I (2009) Intel \textsuperscript{\textregistered} 64 and IA-32
+  Architectures Software Developer's Manual. Intel Corporation
+
+\bibitem[{Danek and Golab(2008)}]{DBLP:conf/wdag/DanekG08}
+Danek R, Golab WM (2008) Closing the complexity gap between {FCFS} mutual
+  exclusion and mutual exclusion. In: DISC, pp 93--108
+
+\bibitem[{Dijkstra(1965)}]{Dij65}
+Dijkstra EW (1965) Solution of a problem in concurrent programming control.
+  Communications of the ACM 8(9):569
+
+\bibitem[{Fan and Lynch(2006)}]{FanL2006}
+Fan R, Lynch N (2006) An {$\Omega(n \log n)$} lower bound on the cost of mutual
+  exclusion. In: PODC, pp 275--284
+
+\bibitem[{Golab et~al(2007)Golab, Hadzilacos, Hendler, and
+  Woelfel}]{DBLP:conf/podc/GolabHHW07}
+Golab WM, Hadzilacos V, Hendler D, Woelfel P (2007) Constant-{RMR}
+  implementations of {CAS} and other synchronization primitives using read and
+  write operations. In: Proceedings of the Twenty-Sixth Annual {ACM} Symposium
+  on Principles of Distributed Computing, {PODC} 2007, pp 3--12
+
+\bibitem[{Golab et~al(2012)Golab, Hadzilacos, Hendler, and
+  Woelfel}]{DBLP:journals/dc/GolabHHW12}
+Golab WM, Hadzilacos V, Hendler D, Woelfel P (2012) {RMR}-efficient
+  implementations of comparison primitives using read and write operations.
+  Distributed Computing 25(2):109--162
+
+\bibitem[{Herlihy and Wing(1990)}]{HerlihyWingLinearizability}
+Herlihy M, Wing JM (1990) Linearizability: a correctness condition for
+  concurrent objects. ACM Trans Program Lang Syst 12(3):463--492
+
+\bibitem[{Herlihy et~al(2003)Herlihy, Luchangco, and Moir}]{HLM03}
+Herlihy M, Luchangco V, Moir M (2003) Obstruction-free synchronization:
+  Double-ended queues as an example. In: Proceedings of the 23rd IEEE
+  International Conference on Distributed Computing Systems (ICDCS'03), pp
+  522--529
+
+\bibitem[{Jayanti(2003)}]{jaya:abort}
+Jayanti P (2003) Adaptive and efficient abortable mutual exclusion. In: PODC,
+  ACM Press, New York, NY, USA, pp 295--304,
+  \doi{http://doi.acm.org/10.1145/872035.872079}
+
+\bibitem[{Jayanti et~al(2005)Jayanti, Petrovic, and
+  Narula}]{DBLP:conf/sofsem/JayantiPN05}
+Jayanti P, Petrovic S, Narula N (2005) Read/write based fast-path
+  transformation for {FCFS} mutual exclusion. In: SOFSEM, pp 209--218
+
+\bibitem[{Kim and Anderson(2007)}]{DBLP:journals/dc/KimA07}
+Kim Y, Anderson JH (2007) Adaptive mutual exclusion with local spinning.
+  Distributed Computing 19(3):197--236, \doi{10.1007/s00446-006-0009-6},
+  \urlprefix\url{http://dx.doi.org/10.1007/s00446-006-0009-6}
+
+\bibitem[{Kim and Anderson(2012)}]{DBLP:journals/dc/KimA12}
+Kim Y, Anderson JH (2012) A time complexity lower bound for adaptive mutual
+  exclusion. Distributed Computing 24(6):271--297,
+  \doi{10.1007/s00446-011-0152-6},
+  \urlprefix\url{http://dx.doi.org/10.1007/s00446-011-0152-6}
+
+\bibitem[{Lamport(1997)}]{DBLP:journals/tc/Lamport97}
+Lamport L (1997) How to make a correct multiprocess program execute correctly
+  on a multiprocessor. IEEE Trans Computers 46(7):779--782
+
+\bibitem[{L.Weaver and Germond(1994)}]{SPARCManual}
+LWeaver D, Germond T (1994) The SPARC Architecture Manual. Prentice Hall
+
+\bibitem[{Owens et~al(2009)Owens, Sarkar, and Sewell}]{OwensSS2009}
+Owens S, Sarkar S, Sewell P (2009) A better x86 memory model: x86-tso. In:
+  Theorem Proving in Higher Order Logics, 22nd International Conference, TPHOLs
+  2009, Munich, Germany, August 17-20, 2009. Proceedings, pp 391--407
+
+\bibitem[{Park and Dill(1999)}]{DBLP:journals/tc/ParkD99}
+Park S, Dill DL (1999) An executable specification and verifier for relaxed
+  memory order. {IEEE} Trans Computers 48(2):227--235, \doi{10.1109/12.752664},
+  \urlprefix\url{http://doi.ieeecomputersociety.org/10.1109/12.752664}
+
+\bibitem[{Patterson and Hennessy(1994)}]{DBLP:books/mk/PattersonH94}
+Patterson DA, Hennessy JL (1994) Computer Organization {\&} Design: The
+  Hardware/Software Interface. Morgan Kaufmann
+
+\bibitem[{Taubenfeld(2006)}]{taubenfeld:book}
+Taubenfeld G (2006) Synchronization Algorithms and Concurrent Programming.
+  Prentice Hall
+
+\bibitem[{Yang and Anderson(1995)}]{yang:fast}
+Yang JH, Anderson J (1995) A fast, scalable mutual exclusion algorithm.
+  Distributed Computing 9(1):51--60
+
+\end{thebibliography}

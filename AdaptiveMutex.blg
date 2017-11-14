@@ -1,0 +1,17 @@
+This is BibTeX, Version 0.99dThe top-level auxiliary file: AdaptiveMutex.aux
+The style file: spbasic.bst
+Database file #1: references.bib
+I was expecting a `,' or a `}'---line 3474 of file references.bib
+ : 
+ : @article{10.1109/4434.749135,
+(Error may have been on previous line)
+I'm skipping whatever remains of this entry
+A bad cross reference---entry "DBLP:conf/podc/Ben-BaruchH15"
+refers to entry "DBLP:conf/podc/2015", which doesn't exist
+A bad cross reference---entry "DBLP:conf/podc/AttiyaHL13"
+refers to entry "DBLP:conf/podc/2013", which doesn't exist
+A bad cross reference---entry "PSOLowerBound"
+refers to entry "DBLP:conf/podc/2015", which doesn't exist
+Warning--I didn't find a database entry for "DBLP:conf/podc/2013"
+Warning--I didn't find a database entry for "DBLP:conf/podc/2015"
+(There were 4 error messages)

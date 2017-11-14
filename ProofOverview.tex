@@ -1,0 +1,205 @@
+\section{Proof Overview}
+\label{sec:proofOverview}
+
+We now provide a detailed overview of our proofs. This is then followed by the full proofs.
+
+We fix an $f$-adaptive mutual exclusion system $\mathcal{A}$. Our goal is to construct an execution in which there is a process that executes ``many'' fences while attempting to gain access to the critical section. The number of fences will be a function of $f$. We first present the definition of an \emph{invisible-set}, a key notion in the constructing of this execution.
+
+Given an execution $E$, we define two sets of processes. \emph{Active processes}, denoted by $Act(E)$, is the set of processes that start a passage in $E$ and are yet to complete it. Informally, an active process is a process in its entry section, trying to enter its critical section. \emph{Finished processes}, denoted by $Fin(E)$, is the set of processes that completed a passage in $E$.
+
+\begin{definition}
+\label{def:inv}
+	Let $E$ be an execution and $\mathit{INV}$ be a set of processes such that $\mathit{INV} \subseteq Act(E)$. We say that $\mathit{INV}$ is an \emph{invisible set} (IN-set), and we call a process in $\mathit{INV}$ an invisible process, if the following conditions hold:
+	\begin{enumerate}
+		\item[\bf IN1:] $\forall p \in P: \quad AW(p,E) \cap \mathit{INV} \subseteq \{p\}$
+		\\ Informally, no process is aware of any invisible process other than itself.
+		\item[\bf IN2:] $\forall p \in \mathit{INV}: \quad status(p, E) = entry$.
+		\\informally, all invisible processes are in the entry section.
+		\item[\bf IN3:] $\forall Y \subseteq \mathit{INV}$, and for any $e \in E^{-Y}$: e is a critical event in $E^{-Y}$ if and only if e is a critical event in E.
+		\\ Informally, erasing invisible processes does not affect the criticality of remaining events.
+		\item[\bf IN4:] For event $e \in E$ by process $p$, if $p$ accesses a remote variable $v$ in $e$ then $owner(v) \notin Act(E)$.
+		\\ Informally, if a process $p$ accesses a remote variable $v$ local to some process $q$, then $q$ is not an active process.
+		\item[\bf IN5:] $\forall v \in V:$ If $|Accessed(v,E) \cap Act(E)| > 1$ then $writer(v,E) \notin \mathit{INV}$.
+		\\ Informally, if variable $v$ has been accessed by more than a single active process, then $v$ was not last written by an invisible process.
+	\end{enumerate}
+\end{definition}
+	
+IN1 ensures that no process is aware of any invisible process (other than itself). This property allows us to erase any invisible process, that is, to remove its events from the execution. IN2 ensures that all invisible processes are in their entry section, trying to gain access to the critical section. IN3 ensures that erasing invisible processes does not affect the number of critical events executed so far by processes that remain active. IN4 ensures that no process can become aware of an invisible process by reading a variable local to it.
+% (thereby extending the execution with local events without changing the IN-set).
+Let $p$ be an invisible process that is visible on some variable $v$; IN5 ensures that if we need to erase $p$ from the execution, no other invisible process becomes visible on $v$. Note that any subset of an IN-set is itself an IN-set.
+
+Our proofs mostly consider ``regular'' executions. Informally, these are executions where all active processes are invisible and in their entry sections. As we soon explain, sometimes we relax this requirement and permit ``semi-regular'' executions.
+	
+\begin{definition} \label{def: regular-and-semi-regular}
+	An execution $E$ is \emph{regular} if $Act(E)$ is an IN-set of $E$.
+	\\ If $Act(E)$ satisfies properties IN1-IN4 in $E$, we say that $E$ is a \emph{semi-regular} execution.
+\end{definition}
+
+Our construction starts with an execution $H_0$ where every process $p$ executes the $Enter_p$ event only. We then inductively construct longer and longer executions $H_i$, for $i>0$. In execution $H_i$, exactly $i$ processes complete a passage through the CS and all active processes complete exactly $i$ fences and issue exactly $l_i$ critical events, for some $l_i \leq f(i)$. Our goal is to extend the execution so that as many processes as possible perform an additional fence.
+
+The TSO model allows to delay the execution of writes until a fence is performed, and these writes may be preceded by reads that follow them in program order. This makes it possible to construct executions in which reads always precede writes in-between fences. In turn, this execution structure allows us to restrict the knowledge gained by processes in-between fences and to retain a sufficiently large IN-set. Technically, the inductive construction of  execution $H_{i+1}$ from $H_i$ is composed of a \emph{read phase}, a \emph{write phase}, and a \emph{regularization phase} (see Figure \ref{figure:ConstructionScheme}).
+
+
+\begin{figure*}
+\begin{center}
+\includegraphics[scale=0.55]{ConstructionScheme3.pdf}
+\end{center}
+\vspace{-6pt}
+\caption{\small Structure of inductive construction. Gray-colored lines show events executed by erased processes.}
+\label{figure:ConstructionScheme}
+\end{figure*}
+
+\paragraph{Read phase:}
+In the read phase, we iteratively extend the execution by allowing active processes to preform additional critical reads. Starting with regular execution $G_0=H_i$, we construct executions $G_1,G_2,\ldots,G_s$. For $k>0$, $G_k$ is an extension of $G_{k-1}$ in which all active processes run until they are about to execute a critical read (Lemma \ref{lem: next-critical-extension} establishes that such an extension exists) and then these reads are interleaved. Each such extension may require erasing a constant fraction of the active processes in order to eliminate information flow, such that the resulting execution is regular (see Claim \ref{claim: G_k-is-regular}). We prove that executions $G_k$, for $k \in \{0, \ldots s\}$, satisfy the following conditions (see Lemma \ref{read-phase-lemma}):
+ \begin{enumerate}[(1)]
+ 	\item $G_k$ is a regular execution;
+ 	\item Each $p \in Act(G_k)$ executes $l_i+k$ critical events in $G_k$;
+ 	\item Each $p \in Act(G_k)$ completes $i$ fences and does not yet issue its $(i+1)$'th fence event in $G_k$;
+ 	\item $Fin(G_k) = Fin(H_i)$;
+ 	\item $|Act(G_k)| \geq (|Act(G_{k-1})|-1)/10$.
+ \end{enumerate}
+
+
+A key point in the proofs is to bound from above the number of iterations, $s$, required before all remaining active processes are about to issue their next fence event. Informally, this is done by using the following argument. Active processes are unaware of each other (since they belong to an IN-set) and may only become aware of finished processes. Consequently, the number of critical reads each of them may execute is bounded from above by a function of $i=\vert {Fin}(G_k) \vert = \vert {Fin}(H_i) \vert$ (an explicit bound is given in Claim \ref{claim: read-upper-bound}). This follows from the fact that processes are allowed at most $f(i)$ critical events, since the algorithm is $f$-adaptive. Therefore, if a sufficient number of processes start the read phase, eventually a large subset of processes cannot execute additional reads and must commit their writes by executing a fence. The resulting execution is denoted by $J_0$, whereupon the read phase ends and a write phase beings.
+
+\paragraph{Write phase:}
+The write phase determines the order in which writes, issued by active processes since their previous fence was completed (or since they began their execution if this is the first fence), are committed. We iteratively extend the execution by allowing active processes to preform additional critical writes.
+
+Starting with $J_0$, we iteratively construct executions $J_1,J_2,\ldots,J_t$. We prove that each of the executions $J_0, \ldots, J_t$  satisfies the following conditions (see Lemma \ref{write-phase-lemma}):
+
+\begin{enumerate}[(1)]
+	\item $J_k$ is a semi-regular execution, in which multiple writes by active processes to the same variable (if any) are ordered in increasing order of process ID;
+	\item Each $p \in Act(J_k)$ executes $l_i+s+k$ critical events in $J_k$;
+	\item Each $p\in Act(J_k)$ completes $i$ fences and did not yet complete its $(i+1)$'th fence in $J_k$;
+	\item $Fin(J_k) = Fin(H_i)$;
+	\item $|Act(J_k)| \geq \sqrt{|Act(J_{k-1})|}/4(l_i+s+k)$.
+\end{enumerate}
+
+
+For $k>0$, $J_k$ is an extension of $J_{k-1}$ in which we let each process run until it is about to perform another critical write. We consider two cases according to where processes are about to write to. In the \emph{low-contention case}, at least a square root fraction of the active processes are about to commit writes to different variables. In this case we retain a single process per such variable $v$ (erasing all other processes accessing $v$) and eliminate future information flow by erasing a fraction of the retained processes. The size of this fraction is a function of the number of critical events each process executed so far. In the \emph{high-contention case}, there is a variable $v$ such that at least a square root fraction of the processes are about to commit their write to $v$. In this case we erase the rest of the processes and then allow these processes to commit their writes to $v$ in an increasing order of their IDs.
+
+Our construction of write phases is similar to a construction by Kim and Anderson \cite{DBLP:journals/dc/KimA12}, but unlike it, we consider fence complexity in addition to RMR complexity. Moreover, in our construction unlike in \cite{DBLP:journals/dc/KimA12}, writes committed during the same write phase are scheduled such that the process with the highest ID is visible on \textit{all} of the phase' high-contention variables, if any; this is guaranteed by the second part of Condition (1) above and is essential for obtaining our tradeoff.
+
+Technically, this requires that some intermediate executions constructed during the write phase are allowed to be semi-regular but not regular: they violate invariant IN5 of Definition \ref{def: regular-and-semi-regular}, since the last writer of high-contention variables is only allowed to finish its passage at the end of the phase. Ensuring the regularity of these intermediate executions would have required a large subset of processes to finish their passage (one per every high-contention write), which would weaken our complexity tradeoff.
+
+Processes do not gain new information in the course of a write phase, since they only commit writes. Using the same argumentation as for the read phase, if a sufficient number of active processes start the phase, eventually a sufficiently large subset of these processes complete another fence (resulting in execution $L_0$) and the write phase terminates (an explicit bound is given in Claim
+\ref{claim: write-upper-bound}).
+
+\paragraph{Regularization phase:} The regularization phase transforms the semi-regular (and possibly not regular) execution constructed by the write phase, $L_0$, into a regular execution. This is done by letting the active process with the largest ID, denoted $p_{max}$, finish its passage. Since $p_{max}$ is visible on all the high-contention variables of the write-phase (if any), $Act(L_0) \setminus {p_{max}}$ is an IN-set.
+
+%Let $L_0$ denote the execution where we extend $J_t$ by letting each of the remaining active processes complete its fence.
+Starting with $L_0$, we construct executions $L_1,L_2,\ldots,L_m,H_{i+1}$. We prove that each of the executions $L_0, \ldots, L_m$  satisfies the following conditions (see Lemma \ref{regularization-phase-lemma}):
+
+\begin{enumerate}[(1)]
+	\item $Act(L_k)$ can be written as $W_k \cup \{p_{max}\}$ (where $p_{max} \notin W_k$);
+	\item $W_k$ is an IN-set of $L_k$;
+	\item $p_{max}$ executed $l_i+s+t+k$ critical events in $L_k$;
+	\item Each $p \in W_k$ executed $l_i+s+t$ critical events in $L_k$;
+	\item Each $p \in W_k$ completed $i+1$ fences in $L_k$ and did not yet issue its $(i+2)$'nd fence event;
+	\item $Fin(L_k) = Fin(H_i)$;
+	\item $|Act(L_k)| \geq |Act(L_{k-1})|-1$.
+\end{enumerate}
+
+For $k \in \{1, \ldots, m\}$, we construct $L_k$ from $L_{k-1}$ by letting $p_{max}$ run until it either terminates or until it is about to execute a critical event $e$. In the latter case, in order to prevent information flow, we may need to erase the active process that owns the remote variable accessed by $e$ or that is the last to have written to it (by Claim \ref{claim:subsection}, there is at most a single such process).
+
+All of the active processes but $p_{max}$ form an IN-set of the resulting execution (Claim \ref{claim: W_k-is-an-IN-set}), thus $p_{max}$ is not aware of any other active process in executions $L_k$, for $0 \leq k \leq m$. Consequently, the number of critical events $p_{max}$ may execute is a function of $i$, thus the number of intermediate executions constructed in the course of the regularization phase, $m$, is bounded from above, and eventually $p_{max}$ finishes its passage (an explicit bound is given in Claim \ref{claim: regularization-upper-bound}). The resulting execution, denoted $H_{i+1}$, is regular, and each active process finished $i+1$ fences. This completes the inductive step of our construction. We present the full proofs in Section \ref{sec:FullProof}.
+
+\subsection{Results}
+%\paragraph{Additional objects:}
+
+\begin{comment} %%%%%%%%%%%
+In Section \ref{sec:AdditionalObjects}, we show that a weak obstruction-free mutual exclusion lock can be easily implemented from a weak obstruction-free implementation of a counter, a stack or a queue. Moreover, the implementation is such that any passage through the CS invokes a single operation on the respective object ($fetch \& increment$, $dequeue$ or $pop$) and has the same asymptotic RMR and fence complexities (see Lemma \ref{lem: ME-using-object}). We get:
+\end{comment}
+
+In Section \ref{sec:FullProof}, we prove the following theorem:
+
+\begin{theorem} \label{main-theorem}
+	Let $\mathcal{A}$ be an $N$-process weak obstruction-free $f$-adaptive implementation of a mutual-exclusion lock and let $i \in \mathbb{N}$ be such that $f(i) \leq \dfrac{N^{2^{-f(i)}}} {f(i)! \cdot 4^{f(i)+2i}}$.
+	Then there exists an execution $H$  whose total contention is $i+1$ and a process $p$ such that $p$ executes $i$ fences in $H$ during a single passage of its CS.
+% (respectively, in the course of performing a $fetch \& increment$, $dequeue$, or $pop$ operation).
+\end{theorem}
+
+\begin{comment} %%%%
+\begin{theorem} \label{main-theorem}
+	Let $\mathcal{A}$ be an $N$-process weak obstruction-free $f$-adaptive implementation of a mutual-exclusion lock, counter, stack or queue, and let $i \in \mathbb{N}$ be such that $f(i) \leq \dfrac{N^{2^{-f(i)}}} {f(i)! \cdot 4^{f(i)+2i}}$.
+	Then there exists an execution $H$  whose total contention is $i+1$ and a process $p$ such that $p$ executes $i$ fences in $H$ during a single passage of its CS (respectively, in the course of performing a $fetch \& increment$, $dequeue$, or $pop$ operation).
+\end{theorem}
+\end{comment}
+
+We then show (in Section \ref{sec:AdditionalObjects}) that a weak obstruction-free mutual exclusion lock can be easily implemented from a weak obstruction-free implementation of a counter, a stack or a queue. Moreover, the implementation is such that any passage through the CS invokes a single operation on the respective object ($fetch \& increment$, $dequeue$ or $pop$) and has the same asymptotic RMR and fence complexities (see Lemma \ref{lem: ME-using-object}). It follows that Theorem \ref{main-theorem} holds for stacks and queues as well.
+
+\begin{comment}%%%%%%%%%%%%
+Theorem 1 follows from Theorem \ref{theorem: Act-lower-bound} in Section \ref{sec:FullProof}, where we prove that under the conditions specified by the theorem, our construction can proceed for $i$ steps, yielding an execution $H_i$ such that $Act(H_i) \geq 1$. Therefore there is an active process $p$ after $H_i$, and from the properties of $H_i$, $p$ is in a middle of a passage in $H_i$ in which it completed $i$ fences. Moreover, Lemma \ref{lem: remove-invisibale-processes} from Section \ref{sec:FullProof} allows us to erase active processes from $H_i$ in order to get a valid execution. By erasing all the active processes but $p$ from $H_i$ we obtain an execution $H$ in which $p$ executes $i$ fences in the course of a single passage, and the total contention of $H$ is $i+1$, that is the number of fences $p$ executes is linear in the total contention of the execution.
+\end{comment}
+
+
+\begin{corollary}
+	There exists no weak obstruction-free implementation of an adaptive mutual exclusion lock, counter, stack or queue with $O(1)$ fence complexity.
+\end{corollary}
+
+\begin{proof}
+	Assume towards a contradiction that there exists such an $f$-adaptive algorithm $\mathcal{A}$, for some function $f$, such that no process executes $c$ or more fences during a single passage/operation, for some constant $c$. We choose large enough $N$ such that $f(c) \leq \dfrac{N^{2^{-f(c)}}} {f(c)! \cdot 4^{f(c)+2c}}$. By Theorem \ref{main-theorem}, there exists an execution $H$ and a process $p$ such that $p$ executes $c$ fences in $H$ during a single passage/operation, contradicting our assumption.
+\end{proof}
+
+Kim and Anderson prove that a sub-linear adaptivity function is impossible \cite{DBLP:journals/dc/KimA12}.
+We now present a lower bound on the fence complexity of the family of algorithms whose adaptivity function is linear.
+
+%that contains all adaptive mutual exclusion implementations that we are aware of %\cite{DBLP:journals/dc/AttiyaB02,DBLP:journals/dc/KimA07}.
+
+\begin{corollary}
+\label{corollary:linear}
+Let $\mathcal{A}$ be an $N$-process $f$-adaptive implementation of a mutual-exclusion lock, counter, stack or queue, such that $f$ is a linear function, that is $f(i) = c \cdot i$ for some constant $c$. Then the fence complexity of $\mathcal{A}$ is $\Omega (\log \log N)$.
+\end{corollary}
+
+\begin{proof}
+	By Theorem \ref{main-theorem}, it suffices to prove that for $i = \Omega(\log \log N)$ the inequality $f(i) \leq \dfrac{N^{2^{-f(i)}}} {f(i)! \cdot 4^{f(i)+2i}}$ holds, thus there exists an execution $E$ and a process $p$ that executes $i = \Omega(\log \log N)$ fences during a single passage/operation in $E$.
+	
+	\begin{equation*}
+		\begin{array}{rcl}
+			c \cdot i \cdot (c \cdot i)! \cdot 4^{c \cdot i +2i} & \leq & {N^{2^{-c \cdot i}}} \\
+			\log(c \cdot i \cdot (c \cdot i)! \cdot 4^{c \cdot i +2i}) & \leq & 2^{-c \cdot i}\cdot \log N \\
+			\log \log(c \cdot i \cdot (c \cdot i)! \cdot 4^{c \cdot i +2i}) & \leq & -c \cdot i + \log \log N \\
+			\log \log(c \cdot i \cdot (c \cdot i)! \cdot 4^{c \cdot i +2i}) + c \cdot i & \leq & \log \log N.
+		\end{array}
+	\end{equation*}
+	
+The right-hand side of the above inequality can be bounded from above as follows:
+\begin{align*}
+	& \log \log(c \cdot i \cdot (c \cdot i)! \cdot 4^{c \cdot i +2i}) + c \cdot i \leq \\
+	& \quad \log \log((c \cdot i)^{2 \cdot c \cdot i}) + c \cdot i = \\
+	& \qquad \log (2 \cdot c \cdot i) + \log \log(c \cdot i) + c \cdot i \leq 3 \cdot c \cdot i.
+\end{align*}
+
+	It follows that the inequality holds for $i = \frac{1}{3c}\log \log N = \Omega(\log \log N)$ and the claim follows.
+\end{proof}
+
+A similar computation is used to prove the following lower bound.
+
+\begin{corollary}
+\label{corollary-exp}
+Let $\mathcal{A}$ be an  $N$-process $f$-adaptive implementation of a mutual-exclusion lock, counter, stack or queue, such that $f$ is an exponential function, that is $f(i) = 2^{c \cdot i}$ for some constant $c$. Then the fence complexity of $\mathcal{A}$ is $\Omega (\log \log \log N)$.
+\end{corollary}
+
+\begin{proof}
+	By Theorem \ref{main-theorem}, it suffices to prove that, for some $i = \Omega(\log \log \log N)$, the inequality $f(i) \leq \dfrac{N^{2^{-f(i)}}} {f(i)! \cdot 4^{f(i)+2i}}$ holds, thus there exists an execution $E$ and a process $p$ such that $p$ executes $i = \Omega(\log \log \log N)$ fences during a single passage/operation in $E$.
+	
+	\begin{equation*}
+	\begin{array}{rcl}
+	2^{c \cdot i} \cdot 2^{c \cdot i}! \cdot 4^{2^{c \cdot i} +2i} & \leq & {N^{2^{-2^{c \cdot i}}}} \\
+	\log \big(2^{c \cdot i} \cdot 2^{c \cdot i}! \cdot 4^{2^{c \cdot i} +2i}\big) & \leq & 2^{-2^{c \cdot i}} \cdot \log N \\
+	\log \log \big(2^{c \cdot i} \cdot 2^{c \cdot i}! \cdot 4^{2^{c \cdot i} +2i}\big) & \leq & -2^{c \cdot i} + \log \log N \\
+	\log \log \big(2^{c \cdot i} \cdot 2^{c \cdot i}! \cdot 4^{2^{c \cdot i} +2i}\big) + 2^{c \cdot i} & \leq & \log \log N.
+	\end{array}
+	\end{equation*}
+
+The right-hand side of the above inequality can be bounded from above as follows:
+\begin{align*}
+& \log \log(2^{c \cdot i} \cdot 2^{c \cdot i}! \cdot 4^{2^{c \cdot i} +2i}) + 2^{c \cdot i} \leq \\
+& \quad \log \log((2^{c \cdot i})^{2 \cdot 2^{c \cdot i}}) + 2^{c \cdot i} = \\
+& \qquad c \cdot i + 1 + \log(c \cdot i) + 2^{c \cdot i} \leq  2^{c \cdot i + 1}.
+\end{align*}
+	
+It follows that the inequality holds for $i = \frac{1}{c}(\log \log \log N - 1) = \Omega(\log \log \log N)$ and the claim follows.
+\end{proof}
+
+

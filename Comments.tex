@@ -1,0 +1,9 @@
+
+- Write-buffer is architecturally after cache, according to our description
+one may infer it is before it, not sure if this is problematic in terms
+of proofs, but possibly needs to be clarified.
+
+Specifically, we write that "events that are served by the write-buffer are not
+considered accesses". Why do we need this? Can we say that this is WLOG?
+
+Re-introduce Theorem 1 (repeat) and its proof.

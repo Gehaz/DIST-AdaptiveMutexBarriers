@@ -1,0 +1,56 @@
+
+\section{Introduction}
+
+In the \emph{mutual exclusion} problem, a set of processes must coordinate their accesses to a \emph{critical section} (CS) so that, at any point in time, at most a single process is inside the CS.
+Introduced by Dijkstra in 1965 \cite{Dij65}, the mutual exclusion problem is a fundamental Distributed Computing problem and is still the focus of intense research \cite{jand:surv,taubenfeld:book}.
+
+For more than $20$ years, shared-memory mutual exclusion research has investigated the \emph{remote memory references} (RMR) complexity of local-spin mutual exclusion algorithms; much of this work focuses on (deterministic) read/write mutual exclusion (e.g. \cite{DBLP:conf/wdag/DanekG08,jaya:abort,DBLP:conf/sofsem/JayantiPN05,DBLP:journals/dc/KimA12,yang:fast}). Anderson and Yang were the first to present an $n$-process mutual exclusion algorithm, where every \emph{passage} (an entry to the critical section and the corresponding exit) incurs $O(\log n)$ RMRs. This was shown to be optimal~\cite{DBLP:conf/stoc/AttiyaHW08,FanL2006}.
+
+A mutual exclusion algorithm $A$ is adaptive, if its RMR complexity is a function of the number of active processes. More formally, an algorithm is \emph{f-adaptive to total contention} (henceforth simply \textit{adaptive}), if the RMR complexity of every passage is $O\big(f(k)\big)$, where $k$ denotes \textit{total contention}, that is, the number of processes that participate in the execution. It is \emph{f-adaptive to interval contention} (respectively, \emph{point contention}) if the RMR complexity of every passage $\cal{P}$ is $O\big(f(k)\big)$, where $k$ is the number of processes that are active during $\cal{P}$ (respectively, the maximum number of processes that are concurrently active at some point in time during $\cal{P}$). We call $f$ the \emph{adaptivity function} of $A$.
+Adaptive algorithms are superior to non-adaptive ones when the number of active processes is typically significantly smaller than $n$, the total number of processes.
+
+Mutual exclusion algorithms are
+almost always designed under the assumption that memory accesses are
+atomic, i.e. linearizable \cite{HerlihyWingLinearizability}, or at least sequentially consistent \cite{DBLP:journals/tc/Lamport97}.
+In practice, however, modern compilers optimize code so as
+to issue certain instructions out of order,
+based on the memory model supported by the architecture.
+
+The memory model dictates which operation pairs can be reordered \cite[Figure 8]{DBLP:journals/computer/AdveG96}.
+For example, the widely-supported \emph{total store ordering} (\emph{TSO}) model \cite{SPARCManual} ensures that writes are not reordered, but it is possible to perform a read from address $a$
+before a write to address $b \neq a$ that is earlier in program order is performed.
+
+The TSO model is supported by several common architectures,
+including SPARC \cite{SPARCManual} and x86 \cite{intelsys}. \footnote{Owens, Sarkar and Sewell~\cite{OwensSS2009} prove Intel x86 is equivalent to Sparc TSO.}
+It is weaker than sequential consistency, and hence,
+also weaker than linearizability.
+
+To ensure the correctness of a concurrent algorithm,
+it is possible to prohibit the reordering of memory instructions,
+by inserting a \emph{fence} (also called a \emph{barrier})
+instruction between them.
+The use of fences was shown to be unavoidable for read/write mutual exclusion algorithms~\cite{DBLP:conf/popl/AttiyaGHKMV11}.
+%since it has been shown~\cite{DBLP:conf/popl/AttiyaGHKMV11} that
+%these algorithms must ensure that there is
+%\emph{a read after a write to a different location}.
+
+Since memory fences incur significant overhead, the number of fence instructions incurred by each passage of an algorithm (henceforth called its \emph{fence complexity}) is a significant contributor to its time complexity, alongside the algorithm's RMR complexity.
+
+Recent work by Attiya, Hendler and Levy~\cite{DBLP:conf/podc/AttiyaHL13} presented the first TSO mutual exclusion algorithm that is optimal in terms of both its RMR and fence complexities: each passage incurs a logarithmic number of RMRs and a constant number of fences. Their algorithm is not adaptive, however, and they posed the question of whether an adaptive TSO mutual exclusion algorithm with the same RMR and fence complexities exists. This is the question that we address in this work.
+
+\subsection*{Our Contributions}
+
+We provide a negative answer to the question posed by \cite{DBLP:conf/podc/AttiyaHL13}. In fact, we prove a stronger result: read/write mutual exclusion algorithms with constant fence complexity cannot be adaptive to total (hence also to interval- or point-) contention. This impossibility result holds regardless of the RMR complexity of the algorithm.
+
+Our result follows from a general tradeoff that we establish between the fence complexity and the growth rate of adaptivity functions. Specifically, we prove that the fence complexity of any read/write algorithm with a linear (or sub-linear) adaptivity function is $\Omega(\log \log n)$. Our results apply for both the cache-coherent (CC) and the distributed shared-memory (DSM) models.
+
+Following~\cite{DBLP:conf/podc/AttiyaHL13,DBLP:journals/dc/GolabHHW12},
+our tradeoff applies also to algorithms that may use
+\emph{comparison} primitives, such as \emph{compare-and-swap} (CAS),
+in addition to reads and writes. We show that our results also hold for obstruction-free \cite{HLM03} implementations of well-known objects, such as counters, stacks and queues.
+
+Our results establish a time complexity separation between adaptive and non-adaptive implementations, thus capturing an inherent cost incurred by adaptive algorithms in the TSO model.
+
+The rest of this article is organized as follows. The model we use and required definitions are provided in Section \ref{sec:model}. An overview of our proofs and results is presented in Section \ref{sec:proofOverview}. Full and detailed proofs are presented in Section \ref{sec:FullProof}.  Section \ref{sec:AdditionalObjects} discusses additional objects such as stacks and queues. The paper is concluded with a short discussion in Section \ref{sec:discussion}.
+
+

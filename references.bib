@@ -1,0 +1,4070 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Definitions
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+@string{ftcs85 = "Proceedings of the 15th IEEE Symposium on Fault Tolerant
+                  Computing Systems (FTCS-15)"}
+
+@string{ftcs93 = "Proceedings of the 23rd IEEE Symposium on Fault Tolerant
+                  Computing Systems (FTCS-23)"}
+
+@string{ftcs96 = "Proceedings of the 26th IEEE Symposium on Fault Tolerant
+                  Computing Systems (FTCS-26)"}
+
+@string{ftcs97 = "Proceedings of the 27th IEEE Symposium on Fault Tolerant
+                  Computing Systems (FTCS-27)"}
+
+@string{ftcs98 = "Proceedings of the 28th IEEE Symposium on Fault Tolerant
+                  Computing Systems (FTCS-28)"}
+
+@string{ftcs98-fastabs = "Digest of FastAbstracts of the 28th IEEE
+                  Symposium on Fault Tolerant Computing Systems
+                  (FTCS-28)"}
+
+@string{wdag89 = "Proceedings of the
+         3rd International Workshop on Distributed Algorithms (WDAG'89)"}
+
+@string{wdag90 = "Proceedings of the
+         4th International Workshop on Distributed Algorithms (WDAG'90)"}
+
+@string{wdag91 = "Proceedings of the
+         5th International Workshop on Distributed Algorithms (WDAG'91)"}
+
+@string{wdag92 = "Proceedings of the
+         6th International Workshop on Distributed Algorithms (WDAG'92)"}
+
+@string{wdag93 = "Proceedings of the
+         7th International Workshop on Distributed Algorithms (WDAG'93)"}
+
+@string{wdag94 = "Proceedings of the
+         8th International Workshop on Distributed Algorithms (WDAG'94)"}
+
+@string{wdag95 = "Proceedings of the
+         9th International Workshop on Distributed Algorithms (WDAG'95)"}
+
+@string{wdag96 = "Proceedings of the
+         10th International Workshop on Distributed Algorithms (WDAG'96)"}
+
+@string{wdag97 = "Proceedings of the
+         11th International Workshop on Distributed Algorithms (WDAG'97)"}
+
+@string{disc98 = "Proceedings of the
+         12th International Symposium on Distributed Computing (DISC'98)"}
+
+@string{disc99 = "Proceedings of the
+          13th International Symposium on Distributed Computing (DISC'99)"}
+
+@string{disc00 = "Proceedings of the
+         14th International Symposium on Distributed Computing (DISC'00)"}
+
+@string{disc01 = "Proceedings of the
+         International Symposium on Distributed Computing (DISC'01)"}
+
+@string{disc02 = "Proceedings of the
+         16th International Symposium on Distributed Computing (DISC'02)"}
+
+@string{disc03 = "Proceedings of the
+         17th International Symposium on Distributed Computing (DISC'03)"}
+
+@string{disc04 = "Proceedings of the
+         18th International Symposium on Distributed Computing (DISC'04)"}
+
+@string{disc05 = "Proceedings of the
+         19th International Symposium on Distributed Computing (DISC'05)"}
+
+@string{disc06 = "Proceedings of the
+         20th International Symposium on Distributed Computing (DISC'06)"}
+
+
+@string{podc83 = "Proceedings of the 2nd
+         Annual ACM Symposium on Principles of Distributed
+         Computing (PODC)"}
+
+@string{podc84 = "Proceedings of the 3rd
+         Annual ACM Symposium on Principles of Distributed
+         Computing (PODC)"}
+
+@string{podc85 = "Proceedings of the 4th
+         Annual ACM Symposium on Principles of Distributed
+         Computing (PODC)"}
+
+@string{podc86 = "Proceedings of the 5th
+         Annual ACM Symposium on Principles of Distributed
+         Computing (PODC)"}
+
+@string{podc87 = "Proceedings of the 6th
+         Annual ACM Symposium on Principles of Distributed
+         Computing (PODC)"}
+
+@string{podc88 = "Proceedings of the 7th
+         Annual ACM Symposium on Principles of Distributed
+         Computing (PODC)"}
+
+@string{podc89 = "Proceedings of the 8th
+         Annual ACM Symposium on Principles of Distributed
+         Computing (PODC)"}
+
+@string{podc90 = "Proceedings of the 9th
+         Annual ACM Symposium on Principles of Distributed
+         Computing (PODC)"}
+
+@string{podc91 = "Proceedings of the 10th
+         Annual ACM Symposium on Principles of Distributed
+         Computing (PODC)"}
+
+@string{podc92 = "Proceedings of the 11th
+         Annual ACM Symposium on Principles of Distributed
+         Computing (PODC)"}
+
+@string{podc93 = "Proceedings of the 12th
+         Annual ACM Symposium on Principles of Distributed
+         Computing (PODC)"}
+
+@string{podc94 = "Proceedings of the 13th
+         Annual ACM Symposium on Principles of Distributed
+         Computing (PODC)"}
+
+@string{podc95 = "Proceedings of the 14th
+         Annual ACM Symposium on Principles of Distributed
+         Computing (PODC)"}
+
+@string{podc96 = "Proceedings of the 15th
+         Annual ACM Symposium on Principles of Distributed
+         Computing (PODC)"}
+
+@string{podc97 = "Proceedings of the 16th
+         Annual ACM Symposium on Principles of Distributed
+         Computing (PODC)"}
+
+@string{podc98 = "Proceedings of the 17th
+         Annual ACM Symposium on Principles of Distributed
+         Computing (PODC)"}
+
+@string{podc99 = "Proceedings of the 18th
+         Annual ACM Symposium on Principles of Distributed
+         Computing (PODC)"}
+
+@string{podc00 = "Proceedings of the 19th
+         Annual ACM Symposium on Principles of Distributed
+         Computing (PODC)"}
+
+@string{podc01 = "Proceedings of the 20th
+         Annual ACM Symposium on Principles of Distributed
+         Computing (PODC)"}
+
+@string{podc02 = "Proceedings of the 21st
+         Annual ACM Symposium on Principles of Distributed
+         Computing (PODC)"}
+
+@string{podc03 = "Proceedings of the 22nd
+         Annual ACM Symposium on Principles of Distributed
+         Computing (PODC)"}
+
+@string{podc04 = "Proceedings of the 23rd
+         Annual ACM Symposium on Principles of Distributed
+         Computing (PODC)"}
+
+@string{podc05 = "Proceedings of the 24th
+         Annual ACM Symposium on Principles of Distributed
+         Computing (PODC)"}
+
+@string{podc06 = "Proceedings of the 25th
+         Annual ACM Symposium on Principles of Distributed
+         Computing (PODC)"}
+
+@string{podc07 = "Proceedings of the 27th
+         Annual ACM Symposium on Principles of Distributed
+         Computing (PODC)"}
+
+@string{podc11 = "Proceedings of the 30th
+         Annual ACM Symposium on Principles of Distributed
+         Computing (PODC)"}
+
+@string{srds91 = "Proceedings of the 10th IEEE
+         Symposium on Reliable Distributed Systems (SRDS)"}
+
+@string{srds92 = "Proceedings of the 11th IEEE
+         Symposium on  Reliable Distributed Systems (SRDS)"}
+
+@string{srds94 = "Proceedings of the 13th IEEE
+         Symposium on  Reliable Distributed Systems (SRDS)"}
+
+@string{srds95 = "Proceedings of the 14th IEEE
+         Symposium on  Reliable Distributed Systems (SRDS)"}
+
+@string{srds2000 = "Proceedings of the 19th IEEE
+         Symposium on  Reliable Distributed Systems (SRDS)"}
+
+
+@string{wss95 = "Proceedings of the 2nd Workshop
+         on Self-Stabilizing Systems"}
+
+@string{wss97 = "Proceedings of the 3rd Workshop
+         on Self-Stabilizing Systems"}
+
+@string{wss99 = "Proceedings of the 19th IEEE International Conference
+                  on Distributed Computing Systems Workshop on
+                  Self-Stabilizing Systems"}
+
+@string{icdcs93 = "Proceedings of the 14th IEEE International
+         Conference on Distributed Computing Systems (ICDCS'93)"}
+@string{icdcs94 = "Proceedings of the 14th IEEE International
+         Conference on Distributed Computing Systems (ICDCS'94)"}
+
+@string{icdcs96 = "Proceedings of the 16th IEEE International
+         Conference on Distributed Computing Systems (ICDCS'96)"}
+
+@string{icdcs98 = "Proceedings of the 18th IEEE International
+         Conference on Distributed Computing Systems (ICDCS'98)"}
+
+@string{icdcs99 = "Proceedings of the 19th IEEE International
+         Conference on Distributed Computing Systems (ICDCS'99)"}
+
+@string{icdcs01 = "Proceedings of the 21st IEEE International
+         Conference on Distributed Computing Systems (ICDCS'01)"}
+
+
+@string{icdcs03 = "Proceedings of the 23rd IEEE International
+         Conference on Distributed Computing Systems (ICDCS'03)"}
+
+@string{icdcs04 = "Proceedings of the 24th IEEE International
+         Conference on Distributed Computing Systems (ICDCS'04)"}
+
+@string{icdcs05 = "Proceedings of the 25th IEEE International
+         Conference on Distributed Computing Systems (ICDCS'05)"}
+
+@string{asa = " International Symposium on Agent Systems and Applications"}
+@string{ma = " International Symposium on Mobile Agents"}
+@string{asama2000 = "Proceedings of the " # "Second" # asa # " and Fourth" # ma #
+ " (ASA/MA2000)"}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+Vassos's macros
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+@string{epfl             = "Ecole Polytechnique F\'ed\'erale de Lausanne"}
+@string{cornell     = "Cornell University"}
+@string{cornellcs   = "Department of Computer Science,
+                                  Cornelpublisl University"}
+@string{berkeley         = "University of California at Berkeley"}
+@string{gitics      = "School of Information and Computer Science,
+                Georgia Institute of Technology"}
+@string{ibmrl       = "IBM Research Laboratory"}
+@string{mitlcs          = "Laboratory for Computer Science,
+                  Massachusetts Institute of Technology"}
+@string{mst             = "Mathematical Systems Theory"}
+@string{gatech          = "College of Computing, Georgia Institute of Technology"}
+@string{yalecs      = "Department of Computer Science, Yale University"}
+%--------------------------------------------------------
+@string{dc      = "Distributed Computing"}
+@string{ic      = "Information and Computation"}
+@string{surveys         = "ACM Computing Surveys"}
+@string{lncs        = "LNCS"}
+@string{springer    = "Springer-Verlag"}
+%-------------------------------------------------------
+@string{icalp       = "International Conference on Automata, Languages,
+                and Programming"}
+@string{focs        = "Symposium on Foundations of Computer Science"}
+@string{ftcs        = "International Symposium on Fault-Tolerant Computing"}
+@string{podc        = "ACM Symposium on Principles
+                of Distributed Computing"}
+@string{pods        = "Symposium on Principles of Database Systems"}
+@string{proc        = "Proceedings of the"}
+@string{stoc        = "ACM Symposium on Theory of Computing"}
+@string{wdag        = "International Workshop on Distributed Algorithms"}
+@string{disc        = "International Symposium on Distributed Computing"}
+@string{icdcs       = "International   Conference on Distributed Computing Systems"}
+@string{srds            =" Symposium on Reliable Distributed Systems"}
+
+%--------------------------
+
+
+@string{inst-ibp           = "Institut Blaise Pascal"}
+@string{inst-litp          = "LITP, " # inst-ibp}
+@string{inst-masi          = "MASI, " # inst-ibp}
+@string{inst-igm           = "Institut Gaspard Monge, Univer\-sit{\'e} de Marne-la-Vall{\'e}e"}
+@string{inst-univp6        = "Univer\-sit{\'e} Paris VI (France)"}
+@string{inst-univp7        = "Univer\-sit{\'e} Paris 7-Denis Diderot (France)"}
+@string{inst-univp11           = "Univer\-sit{\'e} Paris-Sud (France)"}
+@string{inst-univp12           = "Univer\-sit{\'e} Paris XII (France)"}
+@string{inst-univbdx           = "Univer\-sit{\'e} Bordeaux I (France)"}
+@string{inst-UPxiLITP          = "Univer\-sit{\'e} Paris-Sud et LITP (France)"}
+@string{inst-univporto         = "Universidade do Porto (Portugal)"}
+
+@string{ibp        = "Institut Blaise Pascal"}
+@string{litp           = "LITP, " # ibp}
+@string{liafa          = "LIAFA, "# inst-univp7}
+@string{masi           = "MASI, " # ibp}
+@string{igm        = "Institut Gaspard Monge, Universit{\'e} de Marne-la-Vall{\'e}e"}
+@string{univp6         = "Univer\-sit{\'e} Paris VI (France)"}
+@string{univp7         = "Univer\-sit{\'e} Paris VII (France)"}
+@string{univp11        = "Univer\-sit{\'e} Paris-Sud (France)"}
+@string{univp12        = "Univer\-sit{\'e} Paris XII (France)"}
+@string{univbdx        = "Univer\-sit{\'e} Bordeaux I (France)"}
+@string{UPxiLITP           = "Univer\-sit{\'e} Paris-Sud et LITP (France)"}
+@string{univporto          = "Universidade do Porto (Portugal)"}
+@string{polytechnique  = "{\'E}cole Polytechnique"}
+                   ########
+                   # TYPE #
+                   ########
+
+
+@string{tr             = "Rapport de recherche"}
+@string{trlitp             = "Rapport {LITP}"}
+@string{trliafa            = "Rapport {LIAFA}"}
+@string{trlix              = "Rapport {LIX}"}
+@string{trlri              = "Rapport {LRI}"}
+@string{trlabri            = "Rapport {LaBRI}"}
+@string{memo               = "Research Memo"}
+
+
+                   ########
+                   # NOTE #
+                   ########
+
+
+@string{rlitp              = "Rapport {LITP} n\No "}    # utilisation : rlitp # "92-31"
+@string{rliafa             = "Rapport {LIAFA} n\No "}   # utilisation : rlitp # "92-31"
+@string{rmasi              = "Rapport {MASI} n\No "}    # idem
+@string{thlitp             = "Rapport {LITP-TH} n\No "} # idem
+@string{prepa              = "En pr{\'e}paration"}
+@string{soumis             = "Soumis"}
+@string{soumisa            = "Soumis {\`a} "}       # utilisation : soumisa # tcs
+@string{ap             = "{\`A} para{\^\i}tre"}
+@string{apd            = "{\`A} para{\^\i}tre dans "}   # idem
+@string{invite             = "Conf{\'e}rence invit{\'e}e"}
+@string{invite+tutorial        = "Conf{\'e}rence invit{\'e}e associ{\'e}e {\`a} un tutorial"}
+@string{position-paper         = "Position paper"}
+@string{extended-abstract      = "Extended abstract"}
+@string{available          = "{\'E}galement disponible comme "}
+@string{eng-translat-in        = "Traduction anglaise dans "}
+@string{in-french          = "En fran{\c c}ais"}
+@string{in-english         = "En anglais"}
+@string{in-japanese        = "En japonais"}         # idem
+@string{et             = " et "}            # utilisation : ... # et # ...
+@string{stop               = ". "}              # pour separer deux notes
+
+
+                   #########
+                   # MONTH #
+                   #########
+
+
+@string{spring             = "Printemps"}
+@string{summer             = "Et{\'e}"}
+@string{fall               = "Automne"}
+@string{winter             = "Hiver"}
+
+
+@string{fev            = feb}
+@string{avr            = apr}
+@string{mai            = may}
+
+                  ###########
+                  # PUBTYPE #
+                  ###########
+
+@string{numero_special         = "Num{\'e}ro sp{\'e}cial"}
+@string{art_avec_comite        = "Article avec comit{\'e}"}
+@string{art_sans_comite        = "Article sans comit{\'e}"}
+@string{coll_avec_comite       = "Colloque avec comit{\'e}"}
+@string{coll_sans_comite       = "Colloque sans comit{\'e}"}
+@string{seminaire          = "S{\'e}minaire"}
+@string{expose             = "Expos{\'e}"}
+@string{dea            = "M{\'e}moire de {DEA}"}
+@string{these              = "Th{\`e}se de Doctorat"}
+@string{these3             = "Th{\`e}se de 3e cycle"}
+@string{these_etat         = "Th{\`e}se d'{\'E}tat"}
+@string{habilitation           = "Habilitation {\`a} diriger des recherches"}
+@string{livre              = "Livre"}
+@string{edition            = "{\'E}dition"}
+@string{chapitre           = "Chapitre"}
+@string{rapport            = "Rapport de recherche"}
+@string{logiciel           = "Logiciel"}
+@string{autre              = "Autre"}
+@string{unpublished        = "Non publi{\'e}"}
+@string{see-also           = "Voir aussi "}
+@string{?              = "???"}
+
+@string{invited            = invite}
+@string{toappear           = ap}
+@string{research-memo          = memo}
+@string{research-report        = tr}
+@string{invited-assoc-tutorial = invite+tutorial}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% References
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+@inproceedings{AspnesACHH2012,
+author = {James Aspnes and Hagit Attiya and Keren Censor-Hillel and Danny Hendler},
+title = {Lower bounds for restricted-use objects},
+month = jun,
+year = 2012,
+booktitle={Twenty-Fourth ACM Symposium on Parallel Algorithms and Architectures},
+pages={172--181}
+}
+
+
+@article{AspnesAC2011,
+ author = {Aspnes, James and Attiya, Hagit and Censor, Keren},
+ title = {Polylogarithmic concurrent data structures from monotone circuits},
+ journal = jacm,
+ volume =       59,
+ number =       1,
+ month =        feb,
+ year = 2012,
+ note = {Previous version in \emph{PODC}, pages 36--45, 2009.}
+}
+
+@inproceedings{DBLP:conf/podc/AspnesACE12,
+  author    = {James Aspnes and
+               Hagit Attiya and
+               Keren Censor-Hillel and
+               Faith Ellen},
+  title     = {Faster than optimal snapshots (for a while): preliminary
+               version},
+  booktitle = {PODC},
+  year      = {2012},
+  pages     = {375-384},
+  ee        = {http://doi.acm.org/10.1145/2332432.2332507},
+  crossref  = {DBLP:conf/podc/2012},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+@inproceedings{DBLP:conf/spaa/AspnesACH12,
+  author    = {James Aspnes and
+               Hagit Attiya and
+               Keren Censor-Hillel and
+               Danny Hendler},
+  title     = {Lower bounds for restricted-use objects: extended abstract},
+  booktitle = {SPAA},
+  year      = {2012},
+  pages     = {172-181},
+  ee        = {http://doi.acm.org/10.1145/2312005.2312037},
+  crossref  = {DBLP:conf/spaa/2012},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+@inproceedings{AspnesAC2009,
+ author = {Aspnes, James and Attiya, Hagit and Censor, Keren},
+ title = {Max registers, counters, and monotone circuits},
+ booktitle = {Proceedings of the 28th ACM symposium on Principles of distributed computing},
+ series = {PODC '09},
+ year = {2009},
+ isbn = {978-1-60558-396-9},
+ location = {Calgary, AB, Canada},
+ pages = {36--45},
+ numpages = {10},
+ url = {http://doi.acm.org/10.1145/1582716.1582728},
+ doi = {http://doi.acm.org/10.1145/1582716.1582728},
+ acmid = {1582728},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ keywords = {counters, distributed computing, max registers, monotone circuits, shared memory},
+}
+
+
+@TechReport{AGKLR05_TR,
+  author =   {Paul C. Attie and Rachid Guerraoui and Petr Kouznetsov and Nancy A. Lynch and Sergio Rajsbaum},
+  title =    {The Impossibility of Boosting Distributed Service Resilience},
+  institution =  {MIT Computer Science and Artificial Intelligence Laboratory},
+  year =     {2005},
+  OPTkey =   {},
+  OPTtype =      {},
+  OPTaddress =   {},
+  OPTmonth =     {May},
+  note =     {Available at http://theory.lcs.mit.edu/tds/papers/Attie/boosting-tr.ps},
+  OPTannote =    {}
+}
+
+
+
+@article{AH90,
+  author    = {James Aspnes and Maurice Herlihy},
+  title     = {Fast Randomized Consensus Using Shared Memory},
+  journal   = {J. Algorithms},
+  volume    = {11},
+  number    = {3},
+  year      = {1990},
+  pages     = {441-461}
+}
+
+
+@article{YTL-distributing-hot-spot,
+ author = {P.-C. Yew and N.-F. Tzeng and D. H. Lawrie},
+ title = {Distributing hot-spot addressing in large-scale multiprocessors},
+ journal = {IEEE Trans. Comput.},
+ volume = {36},
+ number = {4},
+ year = {1987},
+ issn = {0018-9340},
+ pages = {388--395},
+ publisher = {IEEE Computer Society},
+ address = {Washington, DC, USA},
+ }
+
+@InProceedings{AttiyaGHK06,
+  author =   {Hagit Attiya and Rachid Guerraoui and Danny Hendler and Petr Kouznetsov},
+  title =    {Synchronizing without Locks is Inherently Expensive},
+  booktitle =    podc06,
+  OPTcrossref =  {},
+  OPTkey =   {},
+  pages =     {300 - 307},
+  year =     {2006},
+  OPTeditor =    {},
+  OPTvolume =    {},
+  OPTnumber =    {},
+  OPTseries =    {},
+  OPTaddress =   {},
+  OPTmonth =     {},
+  OPTorganization = {},
+  OPTpublisher = {},
+  OPTnote =      {},
+  OPTannote =    {}
+}
+
+
+@InProceedings{AGK05,
+  author =   {Hagit Attiya and Rachid Guerraoui and Petr Kouznetsov},
+  title =    {Computing with Reads and Writes in the Absence of Step Contention},
+  booktitle =    disc05,
+  OPTcrossref =  {},
+  OPTkey =   {},
+  pages =     {122-136},
+  year =     {2005},
+  OPTeditor =    {},
+  OPTvolume =    {},
+  OPTnumber =    {},
+  OPTseries =    {},
+  OPTaddress =   {},
+  OPTmonth =     {},
+  OPTorganization = {},
+  OPTpublisher = {},
+  OPTnote =      {},
+  OPTannote =    {}
+}
+
+@TechReport{AGK05TR,
+  author =   {Hagit Attiya and Rachid Guerraoui and Petr Kouznetsov},
+  title =    {Handling Contention with Moderate Optimism},
+  institution =  {IC-EPFL},
+  year =     {2005},
+  key =      {IC/2005/006},
+  OPTtype =      {},
+  OPTnumber =    {},
+  OPTaddress =   {},
+  OPTmonth =     {},
+  OPTnote =      {},
+  OPTannote =    {}
+}
+
+@TechReport{TR9717,
+  author =   {S.P. Dandamudi},
+  title =    {Hot-Spot Contention in Shared Memory Multiprocessor Systems},
+  institution =  {Careleton University},
+  year =     {2005},
+  key =      {IC/2005/006},
+  OPTtype =      {},
+  OPTnumber =    {},
+  OPTseries =    {},
+  OPTaddress =   {},
+  OPTmonth =     {},
+  OPTorganization = {},
+  OPTpublisher = {},
+  OPTnote =      {},
+  OPTannote =    {}
+}
+
+@InProceedings{AGMT92,
+  author =   {Yehuda Afek and David Greenberg and Michael Merritt and Gadi Taubenfeld},
+  title =    {Computing with Faulty Shared Memory},
+  booktitle =    podc92,
+  OPTcrossref =  {},
+  OPTkey =   {},
+  OPTpages =     {},
+  year =     {1992},
+  OPTeditor =    {},
+  OPTvolume =    {},
+  OPTnumber =    {},
+  OPTseries =    {},
+  OPTaddress =   {},
+  OPTmonth =     {},
+  OPTorganization = {},
+  OPTpublisher = {},
+  OPTnote =      {},
+  OPTannote =    {}
+}
+
+@InProceedings{AGKLR05,
+  author =   {Paul C. Attie and Rachid Guerraoui and Petr Kouznetsov and Nancy A. Lynch and Sergio Rajsbaum},
+  title =    {The Impossibility of Boosting Distributed Service Resilience},
+  booktitle =    icdcs05,
+  OPTcrossref =  {},
+  OPTkey =   {},
+  OPTpages =     {},
+  year =     {2005},
+  OPTeditor =    {},
+  OPTvolume =    {},
+  OPTnumber =    {},
+  OPTseries =    {},
+  OPTaddress =   {},
+  month =    {June},
+  OPTorganization = {},
+  OPTpublisher = {},
+  note =     {Available at {http://theory.lcs.mit.edu/tds/papers/Attie/boosting-tr.ps}},
+  OPTannote =    {}
+}
+
+
+@inproceedings{greenwald02twohanded,
+ author = {Michael Greenwald},
+ title = {Two-handed emulation: how to build non-blocking implementations of complex data-structures using DCAS},
+ booktitle = {PODC '02: Proceedings of the twenty-first annual symposium on Principles of distributed computing},
+ year = {2002},
+ isbn = {1-58113-485-1},
+ pages = {260--269},
+ location = {Monterey, California},
+ doi = {http://doi.acm.org/10.1145/571825.571874},
+ publisher = {ACM Press},
+ address = {New York, NY, USA},
+ }
+
+
+@inproceedings{AAFST99,
+ author = {Yehuda Afek and Hagit Attiya and Arie Fouren and Gideon Stupp and Dan Touitou},
+ title = {Long-lived renaming made adaptive},
+ booktitle = podc99,
+ year = {1999},
+ month = {May},
+OPTisbn = {1-58113-099-6},
+ pages = {91--103},
+ OPTlocation = {Atlanta, Georgia, United States},
+ OPTdoi = {http://doi.acm.org/10.1145/301308.301335},
+ OPTpublisher = {ACM Press},
+ }
+
+@inproceedings{tsigas,
+  author    = {Phuong Hoai Ha and
+               Marina Papatriantafilou and
+               Philippas Tsigas},
+  title     = {Self-tuning Reactive Distributed Trees for Counting and
+               Balancing.},
+  booktitle = {OPODIS},
+  year      = {2004},
+  pages     = {213-228},
+  ee        = {http://dx.doi.org/10.1007/11516798_16},
+  crossref  = {DBLP:conf/opodis/2004},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+
+
+@inproceedings{HSY04,
+ author = {Danny Hendler and Nir Shavit and Lena Yerushalmi},
+ title = {A scalable lock-free stack algorithm},
+ booktitle = {SPAA '04: Proceedings of the sixteenth annual ACM symposium on Parallelism in algorithms and architectures},
+ year = {2004},
+ isbn = {1-58113-840-7},
+ pages = {206--215},
+ location = {Barcelona, Spain},
+ doi = {http://doi.acm.org/10.1145/1007912.1007944},
+ publisher = {ACM Press},
+ address = {New York, NY, USA},
+ }
+
+@article{kruskal88efficient,
+    author = "Clyde P. Kruskal and Larry Rudolph and Marc Snir",
+    title = "Efficient Synchronization on Multiprocessors with Shared Memory",
+    journal = "ACM Transactions on Programming Languages and Systems",
+    volume = "10",
+    number = "4",
+    pages = "579--601",
+    year = "1988",
+    url = "continuity.ist.psu.edu/kruskal86efficient.html" }
+
+
+@inproceedings{MNSS05,
+ author = {Mark Moir and Daniel Nussbaum and Ori Shalev and Nir Shavit},
+ title = {Using elimination to implement scalable and lock-free FIFO queues},
+ booktitle = {SPAA'05: Proceedings of the 17th annual ACM symposium on Parallelism in algorithms and architectures},
+ year = {2005},
+ isbn = {1-58113-986-1},
+ pages = {253--262},
+ location = {Las Vegas, Nevada, USA},
+ doi = {http://doi.acm.org/10.1145/1073970.1074013},
+ publisher = {ACM Press},
+ address = {New York, NY, USA},
+ }
+
+
+
+
+@Article{ABD95,
+        author =       "Hagit Attiya and Amoz Bar-Noy and Danny Dolev",
+        title =        "Sharing Memory Robustly in Message-Passing Systems",
+        journal =      jacm,
+        volume =       "42",
+        number =       "1",
+        pages =        "124--142",
+        publisher =    "ACM Press , New York, NY , USA",
+        year =         "1995",
+      }
+
+@Article{Attiya94are,
+        author =       "Hagit Attiya and Nancy Lynch and Nir Shavit",
+        title =        "Are Wait-Free Algorithms Fast?",
+        journal =      "Journal of the ACM",
+        volume =       "41",
+        number =       "4",
+        pages =        "725--763",
+        year =         "1994",
+      }
+
+@Article{AFL83,
+        author =       "E. Arjomandi and M. Fischer and N. Lynch",
+        title =        "Efficiency of Synchronous Versus Asnychronous Distributed Systems",
+        journal =      "Journal of the ACM",
+        volume =       "30",
+        number =       "3",
+        pages =        "449--456",
+        year =         "1983",
+      }
+
+@inproceedings{NYU98,
+ author = {Allan Gottlieb and Ralph Grishman and Clyde P. Kruskal and Kevin P. McAuliffe and Larry Rudolph and Marc Snir},
+ title = {The NYU ultracomputer�designing a MIMD, shared-memory parallel machine},
+ booktitle = {ISCA '98: 25 years of the international symposia on Computer architecture (selected papers)},
+ year = {1998},
+ pages = {239--254},
+ location = {Barcelona, Spain},
+ publisher = {ACM Press},
+ address = {New York, NY, USA},
+ }
+
+@inproceedings{GVW-efficient-synch-prim,
+  author    = {James R. Goodman and
+               Mary K. Vernon and
+               Philip J. Woest},
+  title     = {Efficent Synchronization Primitives for Large-Scale Cache-Coherent
+               Multiprocessors.},
+  booktitle = {ASPLOS},
+  year      = {1989},
+  pages     = {64-75},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+
+
+
+@Article{GK99,
+  author =   {Eli Gafni and Elias Koutsoupias},
+  title =    {Three-processor tasks are undecidable},
+  journal =      {SIAM Journal on Computing},
+  year =     {1999},
+  OPTkey =   {},
+  volume =   {28},
+  number =   {3},
+  pages =    {970--983},
+  OPTmonth =     {},
+  OPTnote =      {},
+  OPTannote =    {}
+}
+
+
+@article{HerlihyR00journal,
+author={Maurice Herlihy and Sergio Rajsbaum},
+title={Algebraic Spans},
+journal={Mathematical Structures in Computer Science
+(Special Issue: Geometry and Concurrency)},
+volume={10},
+number={4},
+pages={549-573},
+month={August},
+year={2000},
+}
+
+
+
+@Article{EGHKK03,
+  author =   {P. Th. Eugster and R. Guerraoui and S. B. Handurukande and A.-M. Kermarrec and P. Kouznetsov},
+  title =    {Lightweight Probabilistic Broadcast},
+  journal =      {ACM Transactions on Computer Systems},
+  year =     {2003},
+  OPTkey =   {},
+  volume =   {21},
+  number =   {4},
+  pages =    {341-374},
+  month =    {November}
+}
+
+
+@inproceedings{AST99,
+  author    = {Yehuda Afek and
+               Gideon Stupp and
+               Dan Touitou},
+  title     = {Long-lived Adaptive Collect with Applications.},
+  booktitle =  {Proceedings of the 40th Annual Symposium on Foundations of Computer Science (FOCS)},
+  year      = {1999},
+  pages     = {262--272}
+}
+
+
+@inproceedings{FHS05,
+  author    = {Faith Ellen Fich and Danny Hendler and Nir Shavit},
+  title     = {Linear Lower Bounds on Real-World Implementations of Concurrent Objects},
+  booktitle =  {Proceedings of the 46th Annual Symposium on Foundations of Computer Science (FOCS)},
+  year      = {2005},
+  pages     = {165--173}
+}
+
+
+@inproceedings{SNZI,
+  author    = {Faith Ellen Fich and Yossi Lev and Victor Luchangco and Mark Moir},
+  title     = {SNZI: scalable NonZero Indicators},
+  booktitle =  podc07,
+  year      = {2007},
+  pages     = {13--22}
+}
+
+
+@Unpublished{EHT04,
+  author =   {Jonathan Eisler and Vassos Hadzilacos and Sam Toueg},
+  title =    {The quorum failure detector and its relation to consensus and registers},
+  note =     {Unpublished note},
+  OPTkey =   {},
+  month =    {June 25},
+  year =     {2004},
+  OPTannote =    {}
+}
+
+@TechReport{GHKT04_TR,
+  author =   {Rachid Guerraoui and Vassos Hadzilacos and Petr Kouznetsov and Sam Toueg},
+  title =    {The weakest failure detectors for quittable consensus and non-blocking atomic commit},
+  institution =  {LPD, EPFL},
+  year =     {2004},
+  OPTkey =   {},
+  OPTtype =      {},
+  OPTnumber =    {IC/2003/47},
+  OPTaddress =   {},
+  OPTmonth =     {May},
+  note =     {Availabe at http://lpdwww.epfl.ch/publications/},
+  OPTannote =    {}
+}
+
+
+@article{AttiyaF03,
+  author    = {Hagit Attiya and Arie Fouren},
+  title     = {Algorithms adapting to point contention},
+  journal   = jacm,
+  volume    = {50},
+  number    = {4},
+  year      = {2003},
+  pages     = {444--468}
+}
+
+
+
+@Book{AW98,
+  author =   {Hagit Attiya and Jennifer L. Welch},
+  title =    {Distributed Computing: Fundamentals, Simulations and Advanced Topics},
+  publisher =    {McGraw-Hill},
+  year =     {1998},
+}
+
+@Book{taubenfeld:book,
+  author =   {Gadi Taubenfeld},
+  title =    {Synchronization Algorithms and Concurrent Programming},
+  publisher =    {Prentice Hall},
+  year =     {2006},
+}
+
+
+@Book{FellerBook,
+  author =   {William Feller},
+  title =    {An Introduction to Probability Theory and Its Applications, Vol. 1},
+  publisher =    {Wiley},
+  year =     {1968},
+}
+
+
+@Book{AW03,
+  author =   {Hagit Attiya and Jennifer L. Welch},
+  title =    {Distributed Computing: Fundamentals, Simulations and Advanced Topics (2nd edition)},
+  publisher =    {Wiley},
+  year =     {2004},
+}
+
+
+@inproceedings{CM02,
+        AUTHOR = "Gregory Chockler and Dahlia Malkhi",
+        TITLE = "Active {D}isk {P}axos with infinitely many processes",
+        booktitle =   podc02,
+        address = {Monterey, CA},
+        month = jul,
+        year =        {2002}
+}
+
+
+
+@INPROCEEDINGS{Lamps96,
+       AUTHOR="B. Lampson",
+       TITLE="How to build a highly available system using consensus",
+       BOOKTITLE=wdag96,
+       YEAR=1996,
+       PAGES="1-15"
+}
+
+
+@inproceedings{OL88,
+    author = "B. Oki and B. Liskov",
+    title = "Viewstamped replication: A general primary copy method to
+support highly available distributed systems",
+  booktitle     = podc88,
+   pages         = {8--17},
+   year = 1988
+}
+
+
+@inproceedings{EMT01,
+  author    = {Eli Gafni and
+               Michael Merritt and
+               Gadi Taubenfeld},
+  title     = {The concurrency hierarchy, and algorithms for unbounded
+               concurrency},
+  booktitle = podc01,
+  year      = {2001},
+  pages     = {161--169}
+}
+
+
+@InProceedings{GKP02,
+  author =   {Rachid Guerraoui and Petr Kouznetsov and Bastian Pochon },
+  title =    {A Note on Set Agreement with Omission Failures },
+  booktitle =    {Proceedings of the 4th Workshop on Geometric and Topological Methods in Concurrency
+and Distributed Systems Theory (GETCO 2002)},
+  year =     {2002},
+  address =      {Toulouse},
+  month =    {October}
+}
+
+@article{AHS-counting-networks,
+ author = {James Aspnes and Maurice Herlihy and Nir Shavit},
+ title = {Counting networks},
+ journal = {J. ACM},
+ volume = {41},
+ number = {5},
+ year = {1994},
+ issn = {0004-5411},
+ pages = {1020--1048},
+ doi = {http://doi.acm.org/10.1145/185675.185815},
+ publisher = {ACM Press},
+ address = {New York, NY, USA},
+ }
+
+
+
+@article{HSW-lin-counting-networks,
+  author    = {Maurice Herlihy and
+               Nir Shavit and
+               Orli Waarts},
+  title     = {Linearizable Counting Networks.},
+  journal   = {Distributed Computing},
+  volume    = {9},
+  number    = {4},
+  year      = {1996},
+  pages     = {193-203},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+@article{SZ00-combining-funnels,
+  author    = {Nir Shavit and
+               Asaph Zemach},
+  title     = {Combining Funnels: A Dynamic Approach to Software Combining.},
+  journal   = {J. Parallel Distrib. Comput.},
+  volume    = {60},
+  number    = {11},
+  year      = {2000},
+  pages     = {1355-1387},
+  ee        = {http://dx.doi.org/10.1006/jpdc.2000.1621},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+
+
+@article{SZ96-diffracting,
+ author = {Nir Shavit and Asaph Zemach},
+ title = {Diffracting trees},
+ journal = {ACM Trans. Comput. Syst.},
+ volume = {14},
+ number = {4},
+ year = {1996},
+ issn = {0734-2071},
+ pages = {385--428},
+ doi = {http://doi.acm.org/10.1145/235543.235546},
+ publisher = {ACM Press},
+ address = {New York, NY, USA},
+ }
+
+
+
+@InProceedings{Ada02,
+  author =   {S. Blanc and R. Guerraoui and K. Hess and P. Kouznetsov and P. E. Parent and B. Pochon and O. Sauvageot},
+  title =    {Using the Topological Characterization of Synchronous Models},
+  booktitle =    {Proceedings of the 4th Workshop on Geometric and Topological Methods in Concurrency
+and Distributed Systems Theory (GETCO 2002)},
+  year =     {2002},
+  address =      {Toulouse},
+  month =    {October}
+}
+
+@InProceedings{GKP04,
+  author =   {Rachid Guerraoui and Petr Kouznetsov and Bastian Pochon },
+  title =    {On the asynchronous computability theorem},
+  booktitle =    {Proceedings of the 6th Workshop on Geometric and Topological Methods in Concurrency
+and Distributed Systems Theory (GETCO 2004)},
+  year =     {2004},
+  address =      {Amsterdam},
+  month =    {October}
+}
+
+
+@TechReport{ALR02,
+  author =   {Paul Attie and Nancy A. Lynch and Sergio Rajsbaum},
+  title =    {Boosting fault-tolerance in asynchronous message passing systems is impossible},
+  institution =  {MIT Laboratory for Computer Science, MIT-LCS-TR-877},
+  year =     {2002},
+  OPTtype =      {},
+  OPTnumber =    {},
+  OPTaddress =   {},
+  OPTmonth =     {},
+  OPTnote =      {},
+  OPTannote =    {}
+}
+
+@TechReport{AGKLR04,
+  author =   {Paul Attie and Rachid Guerraoui and Petr Kouznetsov and Nancy A. Lynch and Sergio Rajsbaum},
+  title =    {Boosting distributed service resilience is impossible},
+  institution =  {LPD, EPFL},
+  year =     {2004},
+  OPTtype =      {},
+  OPTnumber =    {},
+  OPTaddress =   {},
+  OPTmonth =     {},
+  OPTnote =      {},
+  OPTannote =    {}
+}
+
+
+
+@unpublished{BCBT01,
+  Author = "Charron-Bost, Bernadette and Sam Toueg",
+  note = "Unpublished notes",
+  year = 2001,
+  }
+
+@inproceedings{FHS04,
+ author = {Faith Fich and Danny Hendler and Nir Shavit},
+ title = {On the inherent weakness of conditional synchronization primitives},
+ booktitle = {PODC '04: Proceedings of the twenty-third annual ACM symposium on Principles of distributed computing},
+ year = {2004},
+ isbn = {1-58113-802-4},
+ pages = {80--87},
+ location = {St. John's, Newfoundland, Canada},
+ doi = {http://doi.acm.org/10.1145/1011767.1011780},
+ publisher = {ACM Press},
+ address = {New York, NY, USA},
+ }
+
+@article{FHS98,
+ author = {Faith Fich and Maurice Herlihy and Nir Shavit},
+ title = {On the space complexity of randomized synchronization},
+ journal = jacm,
+ volume = 45,
+ number = 5,
+ year = 1998,
+ issn =      {0004-5411},
+ pages = {843--862},
+ doi =       {http://doi.acm.org/10.1145/290179.290183},
+ publisher = {ACM Press},
+ }
+
+
+@inproceedings{FGHH02,
+  author    = {Matthias Fitzi and
+               Daniel Gottesman and
+               Martin Hirt and
+               Thomas Holenstein and
+               Adam Smith},
+  title     = {Detectable byzantine agreement secure against faulty majorities.},
+  booktitle = podc02,
+  year      = {2002}
+}
+
+
+
+@TechReport{GGK04,
+  author =   {Felix C. G\"artner and Rachid Guerraoui and Petr Kouznetsov},
+  title =    {The {CHT} Play},
+  institution =  {LPD, EPFL},
+  year =     {2004},
+  OPTtype =      {},
+  OPTnumber =    {},
+  OPTaddress =   {},
+  OPTmonth =     {},
+  OPTnote =      {},
+  OPTannote =    {}
+}
+
+
+@incollection{Gra78,
+  Author = "Gray, James",
+  Title = "Notes on database operating systems",
+  booktitle = "Operating Systems:  An Advanced Course",
+  editor = "R. Bayer and R. M. Graham and G. Seegmuller",
+  series = lncs,
+  Year = 1978,
+  volume = 60,
+  publisher = springer,
+  pages = "393--481",
+  OPTnote = "Also appears as Technical Report RJ2188, IBM Research Laboratory"
+  }
+
+
+@TechReport{AF03,
+  author =   {Marcos Kawazoe Aguilera and Svend Fr{\o}lund},
+  title =    {Strict linearizability and the power of aborting},
+  institution =  {HP Laboratories Palo Alto},
+  year =     {2003},
+  key =      {HPL-2003-241}
+}
+
+
+
+@InProceedings{AFHHT06,
+  author =   {Marcos K. Aguilera and Svend Frolund and Vassos Hadzilacos and
+Stephanie Lorraine Horn and Sam Toueg},
+  title =    {Abortable shared objects},
+  booktitle =    disc06,
+  OPTcrossref =  {},
+  OPTkey =   {},
+  pages =    {534--536},
+  year =     {2006},
+  OPTeditor =    {},
+  OPTvolume =    {},
+  OPTnumber =    {},
+  OPTseries =    {},
+  OPTaddress =   {},
+  OPTmonth =     {},
+  OPTorganization = {},
+  OPTpublisher = {},
+  OPTnote =      {},
+  OPTannote =    {}
+}
+
+
+@inproceedings{ALT02,
+  author    = {Marcos Kawazoe Aguilera and
+               G{\'e}rard {Le Lann} and
+               Sam Toueg},
+  title     = {On the Impact of Fast Failure Detectors on Real-Time Fault-Tolerant
+               Systems},
+  booktitle = disc02,
+  year      = {2002},
+  pages     = {354--370}
+}
+
+@inproceedings{ADFT04,
+  author    = {Marcos Kawazoe Aguilera and
+               Carole Delporte-Gallet and
+               Hugues Fauconnier and
+               Sam Toueg},
+  title     = {Communication-efficient leader election and consensus with
+               limited link synchrony},
+  booktitle = podc04,
+  year      = {2004},
+  pages     = {328--337}
+}
+
+
+@article{Fet03,
+  author    = {Christof Fetzer},
+  title     = {Perfect Failure Detection in Timed Asynchronous Systems},
+  journal   = {IEEE Trans. Computers},
+  volume    = {52},
+  number    = {2},
+  year      = {2003},
+  pages     = {99--112}
+}
+
+
+@article{ACT00,
+  author    = {Marcos Kawazoe Aguilera and
+               Wei Chen and
+               Sam Toueg},
+  title     = {On Quiescent Reliable Communication},
+  journal   = {SIAM J. Comput.},
+  volume    = {29},
+  number    = {6},
+  year      = {2000},
+  pages     = {2040--2073}
+}
+
+@article{ACT00_CR,
+  author    = {Marcos Kawazoe Aguilera and
+               Wei Chen and
+               Sam Toueg},
+  title     = {Failure Detection and Consensus in the Crash-Recovery Model},
+  journal   = {Distributed Computing},
+  volume    = {13},
+  number    = {2},
+  year      = {2000},
+  pages     = {99--125}
+}
+
+@inproceedings{ATD99,
+  author    = {Marcos Kawazoe Aguilera and
+               Sam Toueg and
+               Borislav Deianov},
+  title     = {Revising the Weakest Failure Detector for Uniform Reliable Broadcast},
+  booktitle = disc99,
+  year      = {1999},
+  pages     = {19--33}
+}
+
+@article{CTA02,
+  author    = {Wei Chen and
+               Sam Toueg and
+               Marcos Kawazoe Aguilera},
+  title     = {On the Quality of Service of Failure Detectors},
+  journal   = {IEEE Trans. Computers},
+  volume    = {51},
+  number    = {1\& 5},
+  year      = {2002},
+  pages     = {13--32 \& 561--580}
+}
+
+
+@InProceedings{JT92,
+  author =   {Prasad Jayanti and Sam Toueg},
+  title =    {Some results on the impossibility, universability and decidability of consensus},
+  booktitle =    wdag92,
+  year =     {1992},
+  series =   {LNCS},
+  volume =       {647},
+  publisher =    {Springer Verlag}
+}
+
+@article{DBLP:journals/talg/AspnesC10,
+  author    = {James Aspnes and
+               Keren Censor},
+  title     = {Approximate shared-memory counting despite a strong adversary},
+  journal   = {ACM Transactions on Algorithms},
+  volume    = {6},
+  number    = {2},
+  year      = {2010},
+  ee        = {http://doi.acm.org/10.1145/1721837.1721841},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+
+@Article{JTT00,
+  author =   {Prasad Jayanti and King Tan and Sam Toueg},
+  title =    {Time and Space Lower Bounds for Nonblocking Implementations},
+  journal =      sicomp,
+  year =     {2000},
+  OPTkey =   {},
+  volume =   {30},
+  number =   {2},
+  pages =    {438--456},
+  OPTmonth =     {},
+  OPTnote =      {},
+  OPTannote =    {}
+}
+
+@InProceedings{HR97,
+  author =   {Maurice Herlihy and Sergio Rajsbaum},
+  title =    {The decidability of distributed decision tasks},
+  booktitle =    {Proceedings of the 9th annual ACM symposium on Theory of computing (STOC)},
+  pages =    {589 - 598},
+  year =         {1997}
+}
+
+
+@Book{BHG87,
+  author =   {Philip A. Bernstein and Vassos Hadzilacos and Nathan Goodman},
+  ALTeditor =    {},
+  title =    {Concurrency Control and Recovery in Database Systems},
+  publisher =    {Addison-Wesley},
+  year =     {1987},
+  OPTkey =   {},
+  OPTvolume =    {},
+  OPTnumber =    {},
+  OPTseries =    {},
+  OPTaddress =   {},
+  OPTedition =   {},
+  OPTmonth =     {},
+  OPTnote =      {},
+  OPTannote =    {}
+}
+
+
+
+@Article{DC90,
+  author =   {S. Deering and D. Cheriton},
+  title =    {{Multicast Routing in Datagram Internetworks and Extendexd LANs}},
+  journal =      {ACM Transactions on Computer Systems},
+  year =     {1990},
+  OPTkey =   {},
+  volume =   {8},
+  number =   {2},
+  pages =    {85-110},
+  month =    {May},
+  OPTnote =      {},
+  OPTannote =    {}
+}
+
+@Article{BDFG03,
+  author =   {Romain Boichat and Partha Dutta and Svend Fr{\o}lund and Rachid Guerraoui},
+  title =    {Deconstructing {P}axos},
+  journal =      {ACM SIGACT News Distributed Computing Column},
+  pages =        {47 -- 67},
+  volume =   {34},
+  number =   {1},
+  month =    {March},
+  year = {2003},
+  note = {Revised version of EPFL Technical Report 200106, January 2001}
+}
+
+
+
+@InProceedings{DFGP02,
+  author =   {Partha Dutta and Svend Fr{\o}lund and Rachid Guerraoui and Bastian Pochon},
+  title =    {An Efficient Universal Construction for Message-Passing Systems},
+  booktitle =    disc02,
+  year =     {2002},
+  month =    {October}
+}
+
+
+
+
+@Article{Vid03,
+  author =   {Krishnamurthy Vidyasankar},
+  title =    {A simple group mutual $l$-exclusion algorithm},
+  journal =      {Information Processing Letters},
+  year =     {2003},
+  volume =   {85},
+  pages =    {79-85}
+}
+
+@Article{Chu98,
+  author =   {Francis Chu},
+  title =    {{Reducing ${\Omega}$ to ${\Diamond W}$}},
+  journal =      {Information Processing Letters},
+  year =     {1998},
+  volume =   {67},
+  pages =    {289-293}
+}
+
+@Article{AS85,
+  author =   {Bowen Alpern and Fred B. Schneider},
+  title =    {Defining Liveness},
+  journal =      {Information Processing Letters},
+  year =     {1985},
+  volume =   {21},
+  number =       {4},
+  pages =    {181-185}
+}
+
+
+@Article{Att02,
+  author =   {Paul C. Attie},
+  title =    {Wait-free {B}yzantine consensus},
+  journal =      {Information Processing Letters},
+  year =     {2002},
+  volume =   {83},
+  number =       {4},
+  pages =    {221--227}
+}
+
+@InProceedings{FLBB79,
+  author =   {Michael J. Fischer and Nancy A. Lynch and James E. Burns and Allan Borodin},
+  title =    {Resource allocation with immunity to limited process failure },
+  booktitle =    {Proceedings of the 20th Annual Symposium on Foundations of Computer Science (FOCS)},
+  pages =    {234 -- 254},
+  year =     {1979}
+}
+
+@Article{CW90,
+  author =   {Brian A. Coan and Jennifer Lundelius Welch},
+  title =    {Transaction commit in a realistic timing model},
+  journal =      {Distributed Computing},
+  year =     {1990},
+  volume =   {4},
+  number =   {2},
+  pages =    {87-103}
+}
+
+@Article{Lam86IP,
+  author =   {Leslie Lamport},
+  title =    {On Interprocess Communication--{Part I: Basic Formalism, Part II: Algorithms}},
+  journal =      {Distributed Computing},
+  year =     {1986},
+  volume =   {1,2},
+  number =   {2},
+  pages =    {87-103}
+}
+
+@Article{MMRT03,
+  author =   {Dahlia Malkhi and Michael Merritt and Michael K. Reiter and Gadi Taubenfeld},
+  title =    {Objects Shared by {B}yzantine Processes},
+  journal =      {Distributed Computing},
+  year =     {2003},
+  volume =   {16},
+  number =   {1},
+  pages =    {37--48}
+}
+
+
+@InProceedings{DFG02_RFD,
+  author =   {Carole Delporte-Gallet and Hugues Fauconnier and Rachid Guerraoui},
+  title =    {A realistic look at failure detectors},
+  booktitle =    {Proceedings of the IEEE Symposium on Dependable Systems and Networks (DSN 2002)},
+  year =     {2002},
+  address =      {Washington DC},
+  month =    {June}
+}
+
+
+
+@Article{LA87,
+  author =   {Michael C. Loui and Hosame H. Abu-Amara},
+  title =    {Memory Requirements for Agreement Among Unreliable Asynchronous Processes},
+  journal =      {Advances in Computing Research},
+  year =     {1987},
+  pages =    {163-183}
+}
+
+@Article{HerlihyWingLinearizability,
+  author =   {Maurice Herlihy  and Jeannette M. Wing},
+  title =    {Linearizability: a correctness condition for concurrent objects},
+  journal =      toplas,
+  year =     {1990},
+
+  volume =   {12},
+  number =   {3},
+  pages =    {463--492},
+  month =    {June}
+}
+
+@Unpublished{Gaf03_PC,
+  author =   {Eli Gafni},
+  title =    {Private communication},
+  OPTkey =   {},
+  OPTmonth =     {},
+  year =     {2003},
+  OPTannote =    {}
+}
+
+@Unpublished{Jay03_PC,
+  author =   {Prasad Jayanti},
+  title =    {Private communication},
+  OPTkey =   {},
+  OPTmonth =     {},
+  year =     {2003},
+  OPTannote =    {}
+}
+
+@InProceedings{BGA94,
+  author =   {Elizabeth Borowsky and Eli Gafni and Yehuda Afek},
+  title =    {Consensus power makes (some) sense!},
+  booktitle =    podc94,
+  pages =    {363-372},
+  year =     {1994},
+  month =    {August}
+}
+
+@InProceedings{BG93_IS,
+  author =   {Elizabeth Borowsky and Eli Gafni},
+  title =    {Immediate snapshots and fast renaming},
+  booktitle =    podc93,
+  pages =    {41--52},
+  year =     {1993},
+  month =        {August}
+}
+
+@INPROCEEDINGS{BG97,
+  AUTHOR = { Elizabeth Borowsky and Eli Gafni },
+  TITLE = { A Simple Algorithmically Reasoned Characterization of Wait-Free Computation },
+  BOOKTITLE = podc97,
+  MONTH = {August},
+  YEAR = {1997}
+}
+
+
+@InProceedings{BNP94,
+  author =   {Rida A. Bazzi and Gil Neiger and Gary L. Peterson},
+  title =    {On the use of registers in achieving wait-free consensus},
+  booktitle =    podc94,
+  pages =    {354-362},
+  year =     {1994},
+  month =    {August}
+}
+
+@InProceedings{PBN94,
+  author =   {Gary L. Peterson and Rida A. Bazzi and Gil Neiger},
+  title =    {A gap theorem for consensus types},
+  booktitle =    podc94,
+  pages =    {344-353},
+  year =     {1994},
+  month =    {August}
+}
+
+@InProceedings{BO83,
+  author =   {Michael Ben-Or},
+  title =    {Another Advantage of Free Choice: {C}ompletely Asynchronous Agreement Protocols},
+  booktitle =    podc83,
+  pages =    {27-30},
+  year =     {1983}
+}
+
+@inproceedings{Ber93,
+  author    = {Brian N. Bershad},
+  title     = {Practical Considerations for Non-Blocking Concurrent Objects.},
+  booktitle = icdcs93,
+  year      = {1993},
+  pages     = {264-273}
+}
+
+
+@Article{Kol65,
+  author =   {A. N. Kolmogorov},
+  title =    {Three approaches to the quantitative definition of information},
+  journal =      {Problems of Information Transmission},
+  year =     {1965},
+ volume =    {1},
+  pages =    {4-7},
+}
+
+@Article{DDS87,
+  author =   {Danny Dolev and Cynthia Dwork and Larry J. Stockmeyer},
+  title =    {On the minimal synchronism needed for distributed consensus},
+  journal =      jacm,
+  year =     {1987},
+  volume =   {34},
+  number =   {1},
+  pages =    {77-97},
+  month =    {January}
+}
+
+@InProceedings{HR00,
+  author =   {Maurice Herlihy and Eric Ruppert},
+  title =    {On the existence of booster types},
+  booktitle =    {Proceedings of the 41st IEEE Symposium on Foundations of Computer Science (FOCS)},
+  pages =    {653-663},
+  year =     {2000},
+}
+
+@Article{Her91,
+  author =   {Maurice Herlihy},
+  title =    {Wait-free synchronization},
+  journal =      toplas,
+  year =     {1991},
+  volume =   {13},
+  number =   {1},
+  pages =    {124-149},
+  month =    {January}
+}
+
+@InProceedings{DF02,
+  author =   {Carole Delporte-Gallet and Hugues Fauconnier },
+  title =    {Latency Measures and Lower Bounds for Consensus with Failure Detectors},
+  booktitle =    {Proceedings of the 9th International Colloquium on Structural \
+                 Information and Communication Complexity (SIROCCO 2002)},
+  year =     {2002},
+  address =      {Andros},
+}
+
+@Book{Mun84,
+  author =   {James R. Munkres},
+  title =    {Elements of Algebraic Topology},
+  publisher =    {Addison-Wesley},
+  year =     {1984},
+  address =      {Menlo Park, Calif.},
+}
+
+
+@InProceedings{HRT98,
+  author =   {Maurice Herlihy and Sergio Rajsbaum and Mark R. Tuttle},
+  title =    {Unifying Synchronous and Asynchronous Message-Passing Models},
+  booktitle =    podc98,
+  pages =    {133-142},
+  year =     {1998},
+  month =    {June}
+}
+
+
+@InProceedings{CHJT94,
+ author = {Tushar D. Chandra and Vassos Hadzilacos and Prasad Jayanti and Sam Toueg},
+ title = {Wait-freedom vs. $t$-resiliency and the robustness of wait-free hierarchies},
+ booktitle = podc94,
+ year = {1994},
+ pages = {334-343},
+ location = {Los Angeles, California, United States},
+ month = {August},
+ OPTpublisher = {ACM Press}
+ }
+
+
+
+@Unpublished{CHJT94_robust,
+  author =   {Tushar D. Chandra and Vassos Hadzilacos and Prasad Jayanti and Sam Toueg},
+  title =    {The $h_m^r$ hierarchy is not robust},
+  note =     {Manuscript},
+  OPTkey =   {},
+  OPTmonth =     {},
+  OPTyear =      {},
+  OPTannote =    {}
+}
+
+
+
+@Article{IL93,
+  author =   {Israeli, Amos and Li, Ming},
+  title =    {Bounded time-stamps},
+  journal =      {Distributed Computing},
+  year =     {1993},
+  volume =   {6},
+  number =   {4},
+  month =        {July},
+  pages =    {205--209}
+}
+
+@InProceedings{Jay95,
+  author =   {Prasad Jayanti},
+  title =    {Wait-free computing},
+  booktitle =    wdag95,
+  pages =    {19-50},
+  year =     {1995},
+  series =   {LNCS},
+  volume =       {972},
+  publisher =    {Springer Verlag}
+}
+
+
+@InProceedings{Jay93,
+  author =   {Prasad Jayanti},
+  title =    {On the robustness of {H}erlihy's hierarchy},
+  booktitle =    podc93,
+  pages =    {145-158},
+  year =     {1993},
+  month =    {August}
+}
+
+@Article{Jay98,
+  author =   {Prasad Jayanti},
+  title =    {Solvability of consensus: {Composition} breaks down for nondeterministic types},
+  journal =      {SIAM Journal of Computing},
+  year =     {1998},
+  volume =   {28},
+  number =   {3},
+  pages =    {782-797}
+}
+
+@Article{LH00,
+  author = "Wai-Kau Lo and Vassos Hadzilacos",
+  title = "All of Us Are Smarter than Any of Us: Nondeterministic Wait-Free Hierarchies Are Not Robust",
+  journal =      {SIAM Journal of Computing},
+  year =     {2000},
+  volume =   {30},
+  number =   {3},
+  pages =    {689-728}
+}
+
+
+
+@InProceedings{KCSV00,
+  author =   {Richard M. Karp and Christian Schindelhauer and Scott Shenker and Berthold V\"{o}cking},
+  title =    {Randomized Rumor Spreading},
+  booktitle =    {Proceedings of the  41st Annual Symposium on Foundations of Computer Science (FOCS)},
+  year =     {2000}
+}
+
+@inproceedings{Lam94,
+  author    = {Anthony {LaMarca}},
+  title     = {A Performance Evaluation of Lock-Free Synchronization Protocols.},
+  booktitle =  podc94,
+  year      = {1994},
+  pages     = {130-140}
+}
+
+
+@InProceedings{Pet99,
+ author = {Gary L. Peterson},
+ title = {Properties of a family of booster types},
+ booktitle = podc99,
+ year = {1999},
+ pages = {281}
+ }
+
+
+
+@Article{Rup00,
+  author =   {Eric Ruppert},
+  title =    {Determining consensus numbers},
+  journal =      {SIAM Journal of Computing},
+  year =     {2000},
+  volume =   {30},
+  number =   {4},
+  pages =    {1156-1168}
+}
+
+@Article{Lam98,
+  author =   {Leslie Lamport},
+  title =    {The Part-Time Parliament},
+  journal =      {ACM Transactions on Computer Systems},
+  year =     {1998},
+  volume =   {16},
+  number =   {2},
+  pages =    {133-169},
+  month =    {May}
+}
+
+@Article{Jay97,
+  author =   {Prasad Jayanti},
+  title =    {Robust wait-free hierarchies},
+  journal =      jacm,
+  year =     {1997},
+  volume =   {44},
+  number =   {4},
+  pages =    {592-614}
+}
+
+@InProceedings{MRR01,
+  author =   {Achour Mostefaoui and Sergio Rajsbaum and Michel Raynal},
+  title =    {A Hierarchy of Conditions for Consensus Solvability},
+  booktitle =    podc01,
+  pages =    {151-160},
+  year =     {2001},
+  month =    {August}
+}
+
+@article{DHW97,
+ author = {Cynthia Dwork and Maurice Herlihy and Orli Waarts},
+ title = {Contention in shared memory algorithms},
+ journal = jacm,
+ volume = {44},
+ number = {6},
+ year = {1997},
+ issn = {0004-5411},
+ pages = {779--805},
+ doi = {http://doi.acm.org/10.1145/268999.269000},
+ publisher = {ACM Press},
+ }
+
+@Article{DLS88,
+  author =   {Cynthia Dwork and  Nancy A. Lynch and Larry J. Stockmeyer},
+  title =    {Consensus in the presence of partial synchrony},
+  journal =      jacm,
+  year =     {1988},
+  volume =   {35},
+  number =   {2},
+  month =        {April},
+  pages =    {288 - 323}
+}
+
+@InProceedings{Nei95,
+  author =   {Gil Neiger},
+  title =    {Failure Detectors and the Wait-Free Hierarchy},
+  booktitle =    podc95,
+  pages =    {100-109},
+  year =     {1995},
+  month =    {August}
+}
+
+
+@InProceedings{HS93,
+  author =   {Maurice Herlihy and Nir Shavit},
+  title =    {The Asynchronous Computability Theorem for $t$-Resilient Tasks},
+  booktitle =    {Proceedings of the 25th ACM Symposium on Theory of Computing (STOC)},
+  year =     {1993},
+  month =    {May}
+}
+
+@InProceedings{HS94,
+  author =   {Maurice Herlihy and Nir Shavit},
+  title =    {A Simple Constructive Computability Theorem for Wait-Free Computation},
+  booktitle =    {Proceedings of the 26th ACM Symposium on Theory of Computing (STOC)},
+  year =     {1994},
+  month =    {July}
+}
+
+@Article{HS99,
+  author =   {Maurice Herlihy and Nir Shavit},
+  title =    {The Topological Structure of Asynchronous Computability},
+  journal =      jacm,
+  year =     {1999},
+  key =      {},
+  volume =   {46},
+  number =   {6},
+  pages =    {858-923},
+  month =    {November}
+}
+
+@InProceedings{Gue00,
+  author =   {Rachid Guerraoui},
+  title =    {Indulgent Algorithms},
+  booktitle =    podc00,
+  pages =    {289-298},
+  year =     {2000},
+  month =    {July}
+}
+
+
+
+@InProceedings{SS04_DISC,
+  author =   {Michael L. Scott and William N. {Scherer III}},
+  title =    {Nonblocking Concurrent Objects with Condition Synchronization},
+  booktitle =    disc04,
+  pages =    {174--187},
+  year =     {2004}
+}
+
+
+@InProceedings{SS05,
+  author =   {Michael L. Scott and William N. {Scherer III}},
+  title =    {Advanced Contention Management for Dynamic Software Transactional Memory},
+  booktitle =    podc05,
+  year =     {2005}
+}
+
+@InProceedings{GHP05,
+  author =   {Rachid Guerraoui and Maurice Herlihy and Bastian Pochon},
+  title =    {Toward a Theory of Transactional Contention Managers},
+  booktitle =    podc05,
+  year =     {2005}
+}
+
+@InProceedings{SS04,
+  author =   {Michael L. Scott and William N. {Scherer III}},
+  title =    {Contention Management in Dynamic Software Transactional Memory},
+  booktitle =    {PODC Workshop on Concurrency and Synchronization in Java Programs},
+  OPTcrossref =  {},
+  OPTkey =   {},
+  OPTpages =     {},
+  year =     {2004},
+  OPTeditor =    {},
+  OPTvolume =    {},
+  OPTnumber =    {},
+  OPTseries =    {},
+  OPTaddress =   {},
+  month =    {July},
+  OPTorganization = {},
+  OPTpublisher = {},
+  OPTnote =      {},
+  OPTannote =    {}
+}
+
+
+@InProceedings{SZ93,
+  author =   {Michael Saks and Fotios Zaharoglou},
+  title =    {Wait-free $k$-set agreement is impossible: {T}he topology of public knowledge},
+  booktitle =    {Proceedings of the 25th ACM Symposium on Theory of Computing (STOC)},
+  pages =    {101-110},
+  year =     {1993},
+  month =    {May}
+}
+
+@InProceedings{LH94,
+  author =   {Wai-Kau Lo and Vassos Hadzilacos},
+  title =    {Using Failure Detectors to Solve consensus in asynchronous shared-memory systems},
+  booktitle =    wdag94,
+  pages =    {280-295},
+  year =     {1994},
+  series =   {LNCS},
+  volume =       {857},
+  publisher =    {Springer Verlag}
+}
+
+
+
+@InProceedings{HRT01,
+  author =   {Maurice Herlihy and Sergio Rajsbaum and Mark R. Tuttle},
+  title =    {A New Synchronous Lower Bound for Set Agreement},
+  booktitle =    disc01,
+  pages =    {136-150},
+  year =     {2001},
+  month =    {October}
+}
+
+
+
+@TechReport{DFGK02,
+  author =   {Carole Delporte-Gallet and Hugues Fauconnier and Rachid Guerraoui and Petr Kouznetsov},
+  title =    {Mutual Exclusion in Asynchronous Systems with Failure Detectors},
+  institution =  {School of Computer and Communication Sciences, Swiss Institute of Technology in Lausanne, ID:200227},
+  year =     {2002},
+  OPTkey =   {},
+  OPTtype =      {},
+  OPTnumber =    {},
+  OPTaddress =   {},
+  OPTmonth =     {},
+  OPTnote =      {},
+  OPTannote =    {}
+}
+
+
+
+
+@Article{DFGK05,
+  author =   {Carole Delporte-Gallet and Hugues Fauconnier and Rachid Guerraoui and Petr Kouznetsov},
+  title =    {Mutual Exclusion in Asynchronous Systems with Failure Detectors},
+  journal =      {Journal of Parallel and Dustributed Computing (JPDC)},
+  year =     {2005},
+  OPTkey =   {},
+  volume =   {65},
+  number =   {4},
+  pages =    {492--505},
+  month =    {April},
+  OPTnote =      {},
+  OPTannote =    {}
+}
+
+@InProceedings{DFGHKT04,
+  author =   {Carole Delporte-Gallet and Hugues Fauconnier and Rachid Guerraoui and Vassos Hadzilacos
+and Petr Kouznetsov and Sam Toueg},
+  title =    {The weakest failure detectors to solve certain fundamental problems in distributed computing},
+  booktitle =    podc04,
+  year =     {2004},
+  month =        {July},
+  pages =        {338--346}
+}
+
+
+
+@TechReport{DFG03,
+  author =   {Carole Delporte-Gallet and Hugues Fauconnier and Rachid Guerraoui},
+  title =    {Shared Memory vs Message Passing},
+  institution =  {EPFL},
+  year =     {2003},
+  OPTkey =   {},
+  OPTtype =      {},
+  number =   {IC/2003/77},
+  OPTaddress =   {},
+  month =    {December},
+  OPTnote =      {Available at http://ic2.epfl.ch/publications/documents/IC\_TECH\_REPORT\_200377.pdf},
+  note =          {Availabe at http://icwww.epfl.ch/publications/},
+  OPTannote =    {}
+}
+
+
+
+
+@Article{MRT00,
+  author =       "Achour Mostefaoui and Michel Raynal and
+                 Fr{\'e}d{\'e}ric Tronel",
+  title =        "From {Binary Consensus} to {Multivalued Consensus} in
+                 asynchronous message-passing systems",
+  journal =      "Information Processing Letters",
+  volume =       "73",
+  number =       "5--6",
+  pages =        "207--212",
+  month =        {March},
+  year =         "2000"
+ }
+
+
+
+
+@TechReport{GK02_TR,
+  author =   {Rachid Guerraoui and Petr Kouznetsov},
+  title =    {On the Weakest Failure Detector for Non-Blocking Atomic Commit},
+  institution =  {School of Computer and Communication Sciences, Swiss Institute of Technology in Lausanne},
+  year =     {2002},
+  key =      {ID:200226},
+  note =     {Available at http://icwww.epfl.ch/publications/},
+}
+
+
+
+@InProceedings{GK02_TCS,
+  author =   {Rachid Guerraoui and Petr Kouznetsov},
+  title =    {On the Weakest Failure Detector for Non-Blocking Atomic Commit},
+  booktitle =    {Proceedings of the 2nd IFIP International Conference on Theoretical Computer Science (TCS 2002)},
+  year =     {2002},
+  pages =        {461--473},
+  month =    {August},
+  OPTnote =      {Full version is available at http://icwww.epfl.ch/publications/}
+}
+
+@TechReport{KR01,
+  author =   {Idit Keidar and Sergio Rajsbaum},
+  title =    {On the Cost of Fault-Tolerant Consensus When There Are No Faults - A Tutorial},
+  institution =  {MIT},
+  year =     {2001},
+  key =      {MIT-LCS-TR-821},
+  month =    {May},
+}
+
+@InProceedings{SW89,
+  author =   {Nicola Santoro and Peter Widmayer},
+  title =    {Time is Not a Healer},
+  booktitle =    {Proceedings of the 6th Annual Symposium on  Theoretical Aspects of Computer Science},
+  pages =    {304-313},
+  year =     {1989},
+  volume =   {349 of LNCS},
+  address =      {Padernorn, Germany},
+  month =    {February},
+  publisher = {Springer Verlag},
+}
+
+@InProceedings{Cha90,
+  author =   {Soma Chaudhuri},
+  title =    {Agreement is harder than consensus: set consensus in totally asynchronous systems},
+  booktitle =    podc00,
+  pages =    {311-324},
+  year =     {1990},
+  month =    {August},
+}
+
+@InProceedings{BG93,
+  author =   {Elizabeth Borowsky and Eli Gafni},
+  title =    {Generalized {FLP} impossibility result for $t$-resilient asynchronous computations},
+  booktitle =    {Proceedings of the 25th ACM Symposium on Theory of Computing (STOC)},
+  pages =    {91-100},
+  year =     {1993},
+  month =    {May},
+}
+
+@Unpublished{RKG02,
+  author =   {Luis Rodrigues and Petr Kouznetsov and Rachid Guerraoui},
+  title =    {Time-Free Leader Election in Mobile Ad Hoc Networks},
+  note =     {In submission},
+  OPTkey =   {},
+  OPTmonth =     {},
+  OPTyear =      {},
+  OPTannote =    {}
+}
+
+
+
+@Article{CHLT00,
+  author =   {Soma Chaudhuri and Maurice Herlihy and  Nancy A. Lynch and Mark R. Tuttle},
+  title =    {Tight bounds for k-set agreement},
+  journal =      jacm,
+  year =     {2000},
+  volume =   {47},
+  number =   {5},
+  pages =    {912--943},
+  month =    {},
+}
+
+@InProceedings{KM99,
+  author =   {Patrick Keane and Mark Moir},
+  title =    {A Simple Local-Spin Group Mutual Exclusion Algorithm},
+  booktitle =    podc99,
+  pages =    {23--32},
+  year =     {1999},
+}
+
+@InProceedings{FRT99,
+  author =   {Eddy Fromentin and  Michel Raynal and Fr{\'e}d{\'e}ric Tronel},
+  title =    {On Classes of Problems in Asynchronous Distributed Systems with Process Crashes},
+  booktitle =    icdcs99,
+  pages =    {470-477},
+  year =     {1999}
+}
+
+@InProceedings{EGK04,
+  author =   {Patrick Th. Eugster and Rachid Guerraoui and Petr Kouznetsov},
+  title =    {{Delta-Reliable Broadcast: A Probabilistic Measure of Broadcast Reliability}},
+  booktitle =    icdcs04,
+  year =     {2004}
+}
+
+
+@InProceedings{HLM03,
+  author =   {Maurice Herlihy and Victor Luchangco and Mark Moir},
+  title =    {Obstruction-free Synchronization: Double-ended Queues as an Example},
+  booktitle =    icdcs03,
+  pages =    {522--529},
+  year =     {2003},
+}
+
+
+
+@InProceedings{LMS03,
+  author =   {Victor Luchangco and Mark Moir and Nir Shavit},
+  title =    {On the uncontended complexity of consensus},
+  booktitle =    disc03,
+  pages =        {45--59},
+  year =         {2003}
+}
+
+@InProceedings{HLMS03,
+  author =   {Maurice Herlihy and Victor Luchangco and Mark Moir and William N. {Scherer III}},
+  title =    {Software Transactional Memory for Dynamic-Sized Data Structures},
+  booktitle =    podc03,
+  year =     {2003},
+  pages =        {92--101}
+}
+
+
+
+
+@TechReport{DGKL04,
+  author =   {Partha Dutta and Rachid Guerraoui and Petr Kouznetsov and Ron Levy},
+  title =    {Notes on obstruction-freedom},
+  institution =  {LPD, EPFL},
+  year =     {2004},
+  OPTkey =   {},
+  OPTtype =      {},
+  OPTnumber =    {},
+  OPTaddress =   {},
+  OPTmonth =     {},
+  OPTnote =      {},
+  OPTannote =    {}
+}
+
+@InProceedings{KGHK01,
+  author =   {Petr Kouznetsov and Rachid Guerraoui and Sidath B. Handurukande and Anne-Marie Kermarrec },
+  title =    {Reducing Noise in Gossip-Based Reliable Broadcast},
+  booktitle =    {Proceedings of the 20th Symposium on Reliable Distributed Systems (SRDS 2001)},
+  OPTcrossref =  {},
+  OPTkey =   {},
+  OPTpages =     {},
+  year =     {2001},
+  OPTeditor =    {},
+  OPTvolume =    {},
+  OPTnumber =    {},
+  OPTseries =    {},
+  OPTaddress =   {},
+  month =    {October},
+  OPTorganization = {},
+  OPTpublisher = {},
+  OPTnote =      {},
+  OPTannote =    {}
+}
+
+@Article{KM01,
+  author =   {Patrick Keane and Mark Moir},
+  title =    {A Simple Local-Spin Group Mutual Exclusion Algorithm},
+  journal =      {IEEE Transactions on Parallel and Distributed Systems},
+  year =     {2001},
+  OPTkey =   {},
+  volume =   {12},
+  number =   {7},
+  pages =    {673-685},
+  month =    {July},
+  OPTnote =      {},
+  OPTannote =    {}
+}
+
+@InProceedings{MS94,
+  author =   {D. Manivannan and Mukesh Singhal},
+  title =    {An Efficient Fault-tolerant Mutual Exclusion Algorithm for Distributed
+    Systems},
+  booktitle =    {Proceedings of the ISCA International
+    Conference on Parallel and Distributed Computing Systems},
+  pages =    {525-530},
+  year =     {1994},
+  month =    {October},
+  OPTannote =    {}
+}
+
+
+@InProceedings{CMR01,
+  author =   {Gregory Chockler and Dahlia Malkhi and Michael K. Reiter},
+  title =    {Backoff Protocols for Distributed Mutual Exclusion and Ordering},
+  booktitle =    icdcs01,
+  pages =    {11-20},
+  year =     {2001},
+  month =    {April}
+}
+
+@inproceedings{PS99,
+  year =        {1999},
+  title =       {Generic Broadcast},
+  author =      {F. Pedone and A. Schiper},
+  booktitle =   disc99,
+  keywords =    {FT_principles; Misc; Dragon},
+  url =         {Available at http://lsewww.epfl.ch/servlet/lse.servlet.DisplayPublicationsServlet/Select?id=211},
+  month =       sep
+}
+
+@Article{LK00,
+  author =   {Sandeep Lodha and Ajay D. Kshemkalyani},
+  title =    {A Fair Distributed Mutual Exclusion Algorithm},
+  journal =      {IEEE Transactions on Parallel and Distributed Systems},
+  year =     {2000},
+  volume =   {11},
+  number =   {6},
+  pages =    {537-549},
+  month =    {June},
+}
+
+@Article{GM01,
+  author =   {Eli Gafni and Michael Mitzenmacher},
+  title =    {Analysis of Timing-Based Mutual Exclusion with Random Times},
+  journal =      {SIAM Journal on Computing},
+  year =     {2001},
+  volume =   {31},
+  number =   {3},
+  pages =    {816-837},
+}
+
+
+
+@InProceedings{Gue95,
+  author =   {Rachid Guerraoui},
+  title =    {Revisiting the Relationship Between Non-Blocking Atomic Commit and Consensus},
+  booktitle =    wdag95,
+  pages =    {87-100},
+  year =     {1995},
+  series =   {LNCS},
+  volume =       {972},
+  publisher =    {Springer Verlag}
+}
+
+@Article{GueAgr01,
+  author =   {Rachid Guerraoui},
+  title =    {On the Hardness of Failure-Sensitive Agreement Problems},
+  journal =      {Information Processing Letters},
+  year =     {2001},
+  OPTkey =   {},
+  volume =   {79},
+  number =   {2},
+  pages =    {99-104},
+  month =    {June},
+  OPTnote =      {},
+  OPTannote =    {}
+}
+
+@Book{Ray86,
+    author = {Michel Raynal},
+    title = {Algorithms for Mutual Exclusion},
+    publisher = {MIT Press},
+    address = {Cambridge, Massachusetts},
+    year = {1986}
+}
+
+
+@Article{Gue02,
+  author =   {Rachid Guerraoui},
+  title =    {Non-Blocking Atomic Commit in Asynchronous Distributed Systems with Failure
+Detectors},
+  journal =      {Distributed Computing},
+  year =     {2002},
+  volume =   {15},
+  pages =    {17-25},
+  month =    {January},
+}
+
+@InProceedings{DFG02,
+  author =   {Carole Delporte-Gallet and Hugues Fauconnier and Rachid Guerraoui},
+  title =    {Collapsing the Failure Detector Hierarchy},
+  booktitle =    {Proceedings of the IEEE Symposium on Dependable Systems and Networks, Washington DC},
+  OPTcrossref =  {},
+  OPTkey =   {},
+  OPTpages =     {},
+  year =     {2002},
+  OPTeditor =    {},
+  OPTvolume =    {},
+  OPTnumber =    {},
+  OPTseries =    {},
+  OPTaddress =   {},
+  month =    { June },
+  OPTorganization = {},
+  OPTpublisher = {},
+  OPTnote =      {},
+  OPTannote =    {}
+}
+
+@InProceedings{DFG02b,
+ author =    {Delporte-Gallet, Carole and  Fauconnier, Hugues and Guerraoui, Rachid},
+  title =    {Failure Detection Lower Bounds on Registers and Consensus},
+  year =     {2002},
+  booktitle = {Distributed Computing},
+  editor =   {Malkhi, Dahlia},
+  organization = {16th Internationl conference DISC 2002},
+  series = {LNCS 2508},
+    place={Toulouse, France},
+  page={237--252},
+  author = "Delporte-Gallet, Carole and  Fauconnier, Hugues and Guerraoui, Rachid",
+}
+
+
+
+@Misc{HT03_PC,
+  author =   {Vassos Hadzilacos and Sam Toueg},
+  title =    {The weakest failure detector to solve quittable consensus and non-blocking atomic commit},
+  month =    {May},
+  year =     {2003},
+  howpublished = {Unpublished manuscript -- private communication}
+}
+
+@InProceedings{Had86,
+  author =   {Vassos Hadzilacos},
+  title =    {On the relationship between the atomic commitment and consensus problems},
+  booktitle =    {Proceedings of the Workshop on Fault-Tolerant Distributed Computing},
+  year =     {1986},
+  pages =        {201-208},
+  volume =   {448},
+  series =   {LNCS},
+  publisher = {Springer-Verlag}
+}
+
+@article{Had87,
+  Author = "Hadzilacos, Vassos",
+  Title = "On the relationship between the atomic commitment and
+            consensus problems",
+  Journal = {Fault-Tolerant Distributed Computing},
+  pages="201--208",
+  Year = {1987},
+  Editor   = { B. Simons and A. Spector},
+  Publisher= springer,
+  Series   = {LNCS 448},
+  }
+
+
+
+@InProceedings{Gra86,
+  author =   {Jim Gray},
+  title =    {A Comparison of the Byzantine Agreement Problem and the Transaction Commit Problem},
+  booktitle =    {Proceedings of the Workshop on Fault-Tolerant Distributed Computing},
+  year =     {1986},
+  pages =        {10-17},
+  volume =   {448},
+  series =   {LNCS},
+  publisher = {Springer-Verlag}
+}
+
+
+@TechReport{SM95,
+  author =   {Laura S. Sabel and Keith Marzullo},
+  title =    {Election vs. Consensus in Asynchronous Systems},
+  institution =  {Cornell University, Ithaca, NY, TR95-1488},
+  year =     {1995},
+  OPTkey =   {TR95-1488},
+  OPTtype =      {},
+  OPTnumber =    {},
+  OPTaddress =   {},
+  OPTmonth =     {},
+  OPTnote =      {},
+  OPTannote =    {}
+}
+
+@InProceedings{CT91,
+  author =   {Tushar D. Chandra and Sam Toueg },
+  title =    {Unreliable Failure Detectors for Asynchronous Systems},
+  booktitle =    podc91,
+  OPTcrossref =  {},
+  OPTkey =   {},
+  pages =    {325-340},
+  year =     {1991},
+  OPTeditor =    {},
+  volume =   {5},
+  OPTnumber =    {},
+  OPTseries =    {},
+  OPTaddress =   {},
+  month =    {August},
+  OPTorganization = {},
+  OPTpublisher = {ACM Press},
+  OPTnote =      {},
+  OPTannote =    {}
+}
+
+
+@TechReport{EGK01,
+  author =   {Patrick Th. Eugster and Rachid Guerraoui and Petr Kouznetsov},
+  title =    {Delta-Reliability},
+  institution =  {EPFL, DSC ID:200110},
+  year =     {2001},
+  OPTkey =   {},
+  OPTtype =      {},
+  OPTnumber =    {},
+  OPTaddress =   {},
+  OPTmonth =     {},
+  note =     {In submission},
+  OPTannote =    {}
+}
+
+
+
+@TechReport{GK03_NBAC,
+  author =   {Rachid Guerraoui and Petr Kouznetsov },
+  title =    {The weakest failure detector for non-blocking atomic commit},
+  institution =  {EPFL},
+  year =     {2003},
+  key =      {},
+  OPTtype =      {},
+  number =   {IC/2003/47},
+  OPTaddress =   {},
+  month =    {May},
+  note =     {Availabe at http://icwww.epfl.ch/publications/},
+  OPTannote =    {}
+}
+
+@TechReport{GK03_FNBAC,
+  author =   {Rachid Guerraoui and Petr Kouznetsov },
+  title =    {Finally the weakest failure detector for non-blocking atomic commit},
+  institution =  {EPFL},
+  year =     {2003},
+  key =      {},
+  OPTtype =      {},
+  number =   {IC/2003/78},
+  OPTaddress =   {},
+  month =    {November},
+  note =     {Availabe at http://icwww.epfl.ch/publications/},
+  OPTannote =    {}
+}
+
+
+
+@TechReport{GK03_TB,
+  author =   {Rachid Guerraoui and Petr Kouznetsov },
+  title =    {On failure detectors and type boosters},
+  institution =  {EPFL, ID:IC/2003/48},
+  year =     {2003},
+  month =        {December},
+  note =     {An extended version of {DISC} 2003 paper, available at http://icwww.epfl.ch/publications/}
+}
+
+@TechReport{GK04_gap,
+  author =   {Rachid Guerraoui and Petr Kouznetsov },
+  title =    {The gap in circumventing the consensus impossibility},
+  institution =  {EPFL, ID:IC/2004/28},
+  year =     {2004},
+  month =        {January},
+  note =     {Available at http://icwww.epfl.ch/publications/}
+}
+
+
+@InProceedings{GK03_TB_DISC,
+  author =   {Rachid Guerraoui and Petr Kouznetsov},
+  title =    {On failure detectors and type boosters},
+  booktitle =    disc03,
+  year =     {2003},
+  month =    {October}
+}
+
+
+
+
+
+@InProceedings{L78,
+  author =   {Leslie Lamport},
+  title =    {Time, clocks, and the ordering of events in a distributed system},
+  booktitle =    {Communications of the ACM},
+  OPTcrossref =  {},
+  OPTkey =   {},
+  pages =    {558-565},
+  year =     {1978},
+  OPTeditor =    {},
+  volume =   {21(7)},
+  OPTnumber =    {},
+  OPTseries =    {},
+  OPTaddress =   {},
+  month =    {July},
+  OPTorganization = {},
+  OPTpublisher = {},
+  OPTnote =      {},
+  OPTannote =    {}
+}
+
+@InProceedings{SS00,
+  author =   {Q. Sun and D.C. Sturman},
+  title =    {A Gossip-based Reliable Multicast for Large-Scale High-throughput Applications},
+  booktitle =    {IEEE 2000},
+  OPTcrossref =  {},
+  OPTkey =   {},
+  OPTpages =     {},
+  year =     {2000},
+  OPTeditor =    {},
+  OPTvolume =    {},
+  OPTnumber =    {},
+  OPTseries =    {},
+  OPTaddress =   {},
+  OPTmonth =     {},
+  OPTorganization = {},
+  OPTpublisher = {},
+  OPTnote =      {},
+  OPTannote =    {}
+}
+
+@Book{Bai75,
+  author =       "N. Bailey",
+  title =        "The Mathematical Theory of Infectious Diseases",
+  edition =      "2nd",
+  publisher =    "Charles Griffen and Company",
+  address =      "London, England, United Kingdom",
+  year =         1975
+ }
+
+
+
+@InProceedings{Lidl94,
+  author =   {K. Lidl and J. Osborne and S. Ghemawat},
+  title =    {Drinking from the firehose: Multicast USENET News},
+  booktitle =    {USENIX Winter, Jan.},
+  pages =    {33-45},
+  year =     {1994},
+  address =      {Berkley, CA},
+  publisher = {USENIX Assoc.},
+}
+
+
+@Book{Stevens96,
+  author =   {W. R. Stevens},
+  title =    {TCP/IP Illustrated Volume 1: The Protocols},
+  publisher =    {Addison Wesley},
+  year =     {1996}
+}
+
+@Article{BirBM99,
+  author =   {Kenneth P. Birman and Mark Hayden and Oznur Ozkasap and Zhen Xiao and
+Mihai Budiu and Yaron Minsky},
+  title =    {Bimodal multicast},
+  journal =      tocs,
+  pages =    {41-88},
+  year =     {1999},
+  volume =   {17},
+  number =       {2}
+}
+
+
+
+@InProceedings{BMZ88,
+  author =   {Ofer Biran and Shlomo Moran and Shmuel Zaks},
+  title =    {A Combinatorial Characterization of the Distributed Tasks Which Are Solvable in the Presence of One Faulty Processor},
+  booktitle =    podc88,
+  pages =    {263-275},
+  year =     {1988}
+}
+
+@TechReport{HT94,
+  author =   {Vassos Hadzilacos and Sam Toueg},
+  title =    {A Modular Approach to Fault-Tolerant Broadcast and Related Problems},
+  institution =  {Cornell University, Computer Science},
+  year =     {1994},
+  key =      {ncstrl.cornell/TR94-1425},
+  OPTtype =      {},
+  OPTnumber =    {},
+  OPTaddress =   {},
+  month =    {May},
+  OPTnote =      {},
+  OPTannote =    {}
+}
+
+
+
+@InProceedings{Fl95,
+  author =   {S. Floyd and V. Jacobson and S. McCanne and C.-G. Liu and L. Zhang},
+  title =    {A reliable multicast framework for light-weight sessions and
+application level framing},
+  booktitle =    {SIGCOMM Comput. Commun. Rev. 25, 4 (Oct.)},
+  year = {1995},
+  pages =    {342-356},
+  note =     {For more information see http://www.aciri.org/floyd/srm.html},
+}
+
+
+
+@Article{SRM97,
+  author =   {S. Floyd and V. Jacobson and S. McCanne and C.-G. Liu and L. Zhang},
+  title =    {A reliable multicast framework for light-weight sessions and
+application level framing},
+  journal =      {IEEE/ACM Transactions on Networking},
+  year =     {1997},
+  volume =   {5},
+  number =   {6},
+  pages =    {784-803}
+}
+
+
+
+
+
+@InProceedings{XP95,
+  author =   {{XTP} Forum},
+  title =    { XPress Transfer Protocol specification},
+  booktitle =    {XTP Rev. 4.0},
+ pages =     {95-120},
+  year =     {1995},
+  volume =   {},
+}
+
+@Article{CS93,
+  author =   {David R. Cheriton and Dale Skeen},
+  title =    {Understanding the limitations of causally and totally ordered communication},
+  journal =      {ACM SIGOPS Oper. Syst. Rev.},
+  year =     {1993},
+  volume =   {5},
+  number =   {1},
+  pages =        {44-57},
+  month =    {December},
+}
+
+@InProceedings{Ske81,
+  author =   {Dale Skeen},
+  title =    {Non{B}locking Commit Protocols},
+  booktitle =    {Proceedings of the ACM SIGMOD International Conference on Management of Data},
+  pages =    {133-142},
+  year =     {1981},
+  month =        {May},
+  OPTpublisher = {ACM Press}
+}
+
+@phdthesis{Ske82,
+  Author = "Dale Skeen",
+  Title = "Crash Recovery in a Distributed Database System",
+  School = berkeley,
+  month = may,
+  Year = 1982,
+  note = "Technical Memorandum UCB/ERL M82/45"
+  }
+
+
+
+@InProceedings{Tur36,
+  author =   {Alan Turing},
+  title =    {{On computable numbers, with an application to the Entscheidungsproblem}},
+  booktitle =    {Proceedings of the London Mathematical Society, Second Series},
+  OPTcrossref =  {},
+  OPTkey =   {},
+  pages =    {230--265},
+  year =     {1936},
+  OPTeditor =    {},
+  OPTvolume =    {42},
+  OPTnumber =    {},
+  OPTseries =    {},
+  OPTaddress =   {},
+  month =    {November},
+  OPTorganization = {},
+  OPTpublisher = {},
+  OPTnote =      {},
+  OPTannote =    {}
+}
+
+@Article{FLP85,
+  author =   {Michael J. Fischer and Nancy A. Lynch and Michael S. Paterson},
+  title =    {Impossibility of Distributed Consensus with One Faulty Process},
+  journal =      jacm,
+  year =     {1985},
+  volume =       {32(3)},
+  pages =    {374-382},
+  month =    {April},
+}
+
+@Article{CHT96,
+  author =   {Tushar D. Chandra and Vassos Hadzilacos and Sam Toueg},
+  title =    {The Weakest Failure Detector for Solving Consensus},
+  journal =      jacm,
+  year =     {1996},
+  volume =       {43(4)},
+  pages =    {685-722},
+  month =    {July},
+}
+
+
+@Article{CT96,
+  author =   {Tushar D. Chandra and Sam Toueg},
+  title =    {Unreliable Failure Detectors for Reliable Distributed Systems},
+  journal =      jacm,
+  year =     {1996},
+  volume =       {43(2)},
+  pages =    {225-267},
+  month =    {March},
+}
+
+@PhdThesis{Liu97,
+  author =   {C.G. Liu},
+  title =    {Error recovery in scalable reliable multicast},
+  school =   {Computer Science Department, University of Southern California, LA},
+  year =     {1997},
+
+}
+
+@InProceedings{GRB00,
+  author =   {I. Gupta and R. van Renesse and K. P. Birman},
+  title =    {A probabistically correct leader election protocol for large groups},
+  booktitle =    {Proceedings of the 14th International Symposium on Distributed Computing (DISC'00)},
+  year =     {2000},
+  month =    {October}
+}
+
+@PhdThesis{Luc98,
+  author =   {M. Lucas},
+  title =    {Efficient data distribution in large-scale multicast networks},
+  school =   {Computer Science Department, University of Virginia, Charlottesville, VA},
+  year =     {1998}
+}
+
+@TechReport{Hay96,
+  author =   {Mark Hayden and Kenneth P. Birman},
+  title =    {Probabilistic broadcast},
+  institution =  {Department of Computer Science, Cornell University, Ithaka, NY },
+  year =     {1996},
+}
+
+@Article{BirRM99,
+  author =   {Kenneth P. Birman},
+  title =    {A review of experiences with reliable multicast},
+  journal =      {Soft. Pract. Exper.},
+  year =     {1999},
+  volume =   {29},
+  number =   {9},
+  pages =    {741-774}
+}
+
+
+
+
+
+@inproceedings{UDS00b,
+  year =        {2000},
+  url =         {http://lsewww.epfl.ch/servlet/lse.servlet.DisplayPublicationsServlet/Select?id=244},
+  title =       {Contention-Aware Metrics for Distributed Algorithms: Comparison of Atomic Broadcast Algorithms},
+  author =      {Peter Urb{\'a}n and Xavier D{\'e}fago and Andr{\'e} Schiper},
+  booktitle =   {Proceedings of the 9th IEEE International Conference on Computer
+Communications and Networks (IC3N 2000)},
+  keywords =    {FT_principles},
+  month =       oct
+}
+
+@Article{AtSn93,
+  author =   {Yehuda Afek and Hagit Attiya and Danny Dolev and Eli Gafni and Michael Merrit and Nir Shavit},
+  title =    {Atomic Snapshots of Shared Memory},
+  journal =      jacm,
+  year =     {1993},
+  volume =   {40},
+  number =   {4},
+  pages =    {873-890},
+  month =    {September},
+  note =     {},
+}
+
+@Article{AST02,
+  author =   {Yehuda Afek and
+               Gideon Stupp and
+               Dan Touitou},
+  title =    {Long-Lived Adaptive Splitter and Applications},
+  journal =      {Distributed Computing},
+  year =     {2002},
+  OPTkey =   {},
+  volume =   {15},
+  number =   {2},
+  pages =    {67--86},
+  OPTmonth =     {},
+  OPTnote =      {},
+  OPTannote =    {}
+}
+
+
+
+
+
+@InProceedings{Lam87,
+  author =   {Leslie Lamport},
+  title =    {A fast mutual exclusion algorithm},
+  booktitle =    tocs,
+  pages =    {1-11},
+  year =     {1987},
+  volume =   {5(1)},
+  month =    {February}
+}
+
+@Article{Pit87,
+  author =   {Boris Pittel},
+  title =    {On spreading of a rumor},
+  journal =      {SIAM Journal of Applied Mathematics},
+  year =     {1987},
+  OPTkey =   {},
+  volume =   {47},
+  OPTnumber =    {},
+  pages =    {213-223}
+}
+
+@InProceedings{ORBX99,
+  author =   {Oznur Ozkasap and Robbert van Renesse and Kenneth P. Birman and Zhen
+    Xiao},
+  title =    {Efficient Buffering in Reliable Multicast Protocols},
+  booktitle =    {International Workshop on
+     Networked Group Communication},
+   year =    {1999},
+ month =     {November},
+}
+
+@TechReport{OXB99,
+  author =   {Oznur Ozkasap and Zhen Xiao and Kenneth P. Birman},
+  title =    {Scalability of Two Reliable Multicast Protocols},
+  institution =  {Department of Computer Science, Cornell University},
+  year =     {1999},
+  key =      {TR99-1745},
+  OPTtype =      {},
+  OPTnumber =    {},
+  OPTaddress =   {},
+  month =    {May},
+  OPTnote =      {},
+  OPTannote =    {}
+}
+
+@InProceedings{EGHKK01,
+  author =   {Patrick Th. Eugster and Rachid Guerraoui and Sidath B. Handurukande and Anne-Marie Kermarrec and Petr Kouznetsov},
+  title =    {Lightweight Probabilistic Broadcast},
+  booktitle =    {Proceedings of the IEEE Symposium on Dependable Systems and Networks (DSN 2001)},
+  year =     {2001},
+  OPTeditor =    {},
+  OPTvolume =    {},
+  OPTnumber =    {},
+  OPTseries =    {},
+  OPTaddress =   {},
+  month =    {July},
+  OPTorganization = {},
+  OPTpublisher = {},
+  OPTnote =      {Available at http://dscwww.epfl.ch/EN/publications/documents/tr01\_002.ps},
+  OPTannote =    {}
+}
+
+@InProceedings{PRO00,
+  author =   {J. Pereira and L. Rodrigues and R. Oliveira},
+  title =    {Semantically Reliable Multicast Protocols},
+  booktitle =    {19th IEEE Symposium on Reliable Distributed Systems},
+  pages =    {60-69},
+  year =     {2000},
+  address =      {Nurnberg, Germany},
+  month =    {October},
+  OPTannote =    {}
+}
+
+@TechReport{LMM99,
+  author =   {M.-J. Lin and K. Marzullo and S. Masini},
+  title =    {Gossip versus Deterministic Flooding: Low Message Overhead and High Reliability for Broadcasting on Small Networks},
+  institution =  {University of California, San Diego, Computer Science and Engineering},
+  year =     {1999},
+  key =      {TR CS99-0637},
+  OPTtype =      {},
+  OPTnumber =    {},
+  OPTaddress =   {},
+  OPTmonth =     {},
+  OPTnote =      {},
+  OPTannote =    {}
+}
+
+
+@Article{RMTP97,
+  author =   {Sanjoy Paul and Kristian K. Sabiani and John C.-H. Lin and Supratik Bhattacharyya},
+  title =    {Reliable Multicast Transport Protocol (RMTP)},
+  journal =      {IEEE Journal on Selected Areas in Communication},
+  year =     {1997},
+  volume =   {15},
+  number =   {3},
+  pages =    {407-421},
+  month =    {April}
+}
+
+
+@InProceedings{XB01,
+  author =   {Zhen Xiao and Kenneth P. Birman},
+  title =    {A Randomized Error Recovery Algorithm for Reliable Multicast},
+  booktitle =    {Proceedings of IEEE Infocom},
+  month = {April},
+  year = {2001}
+}
+
+@Book{Lyn96,
+  author =   {Nancy A. Lynch},
+  title =    {Distributed Algorithms},
+  publisher =    {Morgan Kaufmann Publishers},
+  year =     {1996}
+}
+
+@InProceedings{Had01,
+  author =   {Vassos Hadzilacos},
+  title =    {A note on group mutual exclusion},
+  booktitle =    podc01,
+  OPTcrossref =  {},
+  OPTkey =   {},
+  pages =    {100-106},
+  year =     {2001},
+  OPTeditor =    {},
+  OPTvolume =    {},
+  OPTnumber =    {},
+  OPTseries =    {},
+  OPTaddress =   {},
+  month =    {August},
+  OPTorganization = {},
+  OPTpublisher = {},
+  OPTnote =      {},
+  OPTannote =    {}
+}
+
+@InProceedings{Jou98,
+  author =   {Yuh-Jzer Joung},
+  title =    {Asynchronous group mutual exclusion},
+  booktitle =    podc98,
+  OPTcrossref =  {},
+  OPTkey =   {},
+  pages =    {51-60},
+  year =     {1998},
+  OPTeditor =    {},
+  OPTvolume =    {},
+  OPTnumber =    {},
+  OPTseries =    {},
+  OPTaddress =   {},
+  month =    {June},
+  OPTorganization = {},
+  OPTpublisher = {},
+  OPTnote =      {},
+  OPTannote =    {}
+}
+
+@Article{Dij65,
+  author =   {Edsger W. Dijkstra},
+  title =    {Solution of a problem in concurrent programming control},
+  journal =      {Communications of the ACM},
+  year =     {1965},
+  OPTkey =   {},
+  volume =   {8(9)},
+  OPTnumber =    {},
+  pages =    {569},
+  month =    {September},
+  OPTnote =      {},
+  OPTannote =    {}
+}
+
+@Article{Sin93,
+  author =   {Mukesh Singhal},
+  title =    {A taxonomy of distributed mutual exclusion},
+  journal =      {Journal of Parallel and Distributed Computing},
+  year =     {1993},
+  OPTkey =   {},
+  volume =   {18},
+  number =   {1},
+  pages =    {94-101},
+  month =    {May},
+  OPTnote =      {},
+  OPTannote =    {}
+}
+
+@Article{AA91,
+  author =   {D. Agrawal and A. E. Abbadi},
+  title =    {An efficient and fault-tolerant solution for distributed mutual exclusion},
+  journal =      {ACM Transactions on Computer Systems},
+  year =     {1991},
+  volume =   {9(1)},
+  pages =    {1 - 20},
+  month =    {February},
+}
+
+@Article{Lam74,
+  author =   {Leslie Lamport},
+  title =    {A new solution of {D}ijkstra's concurrent programming problem},
+  journal =      {Communications of the ACM},
+  year =     {1974},
+  OPTkey =   {},
+  volume =   {17(8)},
+  OPTnumber =    {},
+  pages =    {453-455},
+  month =    {August},
+  OPTnote =      {},
+  OPTannote =    {}
+}
+
+
+@article{Lam78a,
+  Author = "Lamport, Leslie",
+  Title = "Time, Clocks, and the Ordering of Events in a Distributed System",
+  Journal = cacm,
+  month = jul,
+  Year = 1978,
+  volume = 21,
+  number = 7,
+  pages = "558--565"
+  }
+
+@Article{Lam86,
+  author =   {Leslie Lamport},
+  title =    {The mutual exclusion problem. {P}arts {I\&II}},
+  journal =      jacm,
+  year =     {1986},
+  volume =   {33(2)},
+  pages =    {313-348},
+  month =    {April},
+}
+
+
+@InProceedings{MWV00,
+  author =   { Navneet Malpani and Jennifer L. Welch and Nitin Vaidya },
+  title =    {Leader election algorithms for mobile ad hoc networks},
+  booktitle =    {Proceedings of the 4th international workshop on Discrete algorithms and methods for mobile computing and
+  communications},
+  OPTkey =   {},
+  pages =    {96 - 103},
+  year =     {2000},
+}
+
+@InProceedings{PC97,
+  author =   {Vincent D. Park and M. Scott Corson},
+  title =    {A highly adaptive distributed routing algorithm for mobile wireless networks},
+  booktitle =    {IEEE INFOCOM},
+  year =     {1997},
+  month =    {April 7-11},
+}
+
+@InProceedings{GB81,
+  author =   {Eli M. Gafni and Dimitri P. Bertsekas},
+  title =    {Distributed algorithms for generating loop-free routes in networks with
+                  frequently changing topology},
+  booktitle =    {IEEE Transactions on Communications},
+  pages =    {11-18},
+  year =     {1981},
+  volume =   {COM-29},
+  number =   {1},
+}
+
+@InProceedings{Gaf98,
+  author =   {Eli Gafni},
+  title =    {Round-by-Round Fault Detectors : Unifying Synchrony and Asynchrony},
+  booktitle =    podc98,
+  pages =        {143-152},
+  year =     {1998},
+  month =    {June}
+}
+
+
+@article{Pet83,
+    author = "Gary L. Peterson",
+    title = "A new solution to {Lamport's} concurrent programming problem using small shared variables",
+    journal = toplas,
+    volume = "5",
+    number = "1",
+    pages = "56--65",
+    year = "1983",
+    month = {January}
+}
+
+@inproceedings{Pet-Fischer-77,
+ author = {Gary L. Peterson and Michael J. Fischer},
+ title = {Economical solutions for the critical section problem in a distributed system (Extended Abstract)},
+ booktitle = {STOC '77: Proceedings of the ninth annual ACM symposium on Theory of computing},
+ year = {1977},
+ pages = {91--97},
+ location = {Boulder, Colorado, United States},
+ doi = {http://doi.acm.org/10.1145/800105.803398},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ }
+
+ @article{Dijkstra-semaphores,
+ author = {Edsger W. Dijkstra},
+ title = {Cooperating sequential processes},
+ book = {The origin of concurrent programming: from semaphores to remote procedure calls},
+ year = {2002},
+ isbn = {0-387-95401-5},
+ pages = {65--138},
+ publisher = {Springer-Verlag New York, Inc.},
+ address = {New York, NY, USA},
+ }
+
+@Article{Mae85,
+  author =   {Mamoru Maekawa},
+  title =    {A $\sqrt{N}$ algorithm for mutual exclusion in decentralized systems},
+  journal =      tocs,
+  year =     {1985},
+  OPTkey =   {},
+  volume =   {3},
+  number =   {2},
+  pages =    {145-159},
+  month =    {May},
+  OPTnote =      {},
+  OPTannote =    {}
+}
+
+
+@Article{RA81,
+  author =   {Glenn Ricart and Ashok K. Agrawala},
+  title =    {An optimal algorithm for mutual exclusion in computer networks},
+  journal =      {Communications of the ACM},
+  year =     {1981},
+  OPTkey =   {},
+  volume =   {24},
+  number =   {1},
+  pages =    {9-17},
+  month =    {January},
+  OPTnote =      {},
+  OPTannote =    {}
+}
+
+@Book{Bir96,
+  author =   {Kenneth P. Birman},
+  editor =   {},
+  title =    {Building Secure and Reliable Network Applications},
+  publisher =    {Manning: Prentice Hall},
+  year =     {1996},
+  OPTkey =   {},
+  OPTvolume =    {},
+  OPTnumber =    {},
+  OPTseries =    {},
+  OPTaddress =   {},
+  OPTedition =   {},
+  OPTmonth =     {},
+  OPTnote =      {},
+  OPTannote =    {}
+}
+
+@Article{FHHK00,
+  author =       "B. Fenner and M. Handley and H. Holbrook and I. Kouvelas",
+  title =        "{Protocol Independent Multicast-Sparse Mode (PIM-SM): Protocol Specification (Revised)}",
+  journal = "Internet Engineering Task Force (IETF)",
+  month =        nov,
+  year =         "2000",
+  url =          "http://www.ietf.org/internet-drafts/draft-ietf-pim-sm-v2-new-01.ps"
+}
+
+@article{Sch90,
+  Author = {Fred B. Schneider},
+  Title = "Implementing Fault-Tolerant Services Using the State Machine
+Approach: A Tutorial",
+  Journal = surveys,
+  month = dec,
+  Year = 1990,
+  volume = 22,
+  number = 4,
+  pages = "299--319"
+  }
+
+
+@inproceedings{VA86,
+  author =       {Vitanyi, Paul and Awerbuch, Baruch},
+  title =    {Atomic shared register access by asynchronous hardware},
+  year =     {1986},
+  booktitle =    proc # " 27th " # focs,
+  pages =        {233--246}
+}
+
+
+@Article{BKV01,
+  author =   {Adrian H. van der Burgh and Petr V. Kuznetsov and Sergey A. Vavilov},
+  title =    {The Study of Parametric Excitation in a Stretched String},
+  journal =      {Nonlinear Analysis: Real World Applications},
+  year =     {2001},
+  OPTkey =   {},
+  volume =   {2},
+  OPTnumber =    {},
+  pages =    {387--400},
+  OPTmonth =     {},
+  OPTnote =      {},
+  OPTannote =    {}
+}
+
+@article{DBLP:journals/jacm/AttiyaGHK09,
+  author    = {Hagit Attiya and
+               Rachid Guerraoui and
+               Danny Hendler and
+               Petr Kuznetsov},
+  title     = {The complexity of obstruction-free implementations},
+  journal   = jacm,
+  volume    = {56},
+  number    = {4},
+  year      = {2009},
+  ee        = {http://doi.acm.org/10.1145/1538902.1538908},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+@inproceedings{HendlerS03,
+ author = {Danny Hendler and Nir Shavit},
+ title = {Operation-valency and the cost of coordination},
+ booktitle = podc03,
+ year = {2003},
+ pages = {84-91},
+ }
+
+@inproceedings{HendlerKutten06,
+ author = {Danny Hendler and Shay Kutten},
+ title = {Bounded-Wait Combining: Constructing Robust and High-Throughput Shared Objects},
+ booktitle = disc06,
+ year = {2006},
+ pages = {xx-xx},
+ }
+
+
+
+@inproceedings{Unbounded-HTM,
+  author    = {C. S. Ananian and K. Asanovic and B. C. Kuszmaul and C. E. Leiserson and S. Lie},
+  title     = {Unbounded transactional memory},
+  booktitle = {Proceedings of the Eleventh International Symposium on High-Performance Computer Architecture},
+  year      = {2005},
+  pages     = {316-327}
+}
+
+@inproceedings{DBLP:conf/asplos/DamronFLLMN06,
+  author    = {Peter Damron and
+               Alexandra Fedorova and
+               Yossi Lev and
+               Victor Luchangco and
+               Mark Moir and
+               Daniel Nussbaum},
+  title     = {Hybrid transactional memory},
+  booktitle = {ASPLOS},
+  year      = {2006},
+  pages     = {336-346},
+  ee        = {http://doi.acm.org/10.1145/1168857.1168900},
+  crossref  = {DBLP:conf/asplos/2006},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+@Misc{Frazer-dissertation,
+  author =   {K. Fraser},
+  title =    {Practical Lock-Freedom},
+  year =     {2004},
+  howpublished = {Ph. D. dissertation, UCAM-CL-TR-579, Computer Laboratory, University of Cambridge}
+}
+
+@Misc{DB-book,
+  author =   {Gottfried Vossen and Gerhard Weikum},
+  title =    {Transactional Information Systems, , Morgan Kaufmann, 2001}
+}
+
+@article{STMBench7,
+ author = {Rachid Guerraoui and Michal Kapalka and Jan Vitek},
+ title = {STMBench7: a benchmark for software transactional memory},
+ journal = {SIGOPS Oper. Syst. Rev.},
+ volume = {41},
+ number = {3},
+ year = {2007},
+ issn = {0163-5980},
+ pages = {315--324},
+ doi = {http://doi.acm.org/10.1145/1272998.1273029},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ }
+
+@inproceedings{Hammond-HTM,
+  author    = {L. Hammond and V.Wong, M. Chen and B. D. Carlstrom and J. D. Davis and B. Hertzberg and M. K. Prabju and H. Wijaya and C. Kozyrakis and and K. Olukotun},
+  title     = {Transactional Memory Coherence and Consistency},
+  booktitle = {Proc. of the 31st Annual Intl. Symp. on Computer Architecture},
+  year      = {2004},
+  pages     = {102-113}
+
+}
+
+@inproceedings{DBLP:conf/oopsla/HarrisF03,
+  author    = {Tim Harris and
+               Keir Fraser},
+  title     = {Language support for lightweight transactions},
+  booktitle = {OOPSLA},
+  year      = {2003},
+  pages     = {388-402},
+  ee        = {http://doi.acm.org/10.1145/949305.949340},
+  crossref  = {DBLP:conf/oopsla/2003p},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+@Misc{SXM,
+  author =   {Maurice Herlihy},
+  title =    {SXM software transactional memory package for C\#. http://www.cs.brown.edu/~mph}
+}
+
+
+@inproceedings{HerlihyM93,
+  author    = {Maurice Herlihy and
+               J. Eliot B. Moss},
+  title     = {Transactional Memory: Architectural Support for Lock-Free
+               Data Structures},
+  booktitle = {ISCA},
+  year      = {1993},
+  pages     = {289-300},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+@inproceedings{DBLP:conf/podc/HerlihyLMS03,
+  author    = {Maurice Herlihy and
+               Victor Luchangco and
+               Mark Moir and
+               William N. Scherer III},
+  title     = {Software transactional memory for dynamic-sized data structures},
+  booktitle = {PODC},
+  year      = {2003},
+  pages     = {92-101},
+  ee        = {http://doi.acm.org/10.1145/872035.872048},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+
+@inproceedings{DBLP:conf/ppopp/KumarCHKN06,
+  author    = {Sanjeev Kumar and
+               Michael Chu and
+               Christopher J. Hughes and
+               Partha Kundu and
+               Anthony Nguyen},
+  title     = {Hybrid transactional memory},
+  booktitle = {PPOPP},
+  year      = {2006},
+  pages     = {209-220},
+  ee        = {http://doi.acm.org/10.1145/1122971.1123003},
+  crossref  = {DBLP:conf/ppopp/2006},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+@inproceedings{DBLP:conf/wdag/MaratheSS05,
+  author    = {Virendra J. Marathe and
+               William N. Scherer III and
+               Michael L. Scott},
+  title     = {Adaptive Software Transactional Memory},
+  booktitle = {DISC},
+  year      = {2005},
+  pages     = {354-368},
+  ee        = {http://dx.doi.org/10.1007/11561927_26},
+  crossref  = {DBLP:conf/wdag/2005},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+@inproceedings{Marathe-lowering-overhead,
+  author    = {V. J. Marathe and M. F. Spear and C. Heriot and A. Acharya and D. Eisenstat and W. N. Scherer, III and M. L. Scott},
+  title     = {Lowering the overhead of nonblocking software transactional memory},
+  booktitle = {Workshop on Languages, Compilers, and Hardware Support for Transactional Computing (TRANSACT06),},
+  year      = {2006}
+}
+
+
+
+@inproceedings{Virt-HTM,
+  author    = {R. Rajwar and M. Herlihy and K. Lai},
+  title     = {Virtualizing transactional memory},
+  booktitle = {Proceedings of the 32nd Annual International Symposium on Computer Architecture},
+  year      = {2005},
+  pages     = {494-505}
+}
+
+
+@inproceedings{Log-HTM,
+  author    = {K. E. Moore and J. Bobba and M. J. Moravan and M. D. Hill and D. A. Wood},
+  title     = {LogTM: Log-based transactional memory},
+  booktitle = {Proceedings of the 12th International Conference on High Performance Computer Architecture},
+  year      = {2006},
+  pages     = {254-265}
+}
+
+@inproceedings{RG02-HTM,
+  author    = {R. Rajwar and J. R. Goodman},
+  title     = {Transactional Lock-Free Execution of Lock-Based Programs},
+  booktitle = {Proceedings of the 10th International Conference on Architectural Support for Programming Languages and Operating Systems},
+  year      = {2002}
+}
+
+@inproceedings{Rosebach07,
+ author = {Christopher J. Rossbach and Owen S. Hofmann and Donald E. Porter and Hany E. Ramadan and Bhandari Aditya and Emmett Witchel},
+ title = {TxLinux: using and managing hardware transactional memory in an operating system},
+ booktitle = {SOSP '07: Proceedings of twenty-first ACM SIGOPS symposium on Operating systems principles},
+ year = {2007},
+ isbn = {978-1-59593-591-5},
+ pages = {87--102},
+ location = {Stevenson, Washington, USA},
+ doi = {http://doi.acm.org/10.1145/1294261.1294271},
+ publisher = {ACM},
+ address = {New York, NY, USA},
+ }
+
+@inproceedings{DBLP:conf/ppopp/SahaAHMH06,
+  author    = {Bratin Saha and
+               Ali-Reza Adl-Tabatabai and
+               Richard L. Hudson and
+               Chi Cao Minh and
+               Ben Hertzberg},
+  title     = {McRT-STM: a high performance software transactional memory
+               system for a multi-core runtime},
+  booktitle = {PPOPP},
+  year      = {2006},
+  pages     = {187-197},
+  ee        = {http://doi.acm.org/10.1145/1122971.1123001},
+  crossref  = {DBLP:conf/ppopp/2006},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+@article{DBLP:journals/dc/ShavitT97,
+  author    = {Nir Shavit and
+               Dan Touitou},
+  title     = {Software Transactional Memory},
+  journal   = {Distributed Computing},
+  volume    = {10},
+  number    = {2},
+  year      = {1997},
+  pages     = {99-116},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+@Misc{Yoo-Lee-07,
+  author =   {R. M. Yoo and H. S. Lee},
+  title =    {Adaptive Transaction Scheduling for Transactional Memory Systems},
+  year =     {2007},
+  howpublished = {Georgia Institute of Technology Technical Report GIT-CERCS-07-04}
+}
+
+@inproceedings{GuerraouiHP05,
+  author    = {Rachid Guerraoui and
+               Maurice Herlihy and
+               Bastian Pochon},
+  title     = {Polymorphic Contention Management},
+  booktitle = {DISC},
+  year      = {2005},
+  pages     = {303-323},
+  ee        = {http://dx.doi.org/10.1007/11561927_23},
+  crossref  = {DBLP:conf/wdag/2005},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+@inproceedings{GuerraouiHP06,
+  author    = {Rachid Guerraoui and
+               Maurice Herlihy and
+               Bastian Pochon},
+  title     = {Towards a theory of transactional contention managers},
+  booktitle = {PODC},
+  year      = {2006},
+  pages     = {316-317},
+  ee        = {http://doi.acm.org/10.1145/1146381.1146429},
+  crossref  = {DBLP:conf/podc/2006},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+@inproceedings{AttiyaEST06,
+  author    = {Hagit Attiya and
+               Leah Epstein and
+               Hadas Shachnai and
+               Tami Tamir},
+  title     = {Transactional contention management as a non-clairvoyant
+               scheduling problem},
+  booktitle = {PODC},
+  year      = {2006},
+  pages     = {308-315},
+  ee        = {http://doi.acm.org/10.1145/1146381.1146428},
+  crossref  = {DBLP:conf/podc/2006},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+@inproceedings{MoirATMTP08,
+  author	= {Moir, Mark and Moore, Kevin and Nussbaum, Dan},
+  title		= {The Adaptive Transactional Memory Test Platform: A Tool for Experimenting with Transactional Code for Rock},
+  booktitle	= {Workshop on Transactional Computing (TRANSACT)},
+  year		= {2008},
+  pdf		= {http://research.sun.com/scalable/pubs/TRANSACT2008-ATMTP.pdf}
+}
+  ee        = {http://doi.acm.org/10.1145/1146381.1146428},
+  crossref  = {DBLP:conf/podc/2006},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+@article{jand:surv,
+  author    = {James H. Anderson and
+               Yong{-}Jik Kim and
+               Ted Herman},
+  title     = {Shared-memory mutual exclusion: major research trends since 1986},
+  journal   = {Distributed Computing},
+  volume    = {16},
+  number    = {2-3},
+  pages     = {75--110},
+  year      = {2003},
+  url       = {http://dx.doi.org/10.1007/s00446-003-0088-6},
+  doi       = {10.1007/s00446-003-0088-6},
+  timestamp = {Tue, 24 May 2011 14:19:51 +0200},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/journals/dc/AndersonKH03},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+
+@article{10.1109/4434.749135,
+author = {Sivarama P. Dandamudi},
+title = {Reducing Hot-Spot Contention in Shared-Memory Multiprocessor Systems},
+journal ={IEEE Concurrency},
+volume = {7},
+issn = {1092-3063},
+year = {1999},
+pages = {48-59},
+doi = {http://doi.ieeecomputersociety.org/10.1109/4434.749135},
+publisher = {IEEE Computer Society},
+address = {Los Alamitos, CA, USA},
+}
+
+@article{Bianchini93alleviatingmemory,
+    author = {Ricardo Bianchini},
+    title = {Alleviating Memory Contention in Matrix Computations on Large-Scale . . .},
+    year = {1993}
+}
+
+@article{10.1109/TC.1987.1676921,
+author = {Pen-Chung Yew and Nian-Feng Tzeng and D.H. Lawrie},
+title = {Distributing Hot-Spot Addressing in Large-Scale Multiprocessors},
+journal ={IEEE Transactions on Computers},
+volume = {36},
+issn = {0018-9340},
+year = {1987},
+pages = {388-395},
+doi = {http://doi.ieeecomputersociety.org/10.1109/TC.1987.1676921},
+publisher = {IEEE Computer Society},
+address = {Los Alamitos, CA, USA},
+}
+
+@inproceedings{Dwork94time-lapsesnapshots,
+    author = {Cynthia Dwork and Maurice Herlihy and Serge Plotkin and Orli Waarts},
+    title = {Time-Lapse Snapshots},
+    booktitle = {Proceedings of Israel Symposium on the Theory of Computing and Systems},
+    year = {1994},
+    pages = {154--170},
+    publisher = {Springer-Verlag}
+}
+
+@inproceedings{DBLP:conf/spaa/AspnesH90,
+  author    = {James Aspnes and
+               Maurice Herlihy},
+  title     = {Wait-Free Data Structures in the Asynchronous PRAM Model},
+  booktitle = {SPAA},
+  year      = {1990},
+  pages     = {340-349},
+  ee        = {http://doi.acm.org/10.1145/97444.97701},
+}
+
+@article{Anderson:1992:BAR:156203.156204,
+ author = {Anderson, James H. and Gro\v{s}elj, Bojan},
+ title = {Beyond atomic registers: bounded wait-free implementations of nontrivial objects},
+ journal = {Sci. Comput. Program.},
+ volume = {19},
+ issue = {3},
+ month = {December},
+ year = {1992},
+ issn = {0167-6423},
+ pages = {197--237},
+ numpages = {41},
+ url = {http://portal.acm.org/citation.cfm?id=156203.156204},
+ doi = {10.1016/0167-6423(92)90036-B},
+ acmid = {156204},
+ publisher = {Elsevier North-Holland, Inc.},
+ address = {Amsterdam, The Netherlands, The Netherlands},
+ keywords = {Assertional reasoning, UNITY, atomic register, atomicity, composite register, concurrency, counter, linearizability, read-modify-write, shared variable, snapshot},
+}
+
+@article{Hendler07solo-valencyand,
+    author = {Danny Hendler and Nir Shavit},
+    title = {Solo-Valency and the Cost of Coordination},
+    year = {2007}
+}
+
+@article{10.1109/RTAS.2006.45,
+author = {Philippas Tsigas and Yi Zhang and Daniel Cederman and Tord Dellsen},
+title = {Wait-Free Queue Algorithms for the Real-time Java Specification},
+journal ={Real-Time and Embedded Technology and Applications Symposium, IEEE},
+volume = {0},
+isbn = {0-7695-2516-4},
+year = {2006},
+pages = {373-383},
+doi = {http://doi.ieeecomputersociety.org/10.1109/RTAS.2006.45},
+publisher = {IEEE Computer Society},
+address = {Los Alamitos, CA, USA},
+}
+
+@inproceedings{MoirATMTP08,
+  author	= {Moir, Mark and Moore, Kevin and Nussbaum, Dan},
+  title		= {The Adaptive Transactional Memory Test Platform: A Tool for Experimenting with Transactional Code for Rock},
+  booktitle	= {Workshop on Transactional Computing (TRANSACT)},
+  year		= {2008},
+}
+
+@article{AspnesAC2012,
+	author = {James Aspnes and Hagit Attiya and Keren Censor-Hillel},
+	title = {Polylogarithmic concurrent data structures from monotone circuits},
+	journal=jacm,
+	month=feb,
+	year = 2012,
+	volume=59,
+	number=1,
+	pages={2:1--2:24}
+}
+
+@inproceedings{Attiya05timeand,
+    author = {Hagit Attiya and Danny Hendler},
+    title = {Time and space lower bounds for implementations using k-cas},
+    booktitle = {In DISC},
+    year = {2005},
+    pages = {169--183}
+}
+
+@book{Bollobas2004,
+	 author = {Bollobas, B{\'e}la},
+	 title = {Extremal Graph Theory},
+	 year = {2004},
+	 isbn = {0486435962},
+	 publisher = {Dover Publications, Incorporated},
+}
+
+@article{FichHS04,
+    author = "Faith E. Fich and Danny Hendler and Nir Shavit",
+    title = "On the Inherent Weakness of Conditional Primitives",
+    journal = "Distributed Computing",
+    volume = "18",
+    number = "4",
+    pages = "267-277",
+    year = "2006"
+}
+
+@Article{ALS90,
+	title={Are Wait-Free Algorithms Fast?},
+	author={H. Attiya and N. Lynch and N. Shavit},
+	area={Distributed Computing},
+	pages={725--763},
+	journal=jacm,
+	month=jul,
+	year=1994,
+	volume=41,
+	number=4,
+	source={http://theory.lcs.mit.edu/~jacm/jacm.bib}
+}
+
+@MISC{Bentley75analmost,
+    author = {Jon Louis Bentley and Andrew Chi-chih Yao},
+    title = { AN ALMOST OPTIMAL ALGORITHM FOR UNBOUNDED SEARCHING},
+    year = {1975}
+}
+
+@inproceedings{Afek:1995:WMF:225058.225271,
+	author = {Afek, Yehuda and Dauber, Dalia and Touitou, Dan},
+	title = {Wait-free Made Fast},
+	booktitle = {Proceedings of the Twenty-seventh Annual ACM Symposium on Theory of Computing},
+	series = {STOC '95},
+	year = {1995},
+	isbn = {0-89791-718-9},
+	location = {Las Vegas, Nevada, USA},
+	pages = {538--547},
+	numpages = {10},
+	url = {http://doi.acm.org/10.1145/225058.225271},
+	doi = {10.1145/225058.225271},
+	acmid = {225271},
+	publisher = {ACM},
+	address = {New York, NY, USA},
+}
+
+@inproceedings{YNG98,
+author={Yang, Jiong and Neiger, Gil and Gafni,Eli},
+
+pages="297--306",
+
+  booktitle = proc # " 17th " # podc,
+ title={Structured Derivations of consensus Algorithms for Failure Detectors},
+   Year = 1998,
+
+  }
+}
+
+@BOOK{LeaJava,
+  AUTHOR =       {Douglas Lea},
+  TITLE =        {Concurrent Programming in {Java(TM)}: {Design} Principles and Patterns},
+  PUBLISHER =    {Prentice Hall},
+  YEAR =         1999,
+  edition =      {2nd},
+}
+
+@inproceedings{Jayanti98,
+ author = {Jayanti, Prasad},
+ title = {A time complexity lower bound for randomized implementations of some shared objects},
+ booktitle = "PODC",
+ year = {1998},
+ pages = {201--210},
+}
+
+% booktitle = {Proceedings of the Seventeenth Annual ACM Symposium on Principles of Distributed Computing},
+% series = {PODC '98},
+% isbn = {0-89791-977-7},
+% location = {Puerto Vallarta, Mexico},
+% numpages = {10},
+% url = {http://doi.acm.org/10.1145/277697.277735},
+% doi = {http://doi.acm.org/10.1145/277697.277735},
+% acmid = {277735},
+% publisher = {ACM},
+% address = {New York, NY, USA},
+
+@inproceedings{Yao1977,
+  author    = {Andrew Chi-Chih Yao},
+  title     = {Probabilistic Computations: Toward a Unified Measure of Complexity},
+  booktitle = "FOCS",
+  year      = {1977},
+  pages     = {222-227},
+}
+
+%  booktitle     = {18th Annual Symposium on Foundations of Computer Science,
+%               31 October-2 November, Providence, Rhode Island, USA},
+%  publisher = {IEEE},
+%  bibsource = {DBLP, http://dblp.uni-trier.de}
+
+@ARTICLE{AttiyaH10,
+  AUTHOR =       {Hagit Attiya and Danny Hendler},
+  TITLE =        {Time and Space Lower Bounds for Implementations Using k-CAS},
+  JOURNAL =      {IEEE Trans. Parallel Distrib. Syst.},
+  YEAR =         2010,
+  volume =       21,
+  number =       2,
+  pages =        {162-173},
+}
+
+% booktitle = {Proceedings of the 40th annual ACM symposium on Theory of computing},
+% series = {STOC '08},
+% isbn = {978-1-60558-047-0},
+% location = {Victoria, British Columbia, Canada},
+% numpages = {10},
+% url = {http://doi.acm.org/10.1145/1374376.1374410},
+% doi = {http://doi.acm.org/10.1145/1374376.1374410},
+% acmid = {1374410},
+% publisher = {ACM},
+% address = {New York, NY, USA},
+% keywords = {bounded counter, information theory, lower-bound techniques, mutual exclusion, shared-memory, store/collect
+%object},
+
+
+% booktitle = {Proceedings of the 15th International Conference on Distributed Computing},
+% series = {DISC '01},
+% isbn = {3-540-42605-1},
+% numpages = {15},
+% url = {http://portal.acm.org/citation.cfm?id=645958.676104},
+% acmid = {676104},
+% publisher = {Springer-Verlag},
+% address = {London, UK, UK},
+
+@INPROCEEDINGS{AlistarhAGR2011,
+author = {Dan Alistarh and James Aspnes and Seth Gilbert and Rachid Guerraoui},
+title = {The complexity of renaming},
+booktitle = "FOCS",
+pages = {718-727},
+year = 2011,
+}
+
+@INPROCEEDINGS{BenderG2011,
+    author = {Michael A. Bender and Seth Gilbert},
+    title = {Mutual exclusion with {$O(\log \log n)$} amortized work},
+booktitle = "FOCS",
+pages = {728-737},
+year = 2011,
+}
+
+@INPROCEEDINGS{AlistarhACHGZ2011,
+  AUTHOR =       {Dan Alistarh and James Aspnes and Keren Censor-Hillel and Seth Gilbert and Morteza Zadimoghaddam},
+  TITLE =        {Optimal-time adaptive tight renaming, with applications to counting},
+  booktitle = "PODC",
+  YEAR =         2011,
+  pages =        {239-248},
+}
+
+@article{DBLP:journals/dc/AndersonK02,
+  author    = {James H. Anderson and
+               Yong-Jik Kim},
+  title     = {An improved lower bound for the time complexity of mutual
+               exclusion},
+  journal   = {Distributed Computing},
+  volume    = {15},
+  number    = {4},
+  year      = {2002},
+  pages     = {221-253},
+  ee        = {http://dx.doi.org/10.1007/s00446-002-0084-2},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+@inproceedings{DBLP:conf/podc/Jayanti02,
+  author    = {Prasad Jayanti},
+  title     = {{\it f}-arrays: implementation and applications},
+  booktitle = {PODC},
+  year      = {2002},
+  pages     = {270-279},
+  ee        = {http://doi.acm.org/10.1145/571825.571875},
+  crossref  = {DBLP:conf/podc/2002},
+  bibsource = {DBLP, http://dblp.uni-trier.de}
+}
+
+@inproceedings{DBLP:conf/podc/AttiyaHL13,
+  author    = {Hagit Attiya and
+               Danny Hendler and
+               Smadar Levy},
+  title     = {An {O}(1)-barriers optimal {RMR}s mutual exclusion algorithm: extended
+               abstract},
+  booktitle = {{ACM} Symposium on Principles of Distributed Computing, {PODC} '13,
+               Montreal, QC, Canada, July 22-24, 2013},
+  pages     = {220--229},
+  year      = {2013},
+  crossref  = {DBLP:conf/podc/2013},
+  url       = {http://doi.acm.org/10.1145/2484239.2484255},
+  doi       = {10.1145/2484239.2484255},
+  timestamp = {Wed, 17 Jul 2013 09:15:10 +0200},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/conf/podc/AttiyaHL13},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@article{DBLP:journals/tc/Lamport97,
+  author    = {Leslie Lamport},
+  title     = {How to Make a Correct Multiprocess Program Execute Correctly
+               on a Multiprocessor},
+  journal   = {IEEE Trans. Computers},
+  volume    = {46},
+  number    = {7},
+  year      = {1997},
+  pages     = {779-782},
+}
+
+@inproceedings{DBLP:conf/wdag/DanekG08,
+  author    = {Robert Danek and
+               Wojciech M. Golab},
+  title     = {Closing the Complexity Gap between {FCFS} Mutual Exclusion
+               and Mutual Exclusion},
+  booktitle = {DISC},
+  year      = {2008},
+  pages     = {93-108},
+  ee        = {http://dx.doi.org/10.1007/978-3-540-87779-0_7},
+}
+
+@inproceedings{jaya:abort,
+ author = {P. Jayanti},
+ title = {Adaptive and efficient abortable mutual exclusion},
+ booktitle = {PODC},
+ year = {2003},
+ isbn = {1-58113-708-7},
+ pages = {295--304},
+ location = {Boston, Massachusetts},
+ doi = {http://doi.acm.org/10.1145/872035.872079},
+ publisher = {ACM Press},
+ address = {New York, NY, USA},
+ }
+
+ @inproceedings{DBLP:conf/sofsem/JayantiPN05,
+  author    = {Prasad Jayanti and
+               Srdjan Petrovic and
+               Neha Narula},
+  title     = {Read/Write Based Fast-Path Transformation for {FCFS} Mutual
+               Exclusion},
+  booktitle = {SOFSEM},
+  year      = {2005},
+  pages     = {209-218},
+}
+
+
+ @ARTICLE{yang:fast,
+    AUTHOR="J.-H. Yang and J. Anderson",
+    TITLE="A Fast, Scalable Mutual Exclusion Algorithm",
+    JOURNAL="Distributed Computing",
+    VOLUME=9,
+    NUMBER=1,
+    PAGES="51--60",
+    YEAR=1995
+ }
+
+ @inproceedings{DBLP:conf/stoc/AttiyaHW08,
+  author    = {Hagit Attiya and
+               Danny Hendler and
+               Philipp Woelfel},
+  title     = {Tight {RMR} lower bounds for mutual exclusion and other problems},
+  booktitle = {STOC},
+  year      = {2008},
+  pages     = {217-226},
+}
+
+@inproceedings{DBLP:conf/popl/AttiyaGHKMV11,
+  author    = {Hagit Attiya and
+               Rachid Guerraoui and
+               Danny Hendler and
+               Petr Kuznetsov and
+               Maged M. Michael and
+               Martin T. Vechev},
+  title     = {Laws of order: expensive synchronization in concurrent algorithms
+               cannot be eliminated},
+  booktitle = {POPL},
+  year      = {2011},
+  pages     = {487-498},
+  ee        = {http://doi.acm.org/10.1145/1926385.1926442},
+}
+
+@article{DBLP:journals/computer/AdveG96,
+  title={Shared memory consistency models: A tutorial},
+  author={Adve, Sarita V and Gharachorloo, Kourosh},
+  journal={computer},
+  volume={29},
+  number={12},
+  pages={66--76},
+  year={1996},
+  publisher={IEEE}
+}
+
+
+
+@Book{SPARCManual,
+  author =   {D.~L.Weaver and T.~Germond},
+  title =    {The SPARC Architecture Manual},
+  publisher =    {Prentice Hall},
+  year =     {1994}
+}
+
+
+@inproceedings{OwensSS2009,
+  author    = {Scott Owens and
+               Susmit Sarkar and
+               Peter Sewell},
+  title     = {A Better x86 Memory Model: x86-TSO},
+  booktitle = {Theorem Proving in Higher Order Logics, 22nd International Conference,
+               TPHOLs 2009, Munich, Germany, August 17-20, 2009. Proceedings},
+  pages     = {391--407},
+  year      = {2009}
+}
+
+@book{intelsys,
+	author        = {Intel Corporation},
+	title         = {Intel \textsuperscript{\textregistered} 64 and IA-32 Architectures Software Developer's Manual},
+	publisher = {Intel Corporation},
+	year          = {2009}
+}
+
+
+@book{DBLP:books/mk/PattersonH94,
+	author    = {David A. Patterson and
+	John L. Hennessy},
+	title     = {Computer Organization {\&} Design: The Hardware/Software Interface},
+	publisher = {Morgan Kaufmann},
+	year      = {1994}
+}
+
+@inproceedings{DBLP:conf/podc/GolabHHW07,
+	author    = {Wojciech M. Golab and
+	Vassos Hadzilacos and
+	Danny Hendler and
+	Philipp Woelfel},
+	title     = {Constant-{RMR} implementations of {CAS} and other synchronization primitives
+	using read and write operations},
+	booktitle = {Proceedings of the Twenty-Sixth Annual {ACM} Symposium on Principles
+	of Distributed Computing, {PODC} 2007},
+	pages     = {3--12},
+	year      = {2007}
+}
+
+
+@article{DBLP:journals/tc/ParkD99,
+  author    = {Seungjoon Park and
+               David L. Dill},
+  title     = {An Executable Specification and Verifier for Relaxed Memory Order},
+  journal   = {{IEEE} Trans. Computers},
+  volume    = {48},
+  number    = {2},
+  pages     = {227--235},
+  year      = {1999},
+  url       = {http://doi.ieeecomputersociety.org/10.1109/12.752664},
+  doi       = {10.1109/12.752664},
+  timestamp = {Thu, 27 Oct 2011 17:40:05 +0200},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/journals/tc/ParkD99},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@article{DBLP:journals/dc/KimA12,
+	author    = {Yong{-}Jik Kim and
+	James H. Anderson},
+	title     = {A time complexity lower bound for adaptive mutual exclusion},
+	journal   = {Distributed Computing},
+	volume    = {24},
+	number    = {6},
+	pages     = {271--297},
+	year      = {2012},
+	url       = {http://dx.doi.org/10.1007/s00446-011-0152-6},
+	doi       = {10.1007/s00446-011-0152-6},
+	timestamp = {Thu, 12 Jan 2012 14:38:19 +0100},
+	biburl    = {http://dblp.uni-trier.de/rec/bib/journals/dc/KimA12},
+	bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@article{DBLP:journals/dc/GolabHHW12,
+  author    = {Wojciech M. Golab and
+               Vassos Hadzilacos and
+               Danny Hendler and
+               Philipp Woelfel},
+  title     = {{RMR}-efficient implementations of comparison primitives using read
+               and write operations},
+  journal   = {Distributed Computing},
+  volume    = {25},
+  number    = {2},
+  pages     = {109--162},
+  year      = {2012}
+}
+
+
+@article{DBLP:journals/dc/KimA07,
+  author    = {Yong{-}Jik Kim and
+               James H. Anderson},
+  title     = {Adaptive mutual exclusion with local spinning},
+  journal   = {Distributed Computing},
+  volume    = {19},
+  number    = {3},
+  pages     = {197--236},
+  year      = {2007},
+  url       = {http://dx.doi.org/10.1007/s00446-006-0009-6},
+  doi       = {10.1007/s00446-006-0009-6},
+  timestamp = {Thu, 08 Feb 2007 13:37:00 +0100},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/journals/dc/KimA07},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@article{DBLP:journals/dc/AttiyaB02,
+  author    = {Hagit Attiya and
+               Vita Bortnikov},
+  title     = {Adaptive and efficient mutual exclusion},
+  journal   = {Distributed Computing},
+  volume    = {15},
+  number    = {3},
+  pages     = {177--189},
+  year      = {2002},
+  url       = {http://dx.doi.org/10.1007/s004460100068},
+  doi       = {10.1007/s004460100068},
+  timestamp = {Tue, 24 May 2011 14:19:50 +0200},
+  biburl    = {http://dblp.uni-trier.de/rec/bib/journals/dc/AttiyaB02},
+  bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+@article{Turan,
+	author    = {P\'{a}l Tur\'{a}n},
+	title     = {On an extremal problem in graph theory (in Hungarian)},
+	journal   = {Mat. Fiz. Lapok},
+	volume    = {48},
+	pages     = {436--452},
+	year      = {1941},
+}
+
+
+@inproceedings{PSOLowerBound,
+	author    = {Hagit Attiya and
+	Danny Hendler and
+	Philipp Woelfel},
+	title     = {Trading Fences with RMRs and Separating Memory Models},
+	booktitle = {Proceedings of the 2015 {ACM} Symposium on Principles of Distributed
+	Computing, {PODC} 2015, Donostia-San Sebasti{\'{a}}n, Spain,
+	July 21 - 23, 2015},
+	pages     = {173--182},
+	year      = {2015},
+	crossref  = {DBLP:conf/podc/2015},
+	url       = {http://doi.acm.org/10.1145/2767386.2767427},
+	doi       = {10.1145/2767386.2767427},
+	timestamp = {Sat, 18 Jul 2015 13:42:22 +0200},
+	biburl    = {http://dblp.uni-trier.de/rec/bib/conf/podc/AttiyaHW15},
+	bibsource = {dblp computer science bibliography, http://dblp.org}
+}
+
+
+@inproceedings{FanL2006,
+  title={An {$\Omega(n \log n)$} lower bound on the cost of mutual exclusion},
+  author={Rui Fan and Nancy Lynch},
+  booktitle={PODC},
+  pages={275--284},
+  year={2006},
+}
+
+@inproceedings{DBLP:conf/podc/Ben-BaruchH15,
+	author    = {Ohad Ben{-}Baruch and
+	Danny Hendler},
+	title     = {The Price of being Adaptive},
+	booktitle = {Proceedings of the 2015 {ACM} Symposium on Principles of Distributed
+	Computing, {PODC} 2015, Donostia-San Sebasti{\'{a}}n, Spain,
+	July 21 - 23, 2015},
+	pages     = {183--192},
+	year      = {2015},
+	crossref  = {DBLP:conf/podc/2015},
+	url       = {http://doi.acm.org/10.1145/2767386.2767428},
+	doi       = {10.1145/2767386.2767428},
+	timestamp = {Sat, 18 Jul 2015 13:42:22 +0200},
+	biburl    = {http://dblp.uni-trier.de/rec/bib/conf/podc/Ben-BaruchH15},
+	bibsource = {dblp computer science bibliography, http://dblp.org}
+}
