@@ -1,7 +1,8 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2014.9.4)  31 OCT 2016 17:50
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2017.2.23)  16 NOV 2017 18:15
 entering extended mode
 **AdaptiveMutex.tex
-(C:\Users\ohadben\Downloads\AdaptiveME_SpringerFormat\AdaptiveMutex.tex
+
+(C:\Users\ohadben\Documents\GitHub\DIST-AdaptiveMutexBarriers\AdaptiveMutex.tex
 LaTeX2e <2011/06/27>
 Babel <v3.8m> and hyphenation patterns for english, afrikaans, ancientgreek, ar
 abic, armenian, assamese, basque, bengali, bokmal, bulgarian, catalan, coptic, 
@@ -13,7 +14,7 @@ german-x-2013-05-26, nynorsk, oriya, panjabi, pinyin, polish, portuguese, roman
 ian, russian, sanskrit, serbian, slovak, slovenian, spanish, swedish, swissgerm
 an, tamil, telugu, turkish, turkmen, ukenglish, ukrainian, uppersorbian, usengl
 ishmax, welsh, loaded.
-(C:\Users\ohadben\Downloads\AdaptiveME_SpringerFormat\svjour3.cls
+(C:\Users\ohadben\Documents\GitHub\DIST-AdaptiveMutexBarriers\svjour3.cls
 Document Class: svjour3 2007/05/08 v3.2 
 LaTeX document class for Springer journals
 ("C:\Program Files\MiKTeX 2.9\tex\latex\base\fleqn.clo"
@@ -24,7 +25,7 @@ Class Springer-SVJour3 Info: extra/valid Springer sub-package (-> *.clo)
 (Springer-SVJour3)           not found in option list of \documentclass
 (Springer-SVJour3)           - autoactivating "global" style.
 
-(C:\Users\ohadben\Downloads\AdaptiveME_SpringerFormat\svglov3.clo
+(C:\Users\ohadben\Documents\GitHub\DIST-AdaptiveMutexBarriers\svglov3.clo
 File: svglov3.clo 2009/12/18 v3.2 style option for standardised journals
 
 SVJour Class option: svglov3.clo for standardised journals
@@ -103,8 +104,8 @@ File: graphics.cfg 2007/01/18 v1.5 graphics configuration of teTeX/TeXLive
 )
 Package graphics Info: Driver file: pdftex.def on input line 91.
 
-("C:\Program Files\MiKTeX 2.9\tex\latex\pdftex-def\pdftex.def"
-File: pdftex.def 2011/05/27 v0.06d Graphics/color for pdfTeX
+(C:\Users\ohadben\AppData\Roaming\MiKTeX\2.9\tex\latex\graphics-def\pdftex.def
+File: pdftex.def 2017/01/12 v0.06k Graphics/color for pdfTeX
 
 ("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\infwarerr.sty"
 Package: infwarerr 2010/04/08 v1.3 Providing info/warning/error messages (HO)
@@ -946,7 +947,8 @@ Package: cuted 2012/10/04 v1.5 Mixing onecolumn and twocolumn modes
 \c@invariant=\count289
 \c@ru=\count290
 
-(C:\Users\ohadben\Downloads\AdaptiveME_SpringerFormat\AdaptiveMutex.aux)
+(C:\Users\ohadben\Documents\GitHub\DIST-AdaptiveMutexBarriers\AdaptiveMutex.aux
+)
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 71.
 LaTeX Font Info:    ... okay on input line 71.
 LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 71.
@@ -975,6 +977,47 @@ Unknown journal: specify \journalname{<name of your journal>} in preambel
 \MPnumerator=\count295
 \makeMPintoPDFobject=\count296
 \everyMPtoPDFconversion=\toks52
+) ("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\pdftexcmds.sty"
+Package: pdftexcmds 2011/11/29 v0.20 Utility functions of pdfTeX for LuaTeX (HO
+)
+
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\ifluatex.sty"
+Package: ifluatex 2010/03/01 v1.3 Provides the ifluatex switch (HO)
+Package ifluatex Info: LuaTeX not detected.
+)
+Package pdftexcmds Info: LuaTeX not detected.
+Package pdftexcmds Info: \pdf@primitive is available.
+Package pdftexcmds Info: \pdf@ifprimitive is available.
+Package pdftexcmds Info: \pdfdraftmode found.
+)
+("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\epstopdf-base.sty"
+Package: epstopdf-base 2010/02/09 v2.5 Base part for package epstopdf
+
+("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\grfext.sty"
+Package: grfext 2010/08/19 v1.1 Manage graphics extensions (HO)
+
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\kvdefinekeys.sty"
+Package: kvdefinekeys 2011/04/07 v1.3 Define keys (HO)
+))
+("C:\Program Files\MiKTeX 2.9\tex\latex\oberdiek\kvoptions.sty"
+Package: kvoptions 2011/06/30 v3.11 Key value format for package options (HO)
+
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\kvsetkeys.sty"
+Package: kvsetkeys 2012/04/25 v1.16 Key value parser (HO)
+
+("C:\Program Files\MiKTeX 2.9\tex\generic\oberdiek\etexcmds.sty"
+Package: etexcmds 2011/02/16 v1.5 Avoid name clashes with e-TeX commands (HO)
+Package etexcmds Info: Could not find \expanded.
+(etexcmds)             That can mean that you are not using pdfTeX 1.50 or
+(etexcmds)             that some package has redefined \expanded.
+(etexcmds)             In the latter case, load this package earlier.
+)))
+Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
+34.
+Package grfext Info: Graphics extension search list:
+(grfext)             [.png,.pdf,.jpg,.mps,.jpeg,.jbig2,.jb2,.PNG,.PDF,.JPG,.JPE
+G,.JBIG2,.JB2,.eps]
+(grfext)             \AppendGraphicsExtensions on input line 452.
 )
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: Incompatible package detected (regarding \@caption).
@@ -991,7 +1034,7 @@ See the caption package documentation for explanation.
 
 Package caption Info: End \AtBeginDocument code.
 ABD: EveryShipout initializing macros
-(C:\Users\ohadben\Downloads\AdaptiveME_SpringerFormat\Title.tex
+(C:\Users\ohadben\Documents\GitHub\DIST-AdaptiveMutexBarriers\Title.tex
 SVJour3 warning: Missing \journalname
 SVJour3 warning: Missing \date
 
@@ -1030,7 +1073,8 @@ Underfull \hbox (badness 1484) in paragraph at lines 29--31
 []\OT1/cmr/m/it/10 Mutual ex-clu-sion \OT1/cmr/m/n/10 is a fun-da-men-tal dis-
  []
 
-) (C:\Users\ohadben\Downloads\AdaptiveME_SpringerFormat\Introduction.tex
+)
+(C:\Users\ohadben\Documents\GitHub\DIST-AdaptiveMutexBarriers\Introduction.tex
 [1
 
 {C:/Users/ohadben/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}]
@@ -1039,8 +1083,9 @@ Underfull \hbox (badness 1215) in paragraph at lines 47--51
 ad-di-tion to reads
  []
 
-) (C:\Users\ohadben\Downloads\AdaptiveME_SpringerFormat\Definitions&Model.tex
-[2]
+)
+(C:\Users\ohadben\Documents\GitHub\DIST-AdaptiveMutexBarriers\Definitions&Model
+.tex [2]
 Missing character: There is no ‚ in font cmr10!
 Missing character: There is no Ä in font cmr10!
 Missing character: There is no ú in font cmr10!
@@ -1059,8 +1104,8 @@ Missing character: There is no Å in font cmr10!
 Missing character: There is no Ô in font cmr10!
 Missing character: There is no ¨ in font cmr10!
 Missing character: There is no Å in font cmr10!
- [3] [4] Excluding 'comment' comment. Excluding 'comment' comment.)
-(C:\Users\ohadben\Downloads\AdaptiveME_SpringerFormat\ProofOverview.tex
+ [3] Excluding 'comment' comment. [4] Excluding 'comment' comment.)
+(C:\Users\ohadben\Documents\GitHub\DIST-AdaptiveMutexBarriers\ProofOverview.tex
 [5] <ConstructionScheme3.pdf, id=32, 963.6pt x 335.81459pt>
 File: ConstructionScheme3.pdf Graphic file (type pdf)
 
@@ -1072,8 +1117,8 @@ Overfull \hbox (34.98164pt too wide) in paragraph at lines 45--46
  [] 
  []
 
-[6] [7 <C:/Users/ohadben/Downloads/AdaptiveME_SpringerFormat/ConstructionScheme
-3.pdf>]
+[6] [7 <C:/Users/ohadben/Documents/GitHub/DIST-AdaptiveMutexBarriers/Constructi
+onScheme3.pdf>]
 Underfull \hbox (badness 10000) in paragraph at lines 91--92
 []\OT1/cmr/m/n/10 Starting with $\OML/cmm/m/it/10 L[]$\OT1/cmr/m/n/10 , we con-
 struct ex-e-cu-tions
@@ -1120,7 +1165,8 @@ Underfull \hbox (badness 2050) in paragraph at lines 202--203
  i \OT1/cmr/m/n/10 =$
  []
 
-) (C:\Users\ohadben\Downloads\AdaptiveME_SpringerFormat\FullProof.tex [9]
+) (C:\Users\ohadben\Documents\GitHub\DIST-AdaptiveMutexBarriers\FullProof.tex
+[9]
 Underfull \hbox (badness 10000) in paragraph at lines 96--97
 []$\OML/cmm/m/it/10 F$ \OT1/cmr/m/n/10 con-tains no tran-si-tion events, there-
 fore
@@ -1193,8 +1239,9 @@ Underfull \hbox (badness 3826) in paragraph at lines 620--621
 it/10 N$\OT1/cmr/m/it/10 -process
  []
 
-) (C:\Users\ohadben\Downloads\AdaptiveME_SpringerFormat\AdditionalObjects.tex
-[19]
+)
+(C:\Users\ohadben\Documents\GitHub\DIST-AdaptiveMutexBarriers\AdditionalObjects
+.tex [19]
 
 Package paralist Warning: Incorrect label; no or multiple counters.
 (paralist)                The label is: \textbf {Shared Data:} on input line 31
@@ -1223,12 +1270,14 @@ $: a boolean ar-ray, ini-tially
  []
 
 Excluding 'comment' comment.)
-(C:\Users\ohadben\Downloads\AdaptiveME_SpringerFormat\Discussion.tex
+(C:\Users\ohadben\Documents\GitHub\DIST-AdaptiveMutexBarriers\Discussion.tex
 Underfull \hbox (badness 1038) in paragraph at lines 6--7
 \OT1/cmr/m/n/10 coherent (CC) and the dis-tributed shared-memory
  []
 
-[20]) (C:\Users\ohadben\Downloads\AdaptiveME_SpringerFormat\AdaptiveMutex.bbl
+[20])
+(C:\Users\ohadben\Documents\GitHub\DIST-AdaptiveMutexBarriers\AdaptiveMutex.bbl
+
 Underfull \hbox (badness 2302) in paragraph at lines 12--14
 \OT1/cmr/m/n/10 ory con-sis-tency mod-els: A tu-to-rial. com-puter
  []
@@ -1371,7 +1420,7 @@ Overfull \hbox (14.75867pt too wide) in paragraph at lines 134--137
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 ) [22]
-(C:\Users\ohadben\Downloads\AdaptiveME_SpringerFormat\Appendix.tex
+(C:\Users\ohadben\Documents\GitHub\DIST-AdaptiveMutexBarriers\Appendix.tex
 Underfull \hbox (badness 1102) in paragraph at lines 53--54
 []\OT1/cmr/m/n/10 IN1: For any $\OML/cmm/m/it/10 p[] [] p$ \OT1/cmr/m/n/10 we h
 ave $\OML/cmm/m/it/10 AW\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 p[]; F\OT1/cmr/m/n/10
@@ -1421,17 +1470,18 @@ Underfull \hbox (badness 1337) in paragraph at lines 143--144
  []
 
 [25]) [26]
-(C:\Users\ohadben\Downloads\AdaptiveME_SpringerFormat\AdaptiveMutex.aux)
+(C:\Users\ohadben\Documents\GitHub\DIST-AdaptiveMutexBarriers\AdaptiveMutex.aux
+)
 
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 1.28pt have occurred.
 
  ) 
 Here is how much of TeX's memory you used:
- 21145 strings out of 493921
- 404347 string characters out of 3147331
- 433479 words of memory out of 3000000
- 24032 multiletter control sequences out of 15000+200000
+ 21483 strings out of 493921
+ 410653 string characters out of 3147276
+ 442895 words of memory out of 3000000
+ 24344 multiletter control sequences out of 15000+200000
  15074 words of font info for 56 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
  62i,15n,74p,10409b,508s stack positions out of 5000i,500n,10000p,200000b,50000s
@@ -1453,7 +1503,7 @@ sfonts/cm/cmsy5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm
 /cmsy7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pf
 b><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Pr
 ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on AdaptiveMutex.pdf (26 pages, 656375 bytes).
+Output written on AdaptiveMutex.pdf (26 pages, 656411 bytes).
 PDF statistics:
  199 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

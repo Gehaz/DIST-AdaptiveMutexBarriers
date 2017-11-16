@@ -14,8 +14,8 @@ Quoting from \cite{DBLP:conf/podc/GolabHHW07}: "In a write-through protocol, to 
 
 
 Our model assumes that each variable is permanently local to \emph{at most} a single process (and remote to all others) and thus applies to both DSM and CC systems.
-For variable $v$, we denote by $owner(v)$ the process to which $v$ is local.
-We write $owner(v) = \perp$ if $v$ is remote to all processes, which is always the case in the CC model.
+For variable $v$, we denote by $owner(v)$ the process to which $v$ is local. We write $owner(v) = \perp$ if $v$ is remote to all processes, which is always the case in the CC model.
+Notice that accessing a remote variable does not necessary generates an RMR (depends on the model), but simply implies that the variable is not part of the process's private segment (if there is such).
 
 
 An \emph{event} $e$ is a read or write operation by some $p \in P$ issued to a variable $v \in V$.
@@ -56,26 +56,20 @@ We say that the write operation is \emph{committed} at this step and the executi
 What happens when a process $p$ issues an event depends on the type of the event:
 \begin{enumerate}
 	\item A \emph{fence} event $e$ forces the adversary to commit all the writes in $p$'s write buffer (if any) in the order they were issued. That is, whenever the adversary schedules $p$, it commits the next write from $p$'s write buffer, as long as the buffer is not empty. We say that process \emph{p completes fence e in execution E} if all the writes that were in $p$'s write buffer when $e$ was issued by $p$ were committed in $E$.
-	\item A write operation is placed at the write buffer. If there is already a write operation to this variable in $p$'s write buffer, then the older write in the write buffer is replaced with the new one; otherwise, the write is placed at the end of the write buffer.
-The write operation is \emph{issued} at this event but is not yet made visible to other processes. It will only be made
-visible once the execution is extended by a corresponding commit event.
-	\item A read operation returns the value of the variable and the process changes its local state accordingly. If there is a write to this variable in the write buffer, the value is read from that write; otherwise, if there is a (valid) cached copy
-of the variable in the process' private cache, the value is read from that copy; otherwise, the value of the variable is read from shared memory. The read operation is \emph{issued} at this event.
+	\item A write operation is placed at the end of the write buffer. The write operation is \emph{issued} at this event but is not yet made visible to other processes. It will only be made visible once the execution is extended by a corresponding commit event.
+	\item A read operation returns the value of the variable and the process changes its local state accordingly. If there is a write to this variable in the write buffer, the value is read from the last such write; otherwise, if there is a (valid) cached copy of the variable in the process's private cache, the value is read from that copy; otherwise, the value of the variable is read from shared memory. The read operation is \emph{issued} at this event.
 \end{enumerate}
 
 For simplicity, we split the fence instruction into two successive \emph{fence events}: a $BeginFence$ event, immediately followed (in program order) by an $EndFence$ event. $BeginFence$ initiates the execution of a fence as described above. $EndFence$ signifies that the fence execution has finished, that is, the write buffer of the process that performed the fence is now empty. For execution $E$ and process $p$, we say that \emph{$p$ is
 %\emph{fence-active} after $E$ or that \emph{$p$} is
 executing a fence after $E$}, if the last fence event by $p$ in $E$ is $BeginFence$. Note that if $p$ is executing a fence after $E$, then the only event $p$ is allowed to execute is the next write in its write buffer, or $EndFence$ if the buffer is empty. Hence, if $p$ is executing a fence after $E$, we write $mode(p,E) = write$, otherwise we write $mode(p,E) = read$. We say that $p$ \emph{completed} $i$ fences in $E$ if $p$ executed $i$ $EndFence$ events in $E$, that is $p$ executed to completion $i$ fences in $E$.
 
-The TSO model allows a process to have at most a single write operation per variable in its write buffer at any given time. As a result, during a fence execution,
-a process can commit at most a single write to any distinct variable.
 
-In our construction, we only consider executions in which, whenever the scheduler picks a process $p$ for the next step,
-it will always let it execute another event rather than commit a write from its write buffer,
-as long as $p$ is in between fences (i.e., not executing a fence). That is, the scheduler delays committing writes
-from the write buffer as long as possible. Hence, a process' mode indicates whether it is executing a fence
-(if the process is in write mode), in which case it may only commit writes from its write buffer,
-or it is in between fences (if the process is in read mode), in which case all its writes are delayed
+%The TSO model allows a process to have at most a single write operation per variable in its write buffer at any given time. As a result, during a fence execution, a process can commit at most a single write to any distinct variable.
+
+
+In our construction, we only consider executions in which, whenever the scheduler picks a process $p$ for the next step, it will always let it execute another event rather than commit a write from its write buffer,
+as long as $p$ is in between fences (i.e., not executing a fence). That is, the scheduler delays committing writes from the write buffer as long as possible. Hence, a process' mode indicates whether it is executing a fence (if the process is in write mode), in which case it may only commit writes from its write buffer, or it is in between fences (if the process is in read mode), in which case all its writes are delayed
 and the only shared memory operations performed on its behalf are reads.
 %In other words, if $mode(p,E) = read$, then the next event $p$ is about to execute does not commit a write to any remote %variable.
 
@@ -85,14 +79,14 @@ to \emph{commit} a write to $v$ in $E$. We write $writer(v,E) = \perp$ if there 
 We say that an event $e \in E$ by process $p$ \emph{accesses} a variable $v$ if either 1) $e$ commits a write to $v$,
 or 2) $e$ is a read event to $v$ that is performed when $p$'s write-buffer does not contain a copy of $v$.
 %In other words, events that are served by the write-buffer are not considered accesses.
-Thus, events that issue writes to the write-buffer or read from
-the write-buffer are not considered variable accesses.
+Thus, events that issue writes to the write-buffer or read from the write-buffer are not considered variable accesses.
 %This may only strengthen our lower bound.
-We say that process $p$ \emph{accesses} variable $v$ in $E$ if there is an event by $p$ in $E$ that accesses $v$.
-We denote by $Accessed(v,E)$ the set of processes that accessed $v$ in $E$.
+We say that process $p$ \emph{accesses} variable $v$ in $E$ if there is an event by $p$ in $E$ that accesses $v$. We denote by $Accessed(v,E)$ the set of processes that accessed $v$ in $E$.
+
 A (read or write) event $e \in E$, executed by process $p$, is a \emph{remote event} in $E$ if it accesses a variable that
-is remote w.r.t.
-$p$, otherwise it is a \emph{local event}. Whether or not an event is a remote access is determined based on the history
+is remote w.r.t. $p$, otherwise it is a \emph{local event}.
+Notice that a remote event is not necessary an RMR, as it might be that $p$ has a valid copy of $v$ in its cache. However, such an event has the potential of generating an RMR, and as such the proof will focus on such events.
+Whether or not an event is a remote access is determined based on the history
 of the process executing $e$, as stated below.
 
 \begin{fact}
