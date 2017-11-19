@@ -85,7 +85,7 @@ We say that process $p$ \emph{accesses} variable $v$ in $E$ if there is an event
 
 A (read or write) event $e \in E$, executed by process $p$, is a \emph{remote event} in $E$ if it accesses a variable that
 is remote w.r.t. $p$, otherwise it is a \emph{local event}.
-Notice that a remote event is not necessary an RMR, as it might be that $p$ has a valid copy of $v$ in its cache. However, such an event has the potential of generating an RMR, and as such the proof will focus on such events.
+Notice that a remote event is not necessarily an RMR, as it might be that $p$ has a valid copy of $v$ in its cache. However, such an event has the potential of generating an RMR, and as such the proof will focus on such events.
 Whether or not an event is a remote access is determined based on the history
 of the process executing $e$, as stated below.
 
@@ -105,7 +105,7 @@ The \emph{awareness-set} of $p$ after $E$, denoted by $AW(p,E)$, is the set of p
 \label{def:awareness}
 \end{definition}
 
-Intuitively, a process $p$ is aware of the participation of another process $q$ in an execution if there is (either direct or indirect) information flow from $q$ to $p$ in that execution via shared memory. For simplicity and without loss of generality, we assume that different write events write different values. Notice that the awareness-set of a process can only be extended along an execution. Moreover, it follows from Definition \ref{def:awareness} that whenever a process $p$ reads a variable $v$ last written by some process $q$, all the processes that belonged to $q$'s awareness set when it issued its last write to $v$ are added to $p$'s awareness set.
+Intuitively, a process $p$ is aware of the participation of another process $q$ in an execution if there is (either direct or indirect) information flow from $q$ to $p$ in that execution via shared memory. For simplicity and without loss of generality, we assume that different write events write different values. Notice that the awareness-set of a process can only be extended along an execution. Moreover, it follows from Definition \ref{def:awareness} that whenever a process $p$ reads a variable $v$ last written by some process $q$, all the processes that belonged to $q$'s awareness set when it issued this write to $v$ are added to $p$'s awareness set.
 
 \begin{comment} %%% Possibly say something about this in the discussion?
 We consider a model in which all the writes (to both local and remote variables) are placed in the write buffer. Our proof, on the other hand, relies only on the assumption that all writes to remote variables may be delayed until a fence is performed, thus the same construction can be used in a model where operations to local variable are committed instantly (at the time they are issued). In such a model, a process is allowed to perform any powerful operation on its local variables (such as CAS and swap). A closer inspection of the construction reviles that we do not interleave local events of different processes, thus any powerful operation can be seen as an atomic serious of reads and writes, and the same proof holds.

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2017.2.23)  16 NOV 2017 18:15
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2017.2.23)  19 NOV 2017 18:32
 entering extended mode
 **AdaptiveMutex.tex
 
@@ -1119,48 +1119,48 @@ Overfull \hbox (34.98164pt too wide) in paragraph at lines 45--46
 
 [6] [7 <C:/Users/ohadben/Documents/GitHub/DIST-AdaptiveMutexBarriers/Constructi
 onScheme3.pdf>]
-Underfull \hbox (badness 10000) in paragraph at lines 91--92
+Underfull \hbox (badness 10000) in paragraph at lines 93--94
 []\OT1/cmr/m/n/10 Starting with $\OML/cmm/m/it/10 L[]$\OT1/cmr/m/n/10 , we con-
 struct ex-e-cu-tions
  []
 
 
-Underfull \hbox (badness 2521) in paragraph at lines 91--92
+Underfull \hbox (badness 2521) in paragraph at lines 93--94
 $\OML/cmm/m/it/10 L[]; L[]; [] ; L[]; H[]$\OT1/cmr/m/n/10 . We prove that each 
 of the
  []
 
 Excluding 'comment' comment. Excluding 'comment' comment.
-Underfull \hbox (badness 3769) in paragraph at lines 129--130
+Underfull \hbox (badness 3769) in paragraph at lines 131--132
 []\OT1/cmr/m/n/10 We then show (in Sec-tion 5[]) that a weak
  []
 
 Excluding 'comment' comment. [8]
-Underfull \hbox (badness 2050) in paragraph at lines 173--174
+Underfull \hbox (badness 2050) in paragraph at lines 175--176
 []\OT1/cmr/m/n/10 It fol-lows that the in-equal-ity holds for $\OML/cmm/m/it/10
  i \OT1/cmr/m/n/10 =$
  []
 
 
-Underfull \hbox (badness 2990) in paragraph at lines 184--185
+Underfull \hbox (badness 2990) in paragraph at lines 186--187
 $[]$ \OT1/cmr/m/n/10 holds, thus there ex-ists an ex-e-cu-
  []
 
 
-Underfull \hbox (badness 3088) in paragraph at lines 184--185
+Underfull \hbox (badness 3088) in paragraph at lines 186--187
 \OT1/cmr/m/n/10 tion $\OML/cmm/m/it/10 E$ \OT1/cmr/m/n/10 and a pro-cess $\OML/
 cmm/m/it/10 p$ \OT1/cmr/m/n/10 such that $\OML/cmm/m/it/10 p$ \OT1/cmr/m/n/10 e
 x-e-cutes
  []
 
 
-Underfull \hbox (badness 1748) in paragraph at lines 184--185
+Underfull \hbox (badness 1748) in paragraph at lines 186--187
 $\OML/cmm/m/it/10 i \OT1/cmr/m/n/10 = 
 ([] [] [] \OML/cmm/m/it/10 N\OT1/cmr/m/n/10 )$ fences dur-ing a sin-gle pas-
  []
 
 
-Underfull \hbox (badness 2050) in paragraph at lines 202--203
+Underfull \hbox (badness 2050) in paragraph at lines 204--205
 []\OT1/cmr/m/n/10 It fol-lows that the in-equal-ity holds for $\OML/cmm/m/it/10
  i \OT1/cmr/m/n/10 =$
  []
@@ -1480,7 +1480,7 @@ LaTeX Font Warning: Size substitutions with differences
 Here is how much of TeX's memory you used:
  21483 strings out of 493921
  410653 string characters out of 3147276
- 442895 words of memory out of 3000000
+ 443895 words of memory out of 3000000
  24344 multiletter control sequences out of 15000+200000
  15074 words of font info for 56 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
@@ -1503,7 +1503,7 @@ sfonts/cm/cmsy5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm
 /cmsy7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pf
 b><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Pr
 ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on AdaptiveMutex.pdf (26 pages, 656411 bytes).
+Output written on AdaptiveMutex.pdf (26 pages, 656421 bytes).
 PDF statistics:
  199 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)

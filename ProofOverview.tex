@@ -85,6 +85,8 @@ Technically, this requires that some intermediate executions constructed during 
 Processes do not gain new information in the course of a write phase, since they only commit writes. Using the same argumentation as for the read phase, if a sufficient number of active processes start the phase, eventually a sufficiently large subset of these processes complete another fence (resulting in execution $L_0$) and the write phase terminates (an explicit bound is given in Claim
 \ref{claim: write-upper-bound}).
 
+
+
 \paragraph{Regularization phase:} The regularization phase transforms the semi-regular (and possibly not regular) execution constructed by the write phase, $L_0$, into a regular execution. This is done by letting the active process with the largest ID, denoted $p_{max}$, finish its passage. Since $p_{max}$ is visible on all the high-contention variables of the write-phase (if any), $Act(L_0) \setminus {p_{max}}$ is an IN-set.
 
 %Let $L_0$ denote the execution where we extend $J_t$ by letting each of the remaining active processes complete its fence.
