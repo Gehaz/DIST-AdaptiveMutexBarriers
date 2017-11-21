@@ -231,17 +231,23 @@ Informally, we replace condition IN5 in the definition of a regular execution by
 In the course of the write phase we construct a sequence of executions $J_0,J_1,\ldots,J_t, L_0$. Denote $\delta = \ell+s$.
 
 \begin{lemma} \label{write-phase-lemma}
-	At each step during the write phase we have an execution $J_k$ satisfying the following conditions:
+	At each step during the write phase we have an execution $J_k$ such that $J_k$ can be written as $\alpha \beta$, and the following conditions holds:
 	\begin{enumerate}[(1)]
-		\item $J_k$ is a semi-regular ordered execution;
-		\item Each $p \in Act(J_k)$ executed $\delta+k$ critical events in $J_k$;
+		\item $\alpha$ is a regular execution in which every $p \in Act(J_k)$ executed $\delta$ critical events.
+		\item Each $p \in Act(J_k)$ is executing a (single) fence in $\beta$. Moreover, $p$ committed $k$ critical writes in $\beta$.
+		\item For any $v \in V$ such that there exists a critical write to $v$ in $\beta$ by some process $p$ the following holds:
+		\begin{enumerate}
+			\item $writer(v,\alpha) \notin Act(J_k)$.
+			\item $owner(v) \notin Act(J_k)$.
+			\item Either $p$ is the only process in $Act(J_k)$ to commit write to $v$, or that any process in $Act(J_k)$ committed a write to $v$ in $\beta$.
+		\end{enumerate}
 		\item Each $p\in Act(J_k)$ completed $i$ fences in $J_k$, and $mode(p, J_k) = write$;
 		\item $Fin(J_k) = Fin(H_i)$;
 		\item $|Act(J_k)| \geq \sqrt{|Act(J_{k-1})|}/4(\delta+k)$.
 	\end{enumerate}
 \end{lemma}
 
-First notice that $J_0$ satisfies all the conditions in Lemma \ref{write-phase-lemma}, since $J_0$ is a regular execution (any regular execution is also ordered, as one of (a) or (b) holds for any variable). Assume we already constructed $J_{k-1}$ satisfying the conditions of Lemma \ref{write-phase-lemma}. We denote $J=J_{k-1},\ n=|Act(J_{k-1})|$ throughout the rest of this section, in which we define the construction of the write phase, and prove Lemma \ref{write-phase-lemma}.
+First notice that $J_0$ satisfies all the conditions in Lemma \ref{write-phase-lemma} by choosing $\alpha = J_0$ and $\beta = \langle \rangle$, since $J_0$ is a regular execution. Assume we already constructed $J_{k-1}$ satisfying the conditions of Lemma \ref{write-phase-lemma}. We denote $J=J_{k-1},\ n=|Act(J_{k-1})|$ and $J = \alpha \beta$ the composition promised by Lemma \ref{write-phase-lemma}, throughout the rest of this section, in which we define the construction of the write phase, and prove Lemma \ref{write-phase-lemma}.
 
 \subsubsection{Construction: stage 1}
 Since $mode(p,J) = write$ for any $p \in Act(J)$, $p$ is executing a fence after $J$, thus $p$ can continue to execute commit write events independently of other processes. We extend $J$ in the following manner: we let each $p \in Act(J)$, in an increasing ID order, run until it reaches its next special event $e_p$ (such an event must exist, since $p$ is executing a fence). Denote this extension by $F$. Then $J F$ is an execution and the following hold:

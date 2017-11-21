@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2017.2.23)  19 NOV 2017 18:32
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2017.2.23)  21 NOV 2017 18:15
 entering extended mode
 **AdaptiveMutex.tex
 
@@ -1179,14 +1179,14 @@ Underfull \hbox (badness 1348) in paragraph at lines 132--133
  []
 
 [11] [12]
-Underfull \hbox (badness 10000) in paragraph at lines 256--259
+Underfull \hbox (badness 10000) in paragraph at lines 262--265
 \OT1/cmr/m/n/10 Denote $\OML/cmm/m/it/10 V[] \OT1/cmr/m/n/10 = \OMS/cmsy/m/n/10
  f\OML/cmm/m/it/10 v \OMS/cmsy/m/n/10 2 \OML/cmm/m/it/10 V \OMS/cmsy/m/n/10 j 9
 \OML/cmm/m/it/10 p \OMS/cmsy/m/n/10 2$
  []
 
 [13] [14]
-Underfull \hbox (badness 1112) in paragraph at lines 349--350
+Underfull \hbox (badness 1112) in paragraph at lines 355--356
 []$\OML/cmm/m/it/10 writer\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 v; N\OT1/cmr/m/n/10
  ) [] \OML/cmm/m/it/10 Act\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 N\OT1/cmr/m/n/10 )$
 , thus $\OML/cmm/m/it/10 writer\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 v; J[]\OT1/cmr
@@ -1194,13 +1194,13 @@ Underfull \hbox (badness 1112) in paragraph at lines 349--350
  []
 
 [15]
-Underfull \hbox (badness 1565) in paragraph at lines 398--400
+Underfull \hbox (badness 1565) in paragraph at lines 404--406
 []\OT1/cmr/m/n/10 Consider a vari-able $\OML/cmm/m/it/10 v$\OT1/cmr/m/n/10 . Si
 nce $\OML/cmm/m/it/10 D$ \OT1/cmr/m/n/10 con-tains only
  []
 
 
-Underfull \hbox (badness 3449) in paragraph at lines 436--437
+Underfull \hbox (badness 3449) in paragraph at lines 442--443
 $\OML/cmm/m/it/10 Act\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 L\OT1/cmr/m/n/10 ) \OMS/
 cmsy/m/n/10 n f\OML/cmm/m/it/10 p[]\OMS/cmsy/m/n/10 g \OT1/cmr/m/n/10 = \OML/cm
 m/m/it/10 W[]$\OT1/cmr/m/n/10 , thus $\OMS/cmsy/m/n/10 j\OML/cmm/m/it/10 Act\OT
@@ -1209,32 +1209,32 @@ m/m/it/10 W[]$\OT1/cmr/m/n/10 , thus $\OMS/cmsy/m/n/10 j\OML/cmm/m/it/10 Act\OT
  []
 
 [16]
-Underfull \hbox (badness 1668) in paragraph at lines 439--440
+Underfull \hbox (badness 1668) in paragraph at lines 445--446
 []\OT1/cmr/m/n/10 Since $\OML/cmm/m/it/10 p[]$ \OT1/cmr/m/n/10 fin-ishes its pa
 s-sage in $\OML/cmm/m/it/10 F$\OT1/cmr/m/n/10 , we get
  []
 
 
-Underfull \hbox (badness 1990) in paragraph at lines 491--492
+Underfull \hbox (badness 1990) in paragraph at lines 497--498
 \OT1/cmr/m/n/10 have not been re-moved from $\OML/cmm/m/it/10 N$ \OT1/cmr/m/n/1
 0 and we get
  []
 
 
-Underfull \hbox (badness 1389) in paragraph at lines 502--503
+Underfull \hbox (badness 1389) in paragraph at lines 508--509
 []$\OML/cmm/m/it/10 e$ \OT1/cmr/m/n/10 is not a tran-si-tion event, thus $\OML/
 cmm/m/it/10 Act\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 L[]\OT1/cmr/m/n/10 ) =$
  []
 
 [17]
-Underfull \hbox (badness 3514) in paragraph at lines 533--534
+Underfull \hbox (badness 3514) in paragraph at lines 539--540
 []\OT1/cmr/m/it/10 Let $\OML/cmm/m/it/10 i \OMS/cmsy/m/n/10 2 \U/msb/m/n/10 N$ 
 \OT1/cmr/m/it/10 be such that $\OML/cmm/m/it/10 f\OT1/cmr/m/n/10 (\OML/cmm/m/it
 /10 i\OT1/cmr/m/n/10 ) \OMS/cmsy/m/n/10 $
  []
 
 [18]
-Underfull \hbox (badness 3826) in paragraph at lines 620--621
+Underfull \hbox (badness 3826) in paragraph at lines 626--627
 []\OT1/cmr/m/it/10 Let $\OMS/cmsy/m/n/10 A$ \OT1/cmr/m/it/10 be an $\OML/cmm/m/
 it/10 N$\OT1/cmr/m/it/10 -process
  []
@@ -1503,7 +1503,7 @@ sfonts/cm/cmsy5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm
 /cmsy7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pf
 b><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Pr
 ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on AdaptiveMutex.pdf (26 pages, 656421 bytes).
+Output written on AdaptiveMutex.pdf (26 pages, 657526 bytes).
 PDF statistics:
  199 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
