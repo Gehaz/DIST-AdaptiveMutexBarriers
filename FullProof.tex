@@ -239,7 +239,7 @@ In the course of the write phase we construct a sequence of executions $J_0,J_1,
 		\begin{enumerate}
 			\item $writer(v,\alpha) \notin Act(J_k)$.
 			\item $owner(v) \notin Act(J_k)$.
-			\item Either $p$ is the only process in $Act(J_k)$ to commit write to $v$, or that any process in $Act(J_k)$ committed a write to $v$ in $\beta$.
+			\item Either $p$ is the only process in $Act(J_k)$ to commit a write to $v$ in $\beta$, or that any process in $Act(J_k)$ committed a write to $v$ in $\beta$.
 		\end{enumerate}
 		\item Each $p\in Act(J_k)$ completed $i$ fences in $J_k$, and $mode(p, J_k) = write$;
 		\item $Fin(J_k) = Fin(H_i)$;
@@ -247,21 +247,26 @@ In the course of the write phase we construct a sequence of executions $J_0,J_1,
 	\end{enumerate}
 \end{lemma}
 
-First notice that $J_0$ satisfies all the conditions in Lemma \ref{write-phase-lemma} by choosing $\alpha = J_0$ and $\beta = \langle \rangle$, since $J_0$ is a regular execution. Assume we already constructed $J_{k-1}$ satisfying the conditions of Lemma \ref{write-phase-lemma}. We denote $J=J_{k-1},\ n=|Act(J_{k-1})|$ and $J = \alpha \beta$ the composition promised by Lemma \ref{write-phase-lemma}, throughout the rest of this section, in which we define the construction of the write phase, and prove Lemma \ref{write-phase-lemma}.
+First notice that $J_0$ satisfies all the conditions in Lemma \ref{write-phase-lemma} by choosing $\alpha = J_0$ and $\beta = \langle \rangle$, since $J_0$ is a regular execution. Assume we already constructed $J_{k-1}$ satisfying the conditions of Lemma \ref{write-phase-lemma}. We denote $J=J_{k-1},\ n=|Act(J_{k-1})|$, and $J = \alpha \beta$ the composition of $J$ by Lemma \ref{write-phase-lemma}, throughout the rest of this section, in which we define the construction of the write phase, and prove Lemma \ref{write-phase-lemma}.
 
 \subsubsection{Construction: stage 1}
-Since $mode(p,J) = write$ for any $p \in Act(J)$, $p$ is executing a fence after $J$, thus $p$ can continue to execute commit write events independently of other processes. We extend $J$ in the following manner: we let each $p \in Act(J)$, in an increasing ID order, run until it reaches its next special event $e_p$ (such an event must exist, since $p$ is executing a fence). Denote this extension by $F$. Then $J F$ is an execution and the following hold:
+Since $mode(p,J) = write$ for any $p \in Act(J)$, $p$ is executing a fence after $J$, thus $p$ can continue and execute commit write events independently of other processes. We extend $J$ in the following manner: we let each $p \in Act(J)$ (in an arbitrary order) run until it reaches its next special event $e_p$. Such an event must exist, since $p$ is executing a fence. Denote this extension by $F$. Then $J F$ is an execution and the following hold:
 \begin{enumerate}
 	\item $F$ contains no transition events, thus $Act(J F) = Act(J)$ and $Fin(J F) = Fin(J) = Fin(H_i)$.
-	\item Since $F$ consists of non-critical commit writes in $J F$, by claim \ref{claim: pseudo-regular ordered execution}, $J F$ is a semi-regular ordered execution.
 	\item Each $p \in Act(J)$ executed $\delta+k-1$ critical events in $J F$.
 	\item $F$ contains no fence events, thus each $p \in Act(J F)$ completed $i$ fences in $J F$.
-	\item For any $p \in Act(J)$, since $F$ contains no fence events, $mode(p,J F) = mode(p,J) = write$.
-	\\ Therefore $e_p$ is either a commit write event or an $EndFence$ event. Moreover, as $e_p$ is a special event in $J F' e_p$, for some prefix $F'$ of $F$, and since we extend $F'$ with events by processes other than $p$ to form $F$, by claim \ref{claim: maintain-criticalness} we have that $e_p$ is a special event in $J F e_p$, i.e. $p$ is about to execute a special event $e_p$ after $J F$.
+	\item For any $p \in Act(J)$, since $F$ contains no fence events, $mode(p,J F) = mode(p,J) = write$. Therefore $e_p$ is either a commit write event or an $EndFence$ event.
+	
+	%Moreover, as $e_p$ is a special event in $J F' e_p$, for some prefix $F'$ of $F$, and since we extend $F'$ with events by processes other than $p$ to form $F$, by claim \ref{claim: maintain-criticalness} we have that $e_p$ is a special event in $J F e_p$, i.e. $p$ is about to execute a special event $e_p$ after $J F$.
 \end{enumerate}
-We define: $Z_1 = \{p \in Act(J) \mid e_p = EndFence\}$, $Z_2 = \{p \in Act(J) \mid e_p \text{ is a commit write event}\}$.
-\\It follows that $Act(J) = Z_1 \cup Z_2$ and $Z_1 \cap Z_2 = \emptyset$, thus $n = |Z_1|+|Z_2|$.
-\\ Denote $V_{next} = \{v \in V \mid \exists p \in Z_2 \text{ such that } e_p \text{ remotely writes v}\}$
+
+We define:
+\begin{align*}
+Z_1 &= \{p \in Act(J) \mid e_p = EndFence\} \\
+Z_2 &= \{p \in Act(J) \mid e_p \text{ is a commit write event}\} \\
+V_{next} &= \{v \in V \mid \exists p \in Z_2 \text{ such that } e_p \text{ remotely writes v}\}
+\end{align*}
+It follows that $Act(J) = Z_1 \cup Z_2$ and $Z_1 \cap Z_2 = \emptyset$, thus $n = |Z_1|+|Z_2|$.
 
 \subsubsection*{\hspace{5mm} Case I: $\bf |Z_1| \geq n/2$}
 We define $W = Z_1$.
@@ -271,19 +276,18 @@ For each $v \in V_{next}$, we select an arbitrary $p \in Z_2$ such that $e_p = w
 \newline We construct an undirected graph $\mathcal{G}$ as follows: the vertices of $\mathcal{G}$ are the processes in $Z$. Consider $p \in Z$, and denote $e_p = write(v)$. For $q \in Z$, we add an edge $\{p,q\}$ in $\mathcal{G}$ if either
 \begin{inparaenum}[\itshape a\upshape)]
 	\item $v$ is local to $q$; or
-	\item there exists a critical event $e \in J F$ by $q$ such that $e$ remotely accesses $v$.
+	\item $writer(v,\alpha) = q$.
+	%there exists a critical event $e \in J F$ by $q$ such that $e$ remotely accesses $v$.
 \end{inparaenum}
-\newline Since each $p$ executs exactly $\delta+k-1$ critical events in $J F$, $p$ can introduce at most $\delta+k-1$ edges in $\mathcal{G}$ by rule b). Since each variable is local to at most one process, at most one edge is introduced by rule a) in $\mathcal{G}$. As each edge is counted twice (once per each direction), the average degree in $\mathcal{G}$ is at most $2(\delta+k)$. By Theorem \ref{th: turan}, there exists an independent set $W \subseteq Z$ in $\mathcal{G}$ such that:
-\begin{align*}
-|W| \geq \frac{|Z|}{2(\delta+k)+1} \geq & \dfrac{\sqrt{|Z_2|}}{2(\delta+k)+1} \geq \\
-& \frac{\sqrt{n/2}}{2(\delta+k)+1} \geq \dfrac{\sqrt{n}}{4(\delta+k)}
-\end{align*}
+\\ Since each variable $v$ is local to at most one process, and has at most a single process as $writer(v,\alpha)$, at most two new edges are introduced by each process, and therefore the average degree in $\mathcal{G}$ is at most 4. By Theorem \ref{th: turan}, there exists an independent set $W \subseteq Z$ in $\mathcal{G}$ such that:
+
+$$ |W| \geq \frac{|Z|}{5} \geq \frac{\sqrt{|Z_2|}}{5} \geq \frac{\sqrt{n/2}}{5} \geq \frac{\sqrt{n}}{10} $$
 
 \subsubsection*{\hspace{5mm} Case III: $\bf |Z_2| > |Y|/2$ and $\bf |V_{next}| < \sqrt{|Z_2|}$}
 By the pigeonhole principle, there exists a variable $v$ and a set $W \subseteq Z_2$ of size $|W| \geq \sqrt{|Z_2|} \geq \sqrt{n/2}$, such that $e_p$ is a critical commit write to $v$ for any $p \in W$.
 
 \subsubsection{Construction: stage 2}
-In all of the above cases of stage 1 we have a set $W \subseteq Act(J F)$. Define $\overline{W} = Act(J F) \setminus W$, and denote $N = (J F)^{-\overline{W}}$. Then the following hold:
+In all of the above cases of stage 1 we have a set $W \subseteq Act(J F)$. Define $\overline{W} = Act(J F) \setminus W$, and denote $N = (J F)^{-\overline{W}} = (\alpha \beta F)^{-\overline{W}}$. Then the following hold:
 \begin{enumerate}
 	\item $J F$ is a semi-regular ordered execution and $\overline{W} \subseteq Act(J F)$, thus, by claim \ref{claim: pseudo-regular ordered execution}, $N$ is a semi-regular ordered execution as well.
 	\item $Act(N) = Act(J F) \setminus \overline{W} = W$ and $Fin(N) = Fin(J F) = Fin(H_i)$.
