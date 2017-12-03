@@ -186,46 +186,49 @@ We now prove that $G_k$ satisfies all the conditions in Lemma \ref{read-phase-le
 
 
 \subsection{Write phase}
-In the course of the write phase, we consider semi-regular executions. In order to guarantee the ability to transform the resulting execution at the end of the write phase into a regular execution, we consider the following new condition on execution fragments.
+At the end of the read phase we get an execution $J$ such that the last event by each process in $Act(J)$ was BeginFence. The write phase will determine the order in which processes are executing their write commits along the fence. Each process $p \in Act(J)$ has a list $\alpha_p$ of writes in its write buffer, which it will commit starting from $J$.
 
-\begin{definition}
-\label{def:ordered-exec}
-	Let $E$ be an execution fragment. We say that $E$ is an \emph{ordered} execution if for any variable $v$ one of the following holds:
-	\begin{enumerate}[(a)]
-		\item $writer(v,E) \notin Act(E)$;
-		\item $writer(v,E) = p$ for some $p \in Act(E)$, and $p$ is the only process in $Act(E)$ to access $v$ in $E$.
-		\item There is a sequence $C$ in $E$ of successive commit writes to $v$ by all the processes in $Act(E)$ in an increasing ID order. Moreover, all these processes are executing a fence after $E$, that is, none of them completes in $E$ the fence in the course of which it committed its write in $C$.
+We first focus on the list $\alpha_p$. Notice that $\alpha_p$ is also a solo run of $p$ starting from $J$ until the point where it finish executing its fence. Along the write phase, we first construct a set of processes out of $Act(J)$, such that the lists $\alpha_p$ of those processes satisfies some special properties. Then, we will use this set in order to extend $J$.
+In the course of the write phase we construct a sequence of sets $Act(J) = P_0 \supseteq P_1 \supseteq \ldots \supseteq P_t$ satisfying the Lemma below.
+
+\begin{lemma} \label{lemma-new}
+	At each step of the write phase we have a set $P_k \subseteq Act(J)$ such that each process $p \in P_k$ has a prefix $\beta_p$ of $\alpha_p$ and the following hold:
+	\begin{enumerate}[(1)]
+		\item For each $p \in P_k$, $p$ is executing exactly $k$ critical writes in $\beta_p$ if it to perform it after $J$.
+		\item Let $e_p \in \beta_p$ be a critical write in $J \beta_p$ by some process $p \in P_k$ to some variable $v$. Then, the following holds:
+		\begin{enumerate}
+			\item $writer(v,J) \notin P_k$.
+			\item $owner(v) \notin P_k$.
+			\item Either $p$ is the only process in $P_k$ to write to $v$ in $\beta_p$, or that any process $q \in P_k$ has a write to $v$ in $\beta_q$.
+		\end{enumerate}
+		\item $|P_k| \geq \sqrt{|P_{k-1}|}/10$.
 	\end{enumerate}
-\end{definition}
+\end{lemma}
 
-Informally, we replace condition IN5 in the definition of a regular execution by a more relaxed condition. In a regular execution, each variable satisfies either (a) or (b) in the definition of an ordered execution (that is, any regular execution is also ordered). In a semi-regular ordered execution, we allow \emph{a single} process to be visible on (one or more) variables that are accessed by all the active processes. This is the process with the maximum ID among all active processes that are executing the current write phase. As we prove, a semi-regular ordered execution possesses similar properties to a regular execution, and more specifically, extending it with non-critical write events and erasing active processes results in another semi-regular ordered execution.
+First notice that $P_0=Act(J)$ satisfies all the above conditions with $\beta_p=\langle \rangle$ for any $p \in Act(J)$. Assume we already constructed $P_{k-1}$ satisfying the conditions of Lemma \ref{lemma-new}. For any $p \in P_{k-1}$ we denote $\beta_p$ to be the prefix as promised by Lemma \ref{lemma-new}, throughout the rest of this section, in which we define the construction of the write phase, and prove Lemma \ref{lemma-new}.
+
+\subsubsection{Construction: stage 1}
+For any $p \in P_{k-1}$ we let $p$ perform a solo run starting from $J \beta_p$ until its next event $e_p$ is either a critical write, or that $p$ has finished executing $\alpha_p$ and its next event $e_p$ is $EndFence$. Denote this extension by $\gamma_p$. Notice that $\beta_p \gamma_p$ is indeed a prefix of $\alpha_p$, as $\alpha_p$ is a solo run of $p$ starting from $J$ until it finish its fence execution. We define:
+\begin{align*}
+Z_1 &= \{p \in Act(J) \mid e_p = EndFence\} \\
+Z_2 &= \{p \in Act(J) \mid e_p \text{ is a commit write event}\} \\
+V_{next} &= \{v \in V \mid \exists p \in Z_2 \text{ such that } e_p \text{ remotely writes v}\}
+\end{align*}
+It follows that $Act(J) = Z_1 \cup Z_2$ and $Z_1 \cap Z_2 = \emptyset$, thus $n = |Z_1|+|Z_2|$.
 
 
-\begin{claim-num} \label{claim: pseudo-regular ordered execution}
-	Let $E$ be a semi-regular ordered execution.
-	\begin{enumerate}
-		\item Let $F$ be an extension of $E$ such that $F$ consists of non-critical write events in $E F$. Then $E F$ is a semi-regular ordered execution;
-		\item For any $X \subseteq Act(E)$: $E^{-X}$ is a semi-regular ordered execution.
-	\end{enumerate}
-\end{claim-num}
 
-\begin{proof}
-	$ $
-	
-	1. We first prove that $E F$ is a semi-regular execution. First notice that $Act(E F) = Act(E)$, since there are no transition events in $F$. As $F$ contains only write events, no process changes its awareness-set during $F$, thus IN1 clearly holds in $E F$. Lemma \ref{lem: non-critical-extension} is an analog version to our claim for the regular case. A careful examination of the proof reveals that the proof for propositions IN2-IN4 is valid for our case as well (in order to prove that IN$i$ holds in $E F$ (for $i=2,3,4$), it is sufficient to assume that IN$i$ holds in $E$).
-	
-	We now prove that $E F$ is ordered. Consider a variable $v$. If either of conditions (a) or (b) of Definition \ref{def:ordered-exec} holds for $v$, then we are done. Otherwise, $writer(v,E F) = p$ for some $p \in Act(E F)$, and $p$ is not the only process in $Act(E F)$ to access $v$. Let $q$ be another process in $Act(E F)$ to access $v$. $v$ is remote to at least one of $p$ or $q$, and thus by IN4 $owner(v) \notin Act(E F)$, and in particular $p,q \neq owner(v)$. Notice that both $p$ and $q$ access $v$ in $E$, otherwise at least one of them accesses $v$ in $F$ for the first time, in which case this access is critical, a contradiction. In addition, $writer(v,E) = p$, otherwise it must be that $p$ writes to $v$ in $F$ (since $writer(v,E F) = p$), and the first such write is critical, a contradiction. Altogether, we get that neither (a) nor (b) hold for $v$ in $E$. Since $E$ is an ordered execution, (c) holds for $v$ in $E$. Thus, there is a sequence $C$ in $E$ of successive write commits to $v$ by the processes in $Act(E)$, in an increasing ID order, and therefore $C$ is such a sequence in $E F$ as well (recall that $Act(E F) = Act(E)$). Moreover, none of the processes of $Act(E)$ complete in $E F$ the fence in the course of which they committed their writes in $C$. As a result, (c) holds for $v$ in $E F$.
-	
-	2. We first prove that $E^{-X}$ is a semi-regular execution. Since IN1 holds is $E$, and using Lemma \ref{lem: sub-execution} (by induction on the size of $X$), we get that $E^{-X}$ is an execution. Lemma \ref{lem: remove-invisibale-processes} establishes that after erasing a subset of an IN-set, the remaining set of processes is itself an IN-set of the resulting execution. The proof that each proposition IN$i$ ($1 \leq i \leq 4$) holds in $E^{-X}$ relies only on the assumption that IN$i$ holds in $E$. Thus, the same proof holds for our case as well.
-	
-	We now prove that $E^{-X}$ is ordered. Notice that $Act(E^{-X}) = Act(E) \setminus X$. Consider a variable $v$. Since $E$ is ordered, one of the following holds:
-	\begin{enumerate}[(a)]
-		\item $p = writer(v,E) \notin Act(E)$. Since $p \notin X$, the events by $p$ are not removed, thus $writer(v,E^{-X}) = writer(v,E) = p$ and $p \notin Act(E^{-X})$.
-		\item $writer(v,E) = p$ for some $p \in Act(E)$, and $p$ is the only process in $Act(E)$ to access $v$ in $E$. If $p \in X$, then the events by $p$ have all been removed, thus there is no process in $Act(E^{-X})$ to access $v$ in $E^{-X}$, that is $writer(v,E^{-X}) \notin Act(E^{-X})$ and (a) holds. Otherwise $p \notin X$, thus $writer(v,E^{-X}) = writer(v,E) = p$, and $p$ is the only process in $Act(E^{-X})$ to access $v$ in $E^{-X}$.
-		\item There is a sequence $C$ in $E$ of successive commit writes to $v$ by the processes in $Act(E)$ in an increasing ID order. Thus $C^{-X}$ is a sequence of successive commit writes to $v$ in $E^{-X}$, by the processes in $Act(E^{-X})$ in an increasing ID order.
-		\\ Moreover, any process $p \in Act(E^{-X})$ is executing a fence after $E$, and it has committed its write in $C$ during the current fence is is performing in $E$. Since $E^{-X} \mid p = E \mid p$, $p$ is executing a fence after $E^{-X}$, and it has committed its write in $C^{-X}$ during the current fence it is performing in $E^{-X}$.
-	\end{enumerate}
-\end{proof}
+
+
+
+
+
+
+
+
+
+
+
 
 
 In the course of the write phase we construct a sequence of executions $J_0,J_1,\ldots,J_t, L_0$. Denote $\delta = \ell+s$.
@@ -234,7 +237,7 @@ In the course of the write phase we construct a sequence of executions $J_0,J_1,
 	At each step during the write phase we have an execution $J_k$ such that $J_k$ can be written as $\alpha \beta$, and the following conditions holds:
 	\begin{enumerate}[(1)]
 		\item $\alpha$ is a regular execution in which every $p \in Act(J_k)$ executed $\delta$ critical events.
-		\item Each $p \in Act(J_k)$ is executing a (single) fence in $\beta$. Moreover, $p$ committed $k$ critical writes in $\beta$.
+		\item $\beta$ is an extension in which all processes are executing a (single) fence, such that each $p \in Act(J_k)$ committed $k$ critical writes in $\beta$.
 		\item For any $v \in V$ such that there exists a critical write to $v$ in $\beta$ by some process $p$ the following holds:
 		\begin{enumerate}
 			\item $writer(v,\alpha) \notin Act(J_k)$.
@@ -247,15 +250,15 @@ In the course of the write phase we construct a sequence of executions $J_0,J_1,
 	\end{enumerate}
 \end{lemma}
 
-First notice that $J_0$ satisfies all the conditions in Lemma \ref{write-phase-lemma} by choosing $\alpha = J_0$ and $\beta = \langle \rangle$, since $J_0$ is a regular execution. Assume we already constructed $J_{k-1}$ satisfying the conditions of Lemma \ref{write-phase-lemma}. We denote $J=J_{k-1},\ n=|Act(J_{k-1})|$, and $J = \alpha \beta$ the composition of $J$ by Lemma \ref{write-phase-lemma}, throughout the rest of this section, in which we define the construction of the write phase, and prove Lemma \ref{write-phase-lemma}.
+First notice that $J_0$ satisfies all the conditions in Lemma \ref{write-phase-lemma} by choosing $\alpha = J_0$ and $\beta = \langle \rangle$, since $J_0$ is a regular execution. Assume we already constructed $J_{k-1}$ satisfying the conditions of Lemma \ref{write-phase-lemma}. We denote $J=J_{k-1},\ n=|Act(J_{k-1})|$, and $J = \alpha \beta$ the composition of $J$ by Lemma \ref{write-phase-lemma}, throughout the rest of this section in which we define the construction of the write phase, and prove Lemma \ref{write-phase-lemma}.
 
 \subsubsection{Construction: stage 1}
-Since $mode(p,J) = write$ for any $p \in Act(J)$, $p$ is executing a fence after $J$, thus $p$ can continue and execute commit write events independently of other processes. We extend $J$ in the following manner: we let each $p \in Act(J)$ (in an arbitrary order) run until it reaches its next special event $e_p$. Such an event must exist, since $p$ is executing a fence. Denote this extension by $F$. Then $J F$ is an execution and the following hold:
+For $p \in Act(J)$, since $p$ is executing a fence after $J$ it can continue and execute commit write events independently of other processes. We extend $J$ in the following manner: we let each $p \in Act(J)$ (in an arbitrary order) run until it reaches its next special event $e_p$. Such an event must exist, since $p$ is executing a fence. Denote this extension by $\gamma$. Then $J \gamma$ is an execution and the following hold:
 \begin{enumerate}
-	\item $F$ contains no transition events, thus $Act(J F) = Act(J)$ and $Fin(J F) = Fin(J) = Fin(H_i)$.
-	\item Each $p \in Act(J)$ executed $\delta+k-1$ critical events in $J F$.
-	\item $F$ contains no fence events, thus each $p \in Act(J F)$ completed $i$ fences in $J F$.
-	\item For any $p \in Act(J)$, since $F$ contains no fence events, $mode(p,J F) = mode(p,J) = write$. Therefore $e_p$ is either a commit write event or an $EndFence$ event.
+	\item $\gamma$ contains no transition events, thus $Act(J \gamma) = Act(J)$ and $Fin(J \gamma) = Fin(J) = Fin(H_i)$.
+	\item Each $p \in Act(J)$ executed $\delta+k-1$ critical events in $J \gamma$.
+	\item $\gamma$ contains no fence events, thus each $p \in Act(J \gamma)$ completed $i$ fences in $J \gamma$.
+	\item For any $p \in Act(J)$, since $\gamma$ contains no fence events, $mode(p,J \gamma) = mode(p,J) = write$. Therefore $e_p$ is either a commit write event or an $EndFence$ event.
 	
 	%Moreover, as $e_p$ is a special event in $J F' e_p$, for some prefix $F'$ of $F$, and since we extend $F'$ with events by processes other than $p$ to form $F$, by claim \ref{claim: maintain-criticalness} we have that $e_p$ is a special event in $J F e_p$, i.e. $p$ is about to execute a special event $e_p$ after $J F$.
 \end{enumerate}
@@ -287,9 +290,10 @@ $$ |W| \geq \frac{|Z|}{5} \geq \frac{\sqrt{|Z_2|}}{5} \geq \frac{\sqrt{n/2}}{5} 
 By the pigeonhole principle, there exists a variable $v$ and a set $W \subseteq Z_2$ of size $|W| \geq \sqrt{|Z_2|} \geq \sqrt{n/2}$, such that $e_p$ is a critical commit write to $v$ for any $p \in W$.
 
 \subsubsection{Construction: stage 2}
-In all of the above cases of stage 1 we have a set $W \subseteq Act(J F)$. Define $\overline{W} = Act(J F) \setminus W$, and denote $N = (J F)^{-\overline{W}} = (\alpha \beta F)^{-\overline{W}}$. Then the following hold:
+Stage 1 defines a set $W \subseteq Act(J \gamma)$. Denote $\overline{W} = Act(J \gamma) \setminus W$, and $N = (J \gamma)^{-\overline{W}} = (\alpha \beta \gamma)^{-\overline{W}}$. Then the following hold:
 \begin{enumerate}
-	\item $J F$ is a semi-regular ordered execution and $\overline{W} \subseteq Act(J F)$, thus, by claim \ref{claim: pseudo-regular ordered execution}, $N$ is a semi-regular ordered execution as well.
+	\item $Act(N) = Act(J \gamma) \setminus \overline{W} = W$ and $Fin(N) = Fin(J \gamma) = Fin(H_i)$.
+	\item $\alpha$ is a regular execution, and $\overline{W} \subseteq Act(\alpha)$. By Lemma \ref{lem: remove-invisibale-processes} we get that $\alpha^{\overline{w}}$ is a regular execution and each $p \in Act(N)$ executed $\delta$ critical events in $\alpha^{\overline{w}}$.
 	\item $Act(N) = Act(J F) \setminus \overline{W} = W$ and $Fin(N) = Fin(J F) = Fin(H_i)$.
 	\item By IN3, each $p \in Act(N)$ executed the same critical events in $N$ and in $J F$, thus $p$ executed $\delta+k-1$ critical events in $N$.
 	\item For any $p\in Act(N)$, as $N \mid p = (J F) \mid p$, $p$ completed $i$ fences in $N$ and $mode(p,N) = write$.
