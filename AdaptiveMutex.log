@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2017.2.23)  3 DEC 2017 18:22
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (MiKTeX 2.9 64-bit) (preloaded format=pdflatex 2017.2.23)  5 DEC 2017 18:34
 entering extended mode
 **AdaptiveMutex.tex
 
@@ -1178,37 +1178,36 @@ Underfull \hbox (badness 1348) in paragraph at lines 132--133
 /cmm/m/it/10 J[]$ \OT1/cmr/m/n/10 is Be-gin-Fence, i.e.
  []
 
-[11]
-Overfull \hbox (11.32367pt too wide) in paragraph at lines 216--216
+[11] [12]
+Overfull \hbox (11.32367pt too wide) in paragraph at lines 252--252
 [] 
  []
 
-[12]
-Overfull \hbox (11.32367pt too wide) in paragraph at lines 271--271
+
+Overfull \hbox (11.32367pt too wide) in paragraph at lines 294--294
 [] 
  []
 
-[13]
-Underfull \hbox (badness 1112) in paragraph at lines 363--364
+[13] [14]
+Underfull \hbox (badness 1112) in paragraph at lines 386--387
 []$\OML/cmm/m/it/10 writer\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 v; N\OT1/cmr/m/n/10
  ) [] \OML/cmm/m/it/10 Act\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 N\OT1/cmr/m/n/10 )$
 , thus $\OML/cmm/m/it/10 writer\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 v; J[]\OT1/cmr
 /m/n/10 ) =$
  []
 
-[14]
 
 LaTeX Warning: Reference `claim: pseudo-regular ordered execution' on page 15 u
-ndefined on input line 395.
+ndefined on input line 418.
 
-
-Underfull \hbox (badness 1565) in paragraph at lines 412--414
+[15]
+Underfull \hbox (badness 1565) in paragraph at lines 435--437
 []\OT1/cmr/m/n/10 Consider a vari-able $\OML/cmm/m/it/10 v$\OT1/cmr/m/n/10 . Si
 nce $\OML/cmm/m/it/10 D$ \OT1/cmr/m/n/10 con-tains only
  []
 
-[15]
-Underfull \hbox (badness 3449) in paragraph at lines 450--451
+
+Underfull \hbox (badness 3449) in paragraph at lines 473--474
 $\OML/cmm/m/it/10 Act\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 L\OT1/cmr/m/n/10 ) \OMS/
 cmsy/m/n/10 n f\OML/cmm/m/it/10 p[]\OMS/cmsy/m/n/10 g \OT1/cmr/m/n/10 = \OML/cm
 m/m/it/10 W[]$\OT1/cmr/m/n/10 , thus $\OMS/cmsy/m/n/10 j\OML/cmm/m/it/10 Act\OT
@@ -1216,40 +1215,40 @@ m/m/it/10 W[]$\OT1/cmr/m/n/10 , thus $\OMS/cmsy/m/n/10 j\OML/cmm/m/it/10 Act\OT
 /n/10 =$
  []
 
-
-Underfull \hbox (badness 1668) in paragraph at lines 453--454
+[16]
+Underfull \hbox (badness 1668) in paragraph at lines 476--477
 []\OT1/cmr/m/n/10 Since $\OML/cmm/m/it/10 p[]$ \OT1/cmr/m/n/10 fin-ishes its pa
 s-sage in $\OML/cmm/m/it/10 F$\OT1/cmr/m/n/10 , we get
  []
 
 
-Underfull \hbox (badness 1990) in paragraph at lines 505--506
+Underfull \hbox (badness 1990) in paragraph at lines 528--529
 \OT1/cmr/m/n/10 have not been re-moved from $\OML/cmm/m/it/10 N$ \OT1/cmr/m/n/1
 0 and we get
  []
 
-[16]
-Underfull \hbox (badness 1389) in paragraph at lines 516--517
+
+Underfull \hbox (badness 1389) in paragraph at lines 539--540
 []$\OML/cmm/m/it/10 e$ \OT1/cmr/m/n/10 is not a tran-si-tion event, thus $\OML/
 cmm/m/it/10 Act\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 L[]\OT1/cmr/m/n/10 ) =$
  []
 
-
-Underfull \hbox (badness 3514) in paragraph at lines 547--548
+[17]
+Underfull \hbox (badness 3514) in paragraph at lines 570--571
 []\OT1/cmr/m/it/10 Let $\OML/cmm/m/it/10 i \OMS/cmsy/m/n/10 2 \U/msb/m/n/10 N$ 
 \OT1/cmr/m/it/10 be such that $\OML/cmm/m/it/10 f\OT1/cmr/m/n/10 (\OML/cmm/m/it
 /10 i\OT1/cmr/m/n/10 ) \OMS/cmsy/m/n/10 $
  []
 
-[17]
-Underfull \hbox (badness 3826) in paragraph at lines 634--635
+[18]
+Underfull \hbox (badness 3826) in paragraph at lines 657--658
 []\OT1/cmr/m/it/10 Let $\OMS/cmsy/m/n/10 A$ \OT1/cmr/m/it/10 be an $\OML/cmm/m/
 it/10 N$\OT1/cmr/m/it/10 -process
  []
 
 )
 (C:\Users\ohadben\Documents\GitHub\DIST-AdaptiveMutexBarriers\AdditionalObjects
-.tex [18]
+.tex [19]
 
 Package paralist Warning: Incorrect label; no or multiple counters.
 (paralist)                The label is: \textbf {Shared Data:} on input line 31
@@ -1277,13 +1276,13 @@ Underfull \hbox (badness 10000) in paragraph at lines 33--34
 $: a boolean ar-ray, ini-tially
  []
 
-[19] Excluding 'comment' comment.)
+Excluding 'comment' comment.)
 (C:\Users\ohadben\Documents\GitHub\DIST-AdaptiveMutexBarriers\Discussion.tex
 Underfull \hbox (badness 1038) in paragraph at lines 6--7
 \OT1/cmr/m/n/10 coherent (CC) and the dis-tributed shared-memory
  []
 
-) [20]
+[20])
 (C:\Users\ohadben\Documents\GitHub\DIST-AdaptiveMutexBarriers\AdaptiveMutex.bbl
 
 Underfull \hbox (badness 2302) in paragraph at lines 12--14
@@ -1344,7 +1343,7 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <7> not available
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-
+ [21]
 Underfull \hbox (badness 2343) in paragraph at lines 79--83
 \OT1/cmr/m/n/10 and write op-er-a-tions. In: Pro-ceed-ings of the
  []
@@ -1427,9 +1426,8 @@ Overfull \hbox (14.75867pt too wide) in paragraph at lines 134--137
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [21])
+) [22]
 (C:\Users\ohadben\Documents\GitHub\DIST-AdaptiveMutexBarriers\Appendix.tex
-[22]
 Underfull \hbox (badness 1102) in paragraph at lines 53--54
 []\OT1/cmr/m/n/10 IN1: For any $\OML/cmm/m/it/10 p[] [] p$ \OT1/cmr/m/n/10 we h
 ave $\OML/cmm/m/it/10 AW\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 p[]; F\OT1/cmr/m/n/10
@@ -1450,7 +1448,7 @@ OML/cmm/m/it/10 v; E\OT1/cmr/m/n/10 )$, then $\OML/cmm/m/it/10 q [] INV$ \OT1/c
 mr/m/n/10 and, by IN1
  []
 
-[23]
+[23] [24]
 Underfull \hbox (badness 1122) in paragraph at lines 130--131
 []\OT1/cmr/m/n/10 We re-moved the events of $\OML/cmm/m/it/10 p \OMS/cmsy/m/n/1
 0 2 \OML/cmm/m/it/10 Act\OT1/cmr/m/n/10 (\OML/cmm/m/it/10 E\OT1/cmr/m/n/10 )$, 
@@ -1478,9 +1476,7 @@ Underfull \hbox (badness 1337) in paragraph at lines 143--144
 0 2 \OML/cmm/m/it/10 INV$\OT1/cmr/m/n/10 , thus
  []
 
-[24] [25]) [26
-
-]
+[25]) [26]
 (C:\Users\ohadben\Documents\GitHub\DIST-AdaptiveMutexBarriers\AdaptiveMutex.aux
 )
 
@@ -1494,7 +1490,7 @@ LaTeX Warning: There were undefined references.
 Here is how much of TeX's memory you used:
  21483 strings out of 493921
  410646 string characters out of 3147276
- 442886 words of memory out of 3000000
+ 443886 words of memory out of 3000000
  24344 multiletter control sequences out of 15000+200000
  15074 words of font info for 56 fonts, out of 3000000 for 9000
  841 hyphenation exceptions out of 8191
@@ -1517,7 +1513,7 @@ sfonts/cm/cmsy5.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm
 /cmsy7.pfb><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmsy8.pf
 b><C:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmti10.pfb><C:/Pr
 ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/symbols/msbm10.pfb>
-Output written on AdaptiveMutex.pdf (26 pages, 653574 bytes).
+Output written on AdaptiveMutex.pdf (26 pages, 658508 bytes).
 PDF statistics:
  199 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
