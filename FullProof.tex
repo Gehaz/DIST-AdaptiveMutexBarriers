@@ -186,7 +186,7 @@ We now prove that $G_k$ satisfies all the conditions in Lemma \ref{read-phase-le
 
 
 \subsection{Write phase}
-At the end of the read phase we get an execution $J$ such that the last event by each process in $Act(J)$ was BeginFence. The write phase will determine the order in which processes are executing their write commits along the fence. Each process $p \in Act(J)$ has a list $\alpha_p$ of writes in its write buffer, which it will commit starting from $J$.
+The read phase construct an execution $J$ such that the last event by each process in $Act(J)$ is BeginFence. The write phase will determine the order in which processes are executing their write commits along the fence. Each process $p \in Act(J)$ has a list $\alpha_p$ of writes in its write buffer, which it will commit starting from $J$.
 
 We first focus on the list $\alpha_p$. Notice that $\alpha_p$ is also a solo run of $p$ starting from $J$ until the point where it finish executing its fence. Along the write phase, we first construct a set of processes out of $Act(J)$, such that the lists $\alpha_p$ of those processes satisfies some special properties. Then, we will use this set in order to extend $J$.
 In the course of the write phase we construct a sequence of sets $Act(J) = P_0 \supseteq P_1 \supseteq \ldots \supseteq P_t$ satisfying the Lemma below.
@@ -194,7 +194,7 @@ In the course of the write phase we construct a sequence of sets $Act(J) = P_0 \
 \begin{lemma} \label{lemma-new}
 	At each step of the write phase we have a set $P_k \subseteq Act(J)$ such that each process $p \in P_k$ has a prefix $\beta_p$ of $\alpha_p$ and the following hold:
 	\begin{enumerate}[(1)]
-		\item For each $p \in P_k$, $p$ is executing exactly $k$ critical writes in $\beta_p$ if it to perform it after $J$.
+		\item Each $p \in P_k$ is executing exactly $k$ critical writes along $\beta_p$ in the execution $J \beta_p$.
 		\item Let $e \in \beta_p$ be a critical write in $J \beta_p$ by some process $p \in P_k$ to some variable $v$. Then, the following holds:
 		\begin{enumerate}
 			\item $writer(v,J) \notin P_k$.
@@ -205,7 +205,7 @@ In the course of the write phase we construct a sequence of sets $Act(J) = P_0 \
 	\end{enumerate}
 \end{lemma}
 
-First notice that $P_0=Act(J)$ satisfies all the above conditions with $\beta_p=\langle \rangle$ for any $p \in Act(J)$. Assume we already constructed $P_{k-1}$ satisfying the conditions of Lemma \ref{lemma-new}. We denote $n=|P_{k-1}$, and for any $p \in P_{k-1}$ let $\beta_p$ to be the prefix as promised by Lemma \ref{lemma-new}, throughout the rest of this section, in which we define the construction of the write phase, and prove Lemma \ref{lemma-new}.
+First notice that $P_0=Act(J)$ satisfies all the above conditions with $\beta_p=\langle \rangle$ for any $p \in Act(J)$. Assume we already constructed $P_{k-1}$ satisfying the conditions of Lemma \ref{lemma-new}. We denote $n=|P_{k-1}$, and $\beta_p$ to be the prefix as promised by Lemma \ref{lemma-new} for any $p \in P_{k-1}$, throughout the rest of this section, in which we define the construction of the write phase, and prove Lemma \ref{lemma-new}.
 
 \subsubsection{Construction: stage 1}
 For any $p \in P_{k-1}$ we let $p$ perform a solo run starting from $J \beta_p$ until its next event $e_p$ is either a critical write, or that $p$ has finished executing $\alpha_p$ and its next event $e_p$ is $EndFence$. Denote this extension by $\gamma_p$. Notice that $\beta_p \gamma_p$ is indeed a prefix of $\alpha_p$ by its definition.
@@ -215,26 +215,56 @@ If $|Z|<|P_{k-1}|/2$, i.e., at least half of the processes in $P_{k-1}$ have fin
 Otherwise $|Z| \geq |P_{k-1}|/2$. We define $V_{next}$ to be all the variables that are about to be written in one of the next events $e_p$ by the processes in $Z$. Formally, $V_{next} = \{v \in V \mid \exists p \in Z \text{ such that } e_p \text{ remotely writes v}\}$. In order to construct $P_k$ the following stage will handle the cases of low and high contention separately.
 
 \subsubsection{Construction: stage 2}
+
 \subsubsection*{\hspace{5mm} Case I: $\bf |V_{next}| < \sqrt{|Z|}$}
-By the pigeonhole principle, there exists a variable $u \in V_{next}$ and a set $P_k \subseteq Z$ of size $|P_k| \geq \sqrt{|Z|} \geq \sqrt{n/2}$, such that $e_p$ is a critical commit write to $u$ for any $p \in P_k$. We now prove that $P_k$ satisfies all the conditions of Lemma \ref{lemma-new}, where for each $p \in P_k$ we choose $\beta_p' = \beta_p \gamma_p e_p$ to be the prefix of $\alpha_p$. We will first prove condition (2) holds.
 
-Consider some $p \in P_k$. We first prove that $p$ is not allowed to write any variable in $\gamma_p e_p$ that was written by some other process $q \in P_k$ in $\beta_q$. Assume towards a contradiction that there is such $q$.
-
-it is not allowed to write any variable $v$ that was written to by some process
-
-Let $e \in \beta_p'$ be a critical write in $J \beta_p'$ by some $p \in P_k$ to some variable $v$. First assume $e \in \beta_p$. Since $P_k \subseteq P_{k-1}$ conditions (a) and (b) follows immediately. In addition, if there is a process $q \in P_k$ which writes to $v$ in $\beta_q'$, then the first such write in $J \beta_q'$ is critical (by conditions (a) and (b)). If this write is in $\beta_q$, then by induction, all processes in $P_k \subseteq P_{k-1}$ has a write to $v$ in $\beta_q$, and thus in $\beta_q'$. Otherwise, this write must be $e_q$, since $\gamma_q$ contains no critical writes. It follows that $v=u$, contradicting the fact that $e_p$, the last event in $J \beta_p'$ is critical, as $\beta_p'$ is a solo run by $p$ that contains a write to $u=v$ before $e_p$.
-
-
-any process $q \in P_{k-1}$ has a write to $v$ in $\beta_q$, then so is the case for $q \in P_k$ with $\beta_q'$. Otherwise, if there is $q \in P_k$ that writes to $v$ in $\beta_q'$, as 
-
-no process $q \in P_k$ different then $p$ writes to $v$ in $\beta_q$. If there is sch $q$ that writes to $v$ in
-consider some $q \in P_k$. If there is a write to $v$ in $\beta_q'$, then the first such write in $J \beta_q'$ is critical (as $writer(v,J) \notin P_k$). 
-
+By the pigeonhole principle, there exists a variable $u \in V_{next}$ and a set $P_k \subseteq Z$ of size $|P_k| \geq \sqrt{|Z|}$, such that $e_p$ is a critical commit write to $u$ for any $p \in P_k$. We now prove that $P_k$ satisfies all the conditions of Lemma \ref{lemma-new}, where for each $p \in P_k$ we choose $\beta_p' = \beta_p \gamma_p e_p$ to be the prefix of $\alpha_p$.
 \begin{enumerate}[(1)]
+	
 	\item For each $p \in P_k$, by induction hypothesis $p$ executes $k-1$ critical writes along $\beta_p$ in the run $J \beta_p$. We extended $\beta_p$ with a solo run such that $\gamma_p$ contains no critical events, end $e_p$ is a critical event. Therefore $p$ executes $k$ critical events along $\beta_p' = \beta_p \gamma_p e_p$ in the run $J \beta_p'$.
-	\item Let $e \in \beta_p'$ be a critical write in $J \beta_p'$ by some $p \in P_k$ to some variable $v$. First assume $e \in \beta_p$. Then, since $P_k \subseteq P_{k-1}$ conditions (a) and (b) follows immediately. In addition, if all processes in $P_{k-1}$ 
+	
+	\item $P_k$ satisfies condition (2) with the prefixes $\beta_p$. Intuitively, since we extended each $\beta_p$ in a way such that all processes have one more critical write to the same variable $v$, the condition will hold with the new prefixes $\beta_p'$ as well. Formally, let $e \in \beta_p'$ be a critical write in $J \beta_p'$ by some $p \in P_k$ to some variable $v$. We consider two cases:
+	
+	Assume $e \in \beta_p$. Since $P_k \subseteq P_{k-1}$ conditions (a) and (b) follows immediately. In addition, if there is a process $q \in P_k$ which writes to $v$ in $\beta_q'$, then the first such write in $J \beta_q'$ is critical (by conditions (a) and (b)). If this write is in $\beta_q$, then by induction, all processes in $P_k \subseteq P_{k-1}$ has a write to $v$ in $\beta_q$, and thus in $\beta_q'$. Otherwise, this write must be $e_q$, since $\gamma_q$ contains no critical writes. In case I, it follows that $v=u$ and $p$ writes to $v$ before $e_p$ in $\beta_p'$, contradicting the fact that $e_p$ is critical. In case II, we get that 
+	
+	Otherwise, $e=e_p$ and $v=u$. By the construction, any $q \in P_k$ have a critical write to $v$ in $J \beta_q'$ and condition (c) holds. Since $\beta_q'$ is a solo run by $q$ and there is a critical write to $v$ in $\beta_q'$, we can conclude that $owner(v) \neq q$ and $writer(v,J) \neq q$. Altogether we get that $owner(v) \notin P_k$ and $writer(v,J) \notin P_k$, and conditions (a) and (b) holds.
+	
+	\item $|P_k| \geq \sqrt{|Z|} \geq \sqrt{|P_{k-1}|/2} \geq \sqrt{|P_{k-1}|}/10$.
 
 \end{enumerate}
+
+\subsubsection*{\hspace{5mm} Case II: $\bf |V_{next}| \geq \sqrt{|Z|}$}
+
+For each $v \in V_{next}$ we select an arbitrary $p \in Z$ such that $e_p = write(v)$. Denote this set by $Z'$. Then, $|Z'|=|V_{next}| \geq \sqrt{|Z|}$.
+\newline We construct an undirected graph $\mathcal{G}$ as follows: the vertices of $\mathcal{G}$ are the processes in $Z'$. Consider $p \in Z'$, and denote $e_p = write(v)$. For $q \in Z'$, we add an edge $\{p,q\}$ in $\mathcal{G}$ if either
+\begin{inparaenum}[\itshape a\upshape)]
+	\item $v$ is local to $q$; or
+	\item $writer(v,J) = q$; or
+	\item $q$ writes to $v$ in $\beta_q'$.
+\end{inparaenum}
+\\ Each variable $v$ is local to at most one process. Moreover, if $q = writer(v,J)$ such that $q \neq owner(v)$, since $J$ is a regular execution, by IN4 it follows that $owner(v) \notin Z' \subseteq Act(J)$, and therefore at most one new edge is introduced by rules a) and b).
+Assume there is a process $p \neq q \in Z'$ which writes to $v$ in $\beta_q'$ such that $q \neq owner(v)$ and $writer(v,J) \neq q$. The first such write $e$ is critical. Notice that $e \neq e_q$, since by the definition of $Z'$ in contains no two process such that $e_p$ and $e_q$ writes to the same variable. Therefore, at most one new edge is introduced by rule c). Altogether, the average degree in $\mathcal{G}$ is at most 4. By Theorem \ref{th: turan}, there exists an independent set $P_k \subseteq Z'$ in $\mathcal{G}$ such that:
+
+$$ |P_k| \geq \frac{|Z'|}{5} \geq \frac{\sqrt{|Z|}}{5}$$
+
+We now prove that in both cases $P_k$ satisfies all the conditions of Lemma \ref{lemma-new}, where for each $p \in P_k$ we choose $\beta_p' = \beta_p \gamma_p e_p$ to be the prefix of $\alpha_p$.
+ 
+\begin{enumerate}[(1)]
+	
+	\item  For each $p \in P_k$, by induction hypothesis $p$ executes $k-1$ critical writes along $\beta_p$ in the run $J \beta_p$. We extended $\beta_p$ with a solo run such that $\gamma_p$ contains no critical events, end $e_p$ is a critical event. Therefore $p$ executes $k$ critical events along $\beta_p' = \beta_p \gamma_p e_p$ in the run $J \beta_p'$.
+	
+	\item $P_k$ satisfies condition (2) with the prefixes $\beta_p$. We extended each $\beta_p$ in a way such that each process have one more critical write. Intuitively, since each such write is to a different variable, and the independent set assure that the owner and writer of this variable is not part of $P_k$, the condition will hold with the new prefixes $\beta_p'$ as well. Formally, let $e \in \beta_p'$ be a critical write in $J \beta_p'$ by some $p \in P_k$ to some variable $v$. We consider two cases:
+	
+	Assume $e \in \beta_p$. Since $P_k \subseteq P_{k-1}$ conditions (a) and (b) follows immediately. In addition, if there is a process $q \in P_k$ which writes to $v$ in $\beta_q'$, then the first such write in $J \beta_q'$ is critical (by conditions (a) and (b)). If this write is in $\beta_q$, then by induction, all processes in $P_k \subseteq P_{k-1}$ has a write to $v$ in $\beta_q$, and thus in $\beta_q'$. Otherwise, this write must be $e_q$, since $\gamma_q$ contains no critical writes. In case I, it follows that $v=u$ and $p$ writes to $v$ before $e_p$ in $\beta_p'$, contradicting the fact that $e_p$ is critical. In case II, we get that 
+	
+\end{enumerate}
+
+
+
+
+
+
+
 
 
 
