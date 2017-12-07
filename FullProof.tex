@@ -209,9 +209,10 @@ First notice that $P_0=Act(J)$ satisfies all the above conditions with $\beta_p=
 
 \subsubsection{Construction: stage 1}
 For any $p \in P_{k-1}$ we let $p$ perform a solo run starting from $J \beta_p$ until its next event $e_p$ is either a critical write, or that $p$ has finished executing $\alpha_p$ and its next event $e_p$ is $EndFence$. Denote this extension by $\gamma_p$. Notice that $\beta_p \gamma_p$ is indeed a prefix of $\alpha_p$ by its definition.
-
 Let $Z$ be the set of all processes that have not finished executing $\alpha_p$, that is, $Z = \{p \in P_{k-1} \mid \beta_p \gamma_p \neq \alpha_p\}$.
+
 If $|Z|<|P_{k-1}|/2$, i.e., at least half of the processes in $P_{k-1}$ have finished executing $\alpha_p$, then we define $t=k-1$ and $P' = P_{k-1} \setminus Z$, and we move to stage 3 of the write phase.
+%It follows that $P'$ satisfies condition (2) of Lemma \ref{lemma-new}, since we extended $\beta_p$ with non critical events only, and $P' \subseteq P_{k-1}$.
 Otherwise $|Z| \geq |P_{k-1}|/2$. We define $V_{next}$ to be all the variables that are about to be written in one of the next events $e_p$ by the processes in $Z$. Formally, $V_{next} = \{v \in V \mid \exists p \in Z \text{ such that } e_p \text{ remotely writes v}\}$. In order to construct $P_k$ the following stage will handle the cases of low and high contention separately.
 
 \subsubsection{Construction: stage 2}
@@ -242,18 +243,34 @@ For each $v \in V_{next}$ we select an arbitrary $p \in Z$ such that $e_p = writ
 	\item $writer(v,J) = q$; or
 	\item $q$ writes to $v$ in $\beta_q'$.
 \end{inparaenum}
-\\ Each variable $v$ is local to at most one process. Moreover, if $q = writer(v,J)$ such that $q \neq owner(v)$, since $J$ is a regular execution, by IN4 it follows that $owner(v) \notin Z' \subseteq Act(J)$, and therefore at most one new edge is introduced by rules a) and b).
-Assume there is a process $p \neq q \in Z'$ which writes to $v$ in $\beta_q'$ such that $q \neq owner(v)$ and $writer(v,J) \neq q$. The first such write $e$ is critical. Notice that $e \neq e_q$, since by the definition of $Z'$ in contains no two process such that $e_p$ and $e_q$ writes to the same variable. Therefore, at most one new edge is introduced by rule c). Altogether, the average degree in $\mathcal{G}$ is at most 4. By Theorem \ref{th: turan}, there exists an independent set $P_k \subseteq Z'$ in $\mathcal{G}$ such that:
+\\  Fix a process $p \in Z'$ such that $e_p = write(v)$. Each variable $v$ is local to at most one process. Moreover, if $q = writer(v,J)$ such that $q \neq owner(v)$, since $J$ is a regular execution, by IN4 it follows that $owner(v) \notin Z' \subseteq Act(J)$, and therefore at most one new edge is introduced by rules a) and b).
+Assume there is a process $p \neq q \in Z'$ which writes to $v$ in $\beta_q'$ such that $q \neq owner(v)$ and $q \neq writer(v,J)$. Thus, the first such write $e$ in $\beta_q'$ is critical. Notice that $e \neq e_q$, since by the definition of $Z'$ it contains no two process such that $e_p$ and $e_q$ writes to the same variable. Therefore, at most one new edge is introduced by rule c). Altogether, the average degree in $\mathcal{G}$ is at most 4. By Theorem \ref{th: turan}, there exists an independent set $P_k \subseteq Z'$ in $\mathcal{G}$ such that:
 
 $$ |P_k| \geq \frac{|Z'|}{5} \geq \frac{\sqrt{|Z|}}{5}$$
 
 We now prove that in both cases $P_k$ satisfies all the conditions of Lemma \ref{lemma-new}, where for each $p \in P_k$ we choose $\beta_p' = \beta_p \gamma_p e_p$ to be the prefix of $\alpha_p$.
+
+\begin{claim-subsection}
+	$P_k$ satisfies condition (2) of Lemma \ref{lemma-new}.
+\end{claim-subsection}
  
+ \begin{proof}
+ 	Notice that $P_k$ satisfies condition (2) with the prefixes $\beta_p$, since $P_{k-1}$ did. Each $\beta_p$ was extended such that $p$ have one more critical write. In case I all processes have one more critical write to the same variable $u$. In case II all new critical writes are to different variables, and the independent set assure that the owner and writer of those variable are not part of $P_k$. This gives an intuition of why condition (2) holds with the new prefixes $\beta_p'$ as well. Formally, let $e \in \beta_p'$ be a critical write in $J \beta_p'$ by some $p \in P_k$ to some variable $v$. We consider two cases:
+ 	
+ 	Assume $e \in \beta_p$. Since conditions (a) and (b) holds for $e$ with $P_{k-1} \supseteq P_k$, it follows immediately they both hold with $P_k$. In addition, if there exists a process $q \in P_k$ which writes to $v$ in $\beta_q'$, then the first such write $e'$ is critical in $J \beta_q'$ (by conditions (a) and (b)). If $e' \in \beta_q$ then both $p,q$ commit a critical write to $v$ in $\beta_p,\beta_q$ (respectively). By condition (c) all processes in $P_k \subseteq P_{k-1}$ has a write to $v$ in $\beta_q$, and thus in $\beta_q'$, and condition (c) holds.
+ 	\\ Since $\gamma_q$ contains no critical events, the only other option is $e = e_p$. We now prove this can not occur. Assume towards a contradiction $e' = e_q$. In case I, since all new critical events are to the same variable, it follows that $v=u$. Therefore, $p$ writes to $v$ twice in $\beta_q'$ which is a solo run, contradicting the fact that the last such write $e_p$ is critical. In case II, we get that $q$ writes in $e_q$ to a variable that was written to in $\beta_p'$, and thus there is an edge $\{p,q\}$ in $\mathcal{G}$, contradicting the fact that $p,q \in P_k$, an independent set.
+ 	
+ 	Otherwise, $e =e_p$.
+ 	
+ 	
+ \end{proof}
+
+
 \begin{enumerate}[(1)]
 	
 	\item  For each $p \in P_k$, by induction hypothesis $p$ executes $k-1$ critical writes along $\beta_p$ in the run $J \beta_p$. We extended $\beta_p$ with a solo run such that $\gamma_p$ contains no critical events, end $e_p$ is a critical event. Therefore $p$ executes $k$ critical events along $\beta_p' = \beta_p \gamma_p e_p$ in the run $J \beta_p'$.
 	
-	\item $P_k$ satisfies condition (2) with the prefixes $\beta_p$. We extended each $\beta_p$ in a way such that each process have one more critical write. Intuitively, since each such write is to a different variable, and the independent set assure that the owner and writer of this variable is not part of $P_k$, the condition will hold with the new prefixes $\beta_p'$ as well. Formally, let $e \in \beta_p'$ be a critical write in $J \beta_p'$ by some $p \in P_k$ to some variable $v$. We consider two cases:
+	\item Notice that $P_k$ satisfies condition (2) with the prefixes $\beta_p$, since $P_{k-1}$ did. We extended each $\beta_p$ in a way such that each process have one more critical write. In case I we extended each $\beta_p$ in a way such that all processes have one more critical write to the same variable $v$. In case II all new critical writes are to different variables, and the independent set assure that the owner and writer of those variable are not part of $P_k$. Thus, intuitively the condition will hold with the new prefixes $\beta_p'$ as well. Formally, let $e \in \beta_p'$ be a critical write in $J \beta_p'$ by some $p \in P_k$ to some variable $v$. We consider two cases:
 	
 	Assume $e \in \beta_p$. Since $P_k \subseteq P_{k-1}$ conditions (a) and (b) follows immediately. In addition, if there is a process $q \in P_k$ which writes to $v$ in $\beta_q'$, then the first such write in $J \beta_q'$ is critical (by conditions (a) and (b)). If this write is in $\beta_q$, then by induction, all processes in $P_k \subseteq P_{k-1}$ has a write to $v$ in $\beta_q$, and thus in $\beta_q'$. Otherwise, this write must be $e_q$, since $\gamma_q$ contains no critical writes. In case I, it follows that $v=u$ and $p$ writes to $v$ before $e_p$ in $\beta_p'$, contradicting the fact that $e_p$ is critical. In case II, we get that 
 	
