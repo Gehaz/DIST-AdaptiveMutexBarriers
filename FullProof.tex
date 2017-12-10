@@ -198,8 +198,9 @@ In the course of the write phase we construct a sequence of sets $Act(J) = P_0 \
 		\item Each $p \in P_k$ is executing exactly $k$ critical writes along $\beta_p$ in the execution $J \beta_p$.
 		\item Let $e \in \beta_p$ be a critical write in $J \beta_p$ by some process $p \in P_k$ to some variable $v$. Then, the following holds:
 		\begin{enumerate}
-			\item $owner(v) \notin P_k$.
-			\item Either there is no $p \neq q \in P_k$ that access $v$ in $J \beta_q$, or that any process $q \in P_k$ have a critical write to $v$ along $\beta_q$ in the execution $J \beta_q$.
+			\item $owner(v) \notin P_k$;
+			\item $writer(v,J) \notin P_k$;
+			\item Either there is no $p \neq q \in P_k$ that access $v$ in $J \beta_q$, or that any process $q \in P_k$ have a write to $v$ along $\beta_q$ in the execution $J \beta_q$.
 		\end{enumerate}
 		\item $|P_k| \geq \sqrt{|P_{k-1}|}/4(\ell+s+k)$.
 	\end{enumerate}
@@ -212,7 +213,7 @@ For any $p \in P_{k-1}$ we let $p$ perform a solo run starting from $J \beta_p$ 
 Let $Z$ be the set of all processes that have not finished executing $\alpha_p$, that is, $Z = \{p \in P_{k-1} \mid \beta_p \gamma_p \neq \alpha_p\}$.
 
 If $|Z|<|P_{k-1}|/2$, i.e., at least half of the processes in $P_{k-1}$ have finished executing $\alpha_p$, then we define $t=k-1$ and $W = P_{k-1} \setminus Z$, and we move to stage 3 of the write phase.
-By its definition, each process $p \in W$ executes $t$ critical writes along $\alpha_p$ in the execution $J \alpha_p$. Moreover, it is easy to verify that condition (2) of Lemma \ref{lemma-new} holds for $W$ with $\alpha_p$, since it holds for $W \subseteq P_{k-1}$ with $\beta_p$, and $\alpha_p = \beta_p \gamma_p$ where $\gamma_p$ contains no critical writes. Notice that no $p \in W$ can write to a remote variable in $\gamma_p$ it did not access in $J \beta_p$, as such write is critical, and therefore condition (2.b) follows immediately.
+By its definition, each process $p \in W$ executes $t$ critical writes along $\alpha_p$ in the execution $J \alpha_p$. Moreover, it is easy to verify that condition (2) of Lemma \ref{lemma-new} holds for $W$ with $\alpha_p$, since it holds for $W \subseteq P_{k-1}$ with $\beta_p$, and $\alpha_p = \beta_p \gamma_p$ where $\gamma_p$ contains no critical writes. Notice that no $p \in W$ can write to a remote variable in $\gamma_p$ it did not access in $J \beta_p$, as such write is critical, and therefore condition (2.c) follows immediately.
 
 Otherwise $|Z| \geq |P_{k-1}|/2$. We define $V_{next}$ to be all the variables that are about to be written in one of the next events $e_p$ by the processes in $Z$. Formally, $V_{next} = \{v \in V \mid \exists p \in Z \text{ such that } e_p \text{ remotely writes v}\}$. In order to construct $P_k$ the following stage will handle the cases of low and high contention separately.
 
@@ -234,7 +235,7 @@ We construct an undirected graph $\mathcal{G}$ as follows: the vertices of $\mat
 	\item $q$ access $v$ in $J \beta_q$.
 \end{inparaenum}
 
-Since each first access to a remote variable is critical, the number of new edges introduce by rule b) for some $p \in Z'$ is at most the number of critical events $p$ executes in $J \beta_p$, which is $\ell+s+k-1$. Since each variable is local at most one process, at most one new edge is introduce by rule a).
+Since each first access to a remote variable is critical, the number of different remote variables accessed by some process $p \in Z'$ is at most the number of critical events it executed. Therefore, the number of new edges introduce by rule b) for $p$ is at most the number of critical events $p$ executes in $J \beta_p$, which is $\ell+s+k-1$. Since each variable is local at most one process, at most one new edge is introduce by rule a).
 Altogether, the average degree in $\mathcal{G}$ is at most $2(\ell+s+k)$. By Theorem \ref{th: turan}, there exists an independent set $P_k \subseteq Z'$ in $\mathcal{G}$ such that:
 
 $$ |P_k| \geq \frac{|Z'|}{2(\ell+s+k)+1} \geq \frac{\sqrt{|Z|}}{2(\ell+s+k)+1}$$
@@ -248,11 +249,11 @@ We now prove that in both cases $P_k$ satisfies all the conditions of Lemma \ref
  \begin{proof}
  	We first prove condition (2). Notice that $P_k$ satisfies it with the prefixes $\beta_p$, since $P_{k-1}$ did. Each $\beta_p$ was extended such that $p$ have one more critical write. In case I all processes have one more critical write to the same variable $u$. In case II all new critical writes are to different variables, where the independent set assures no such variable is accessed by some other process in $P_k$. This gives an intuition of why condition (2) holds with the new prefixes $\beta_p'$ as well. Formally, let $e \in \beta_p'$ be a critical write in $J \beta_p'$ by some $p \in P_k$ to some variable $v$. We consider two cases:
  	
- 	Assume $e \in \beta_p$. By Condition (a) for $P_{k-1}$ we get $owner(v) \notin P_k \subseteq P_{k-1}$. If any $q \in P_{k-1}$ have a critical write to $v$ in $\beta_q$, then so is the case with $\beta_q'$, and condition (b) holds. Otherwise, consider some $q \in P_k$ different then $p$. By condition (b) $q$ does not access $v$ in $J \beta_q$. Assume towards a contradiction it does access $v$ in $\gamma_q e_q$. Following condition (a) $q \neq owner(v)$, therefore this write is critical, i.e., it is $e_q$. In case I we get that $v=u$, and as so $p$ have two different critical write, $e$ and $e_p$, to the same variable $v$ along a solo run $\beta_p'$, in contradiction. In case II, we get that $p$ access the variable of $e_q$ in $J \beta_p$, thus there is an edge $\{p,q\}$ in $\mathcal{G}$, contradicting the fact that $p,q \in P_k$, an independent set.
+ 	Assume $e \in \beta_p$. Since (a) and (b) holds with $P_{k-1}$ and $P_k \subseteq P_{k-1}$, it follows immediately they both holds with $P_k$ as well. If any $q \in P_{k-1}$ have a write to $v$ in $\beta_q$, then so is the case with $\beta_q'$, and condition (c) holds. Otherwise, consider some $q \in P_k$ different then $p$. By condition (c) $q$ does not access $v$ in $J \beta_q$. Assume towards a contradiction it does access $v$ in $\gamma_q e_q$. Following condition (a) $q \neq owner(v)$, therefore this write is critical, i.e., it is $e_q$. In case I we get that $v=u$, and as so $p$ have two different critical write, $e$ and $e_p$, to the same variable $v$ along a solo run $\beta_p'$, in contradiction. In case II, we get that $p$ access the variable of $e_q$ in $J \beta_p$, thus there is an edge $\{p,q\}$ in $\mathcal{G}$, contradicting the fact that $p,q \in P_k$, an independent set.
  	
  	Otherwise $e=e_p$.
- 	In case I, every $q \in P_k$ have a critical write $e_q$ to $u=v$, and therefore $q \neq owner(v)$, and conditions (2) follows.
- 	In case II, consider some $q \in P_k$. If $q \neq owner(v)$ and it access $v$ in $J \beta_q'$, then the first such access is critical. This critical event is different then $e_q$, since $e_p$ and $e_q$ writes to different variables, therefore it must be in $J \beta_q$. In such case, or if $q = owner(v)$, there is an edge $\{p,q\}$ in $\mathcal{G}$. This contradict the fact that $P_k$ is an independent set. Thus, condition (2) holds for $e$.
+ 	In case I, any $q \in P_k$ have a critical write $e_q$ to $u=v$, and therefore $q \neq owner(v)$. Moreover, $e_q$ must be the first write to $v$ in $\beta_q'$, as it is critical and $\beta_q'$ is a solo run. It follows that $q \neq writer(v,J)$, and conditions (2) follows.
+ 	In case II, consider some $q \in P_k$. If $q \neq owner(v)$ and it access $v$ in $J \beta_q'$, then the first such access is critical. This critical event is different then $e_q$, since $e_p$ and $e_q$ writes to different variables, therefore it must be in $J \beta_q$. In such case, or if $q = owner(v)$, there is an edge $\{p,q\}$ in $\mathcal{G}$. This contradict the fact that $P_k$ is an independent set. It follows that $q \neq owner(v)$, and it does not access $v$ in $J \beta_q'$, and in particular $q \neq writer(v,J)$, and condition (2) holds.
  	
  	Condition (1) follows from construction. By induction hypothesis, each $p \in P_k$ executes $k-1$ critical writes along $\beta_p$ in the run $J \beta_p$. We extended $\beta_p$ with a solo run such that $\gamma_p$ contains no critical events, end $e_p$ is a critical event. Therefore $p$ executes $k$ critical events along $\beta_p' = \beta_p \gamma_p e_p$ in the run $J \beta_p'$.
  	
@@ -268,6 +269,32 @@ This finish the inductive step of the write phase. At the last step we have larg
 
 We have a set $W \subseteq Act(J)$ satisfying condition (2) of Lemma \ref{lemma-new} with $\alpha_p$, such that each $p \in W$ executes $t$ critical writes along $\alpha_p$ in the execution $J \alpha_p$.
 We extend $J$ by letting each process $p \in W$ perform its run $\alpha_p$ in some arbitrary way. Denote this extension by $D$, and let $p_r \in W$ be the last process to perform its $\alpha_p$ in $D$. First notice the $D$ is indeed an extension of $J$ - since all processes performs only writes, we can order them in any way to get an extension, as writes of one process does not affect writes of other.
+
+\begin{claim-subsection} \label{claim:IN3-write-phase}
+	For any $Y \subseteq Act(J)$, $p \in W \setminus Y$, and $e \in \alpha_p$ the following holds:
+	$e$ is a critical event in $J \alpha_p$ if and only if it is critical in $(J D)^{-Y}$.
+\end{claim-subsection}
+
+\begin{proof}
+	Let $Y,p$ be as in the claim. Consider $e \in \alpha_p$, a write to variable $v$. 
+	
+	Assume $e$ is critical in $J \alpha_p$. By Lemma \ref{lemma-new} we have $owner(v) \notin W$ and $q = writer(v,J) \notin W$. If $q \notin Y$, then $q = writer(v,J^{-Y})$. Otherwise, $q \in Y$. Since $J$ is a regular execution, by IN5 $q$ is the only process in $Act(J)$ to access $v$ in $J$. After removing events by $q$ we get $writer(v,J^{-Y}) \notin Act(J)$. In particular, in both cases we have $writer(v,J^{-Y}) \neq p$.
+	Notice that $e$ is the first write in $\alpha_p$ to $v$, since this event is critical in $J \alpha_p$. As a result, in $D^{-Y}$ $p$ executes $\alpha_p$, where the first write to $v$ in it is $e$, and all the events preceding $\alpha_p$ are by processes different then $p$. Therefore, either there is a write to $v$ before $e$ in $D^{-Y}$ by some process different then $p$, or that the last write is in $J^{-Y}$. In both cases we get that $e$ is a critical write in $J^{-Y} D^{-Y}$.
+	
+	Assume $e$ is not critical in $J \alpha_p$. If $e$ is not the first write to $v$ in $\alpha_p$, then so is the case in $D^{-Y}$ which contains $\alpha_p$, and on both cases $e$ is not a critical write. Otherwise, $e$ is the first write to $v$ in $\alpha_p$.
+	If $p = owner(v)$, then by its definition a write by $p$ to $v$ is not critical in any execution, and we done. Assume $p \neq owner(v)$, then it must be that $p = writer(v,J)$. Since $J$ is regular, by IN4 $owner(v) \notin Act(J)$. Consider some $q \in W$ different then $p$, then $q \neq owner(v)$. If $q$ does write to $v$ in $\alpha_q$, the first such write is critical in $J \alpha_q$. By Lemma \ref{lemma-new} we get that $p=writer(v,J) \notin W$, in contradiction. As a result, no process in $W$ besides $p$ writes to $v$ in $D$, and therefore in $D^{-Y}$. Meaning, the last write to $v$ before $e$ in $J^{-Y} D^{-Y}$ is in $J^{-Y}$. As we did not remove events by process $p$ we have $p = writer(v,J^{-Y})$, and $e$ is not critical in $J^{-Y} D^{-Y}$.
+\end{proof}
+
+As a corollary we get that each $p \in W$ executes exactly $t$ critical events along $D$ in the execution $J D$. Denote $\overline{W} = Act(J) \setminus W$. 
+
+Since $J$ is a regular execution, by Lemma \ref{lem: remove-invisibale-processes} with $'E' \leftarrow J$ and $'Y' \leftarrow \overline{W}$, we have an execution $N = J^{\overline{W}}$ such that the following holds:
+\begin{enumerate}
+	\item $W = Act(J) \setminus \overline{W}$ is an IN-set of N;
+	\item $Act(N) = Act(J) \setminus \overline{W} = W$, and $Fin(N) = Fin(J)$;
+	\item From 1 and 2 it follows that $N$ is a regular execution;
+	\item Each $p \in W$ executes the same critical events in $N$ and in $J$, thus $p$ executes $\ell+s$ critical events in $N$;
+\end{enumerate}
+
 
 \begin{claim-subsection}
 	$W \setminus \{p_r\}$ is an IN-set of $J D$.
@@ -295,7 +322,17 @@ Denote $\overline{W} = Act(J) \setminus W$. Since $J$ is a regular execution, by
 	\item Each $p \in W$ executes the same critical events in $N$ and in $J$, thus $p$ executes $\ell+s$ critical events in $N$;
 \end{enumerate}
 
-We extend $N$ by letting each process $p \in W$ perform its run $\alpha_p$ in some arbitrary way. Denote this extension by $D$, and let $p_r \in W$ be the last process to perform its $\alpha_p$ in $D$. First notice the $D$ is indeed an extension of $N$: for any $p \in W$ we have $J \mid p = N \mid p$. Therefore, in both executions $p$ has the same writes, $\alpha_p$, in its write buffer. Moreover, since all processes performs only writes, we can order them in any way to get an extension, as writes of one process does not affect writes of other.
+We extend $N$ by letting each process $p \in W$ perform its run $\alpha_p$ in some arbitrary order. Denote this extension by $D$, and let $p_r \in W$ be the last process to perform its $\alpha_p$ in $D$. First notice the $D$ is indeed an extension of $N$: for any $p \in W$ we have $J \mid p = N \mid p$. Therefore, in both executions $p$ has the same writes, $\alpha_p$, in its write buffer. Moreover, since all processes performs only writes, we can order them in any way to get an extension, as writes of one process does not affect writes of other.
+
+
+
+
+
+
+
+
+
+
 
 \begin{claim-subsection}
 	Each $p \in W$ executes exactly $t$ critical writes in $\alpha_p$ at the execution $N D$
