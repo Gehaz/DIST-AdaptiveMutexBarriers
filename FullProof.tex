@@ -285,245 +285,40 @@ We extend $J$ by letting each process $p \in W$ perform its run $\alpha_p$ in so
 	If $p = owner(v)$, then by its definition a write by $p$ to $v$ is not critical in any execution, and we done. Assume $p \neq owner(v)$, then it must be that $p = writer(v,J)$. Since $J$ is regular, by IN4 $owner(v) \notin Act(J)$. Consider some $q \in W$ different then $p$, then $q \neq owner(v)$. If $q$ does write to $v$ in $\alpha_q$, the first such write is critical in $J \alpha_q$. By Lemma \ref{lemma-new} we get that $p=writer(v,J) \notin W$, in contradiction. As a result, no process in $W$ besides $p$ writes to $v$ in $D$, and therefore in $D^{-Y}$. Meaning, the last write to $v$ before $e$ in $J^{-Y} D^{-Y}$ is in $J^{-Y}$. As we did not remove events by process $p$ we have $p = writer(v,J^{-Y})$, and $e$ is not critical in $J^{-Y} D^{-Y}$.
 \end{proof}
 
-As a corollary we get that each $p \in W$ executes exactly $t$ critical events along $D$ in the execution $J D$. Denote $\overline{W} = Act(J) \setminus W$. 
-
-Since $J$ is a regular execution, by Lemma \ref{lem: remove-invisibale-processes} with $'E' \leftarrow J$ and $'Y' \leftarrow \overline{W}$, we have an execution $N = J^{\overline{W}}$ such that the following holds:
-\begin{enumerate}
-	\item $W = Act(J) \setminus \overline{W}$ is an IN-set of N;
-	\item $Act(N) = Act(J) \setminus \overline{W} = W$, and $Fin(N) = Fin(J)$;
-	\item From 1 and 2 it follows that $N$ is a regular execution;
-	\item Each $p \in W$ executes the same critical events in $N$ and in $J$, thus $p$ executes $\ell+s$ critical events in $N$;
-\end{enumerate}
-
+As a corollary we get that each $p \in W$ executes exactly $t$ critical events along $D$ in the execution $J D$. Denote $\overline{W} = Act(J) \setminus W$, and let $L = (J D)^{-\overline{W}}$. Since no process in $\overline{W}$ take steps in $D$ we get $L = J^{-\overline{W}} D$.
+First notice that $L$ is indeed an execution. Since $J$ is a regular execution, by Lemma \ref{lem: remove-invisibale-processes} with $'E' \leftarrow J$ and $'Y' \leftarrow \overline{W}$, we have a regular execution $J^{-\overline{W}}$. Moreover, $D$ is an extension of $J^{-\overline{W}}$: for any $p \in W$ we have $J \mid p = J^{-\overline{W}} \mid p$. Therefore, after both executions $p$ have the same writes, $\alpha_p$, in its write buffer. Furthermore, since all processes performs only writes in $D$, any order of these writes is an extension of $J^{-\overline{W}}$, as writes of one process does not affect writes of other.
 
 \begin{claim-subsection}
-	$W \setminus \{p_r\}$ is an IN-set of $J D$.
+	$W \setminus \{p_r\}$ is an IN-set of $L$.
 \end{claim-subsection}
 
 \begin{proof}
-	Denote $W' = W \setminus \{p_r\}$. Notice that $J$ is a regular execution, and $W' \subseteq Act(J)$. Therefore $W'$ is an IN-set of $J$.
+	Denote $W' = W \setminus \{p_r\}$. Notice that $J^{-\overline{W}}$ is a regular execution, and $W' \subseteq Act(J^{-\overline{W}})$. Therefore $W'$ is an IN-set of $J^{-\overline{W}}$.
 	
-	IN1: for any $p \in P$ we have $AW(p,J) \cap W' \subseteq \{p\}$. In addition, $D$ contains only write events, therefore no process can change its awareness-set along $D$, resulting $AW(p,J D) \cap W' \subseteq \{p\}$.
+	IN1: for any $p \in P$ we have $AW(p,J^{-\overline{W}}) \cap W' \subseteq \{p\}$. In addition, $D$ contains only write events, therefore no process change its awareness-set along $D$, resulting $AW(p,J^{-\overline{W}} D) \cap W' \subseteq \{p\}$.
 	
-	IN2: for any $p \in W'$ we have $status(p,J) = entry$.  In addition, $D$ contains only write events, therefore no process change its status in $D$ and $status(p,J D) = entry$.
+	IN2: for any $p \in W'$ we have $status(p,J^{-\overline{W}}) = entry$.  In addition, $D$ contains only write events, therefore no process change its status in $D$ and $status(p,J D) = entry$.
 	
-	IN3: consider $Y \subseteq W'$
+	IN3: consider $Y \subseteq W'$, and consider $e \in (J^{-\overline{W}} D)^{-Y}$. If $e \in (J^{-\overline{W}})^{-Y}$, then since $J^{-\overline{W}}$ is regular, by IN3 we get: $e$ is a critical event in $J^{-\overline{W}}$ if and only if it is critical in $(J^{-\overline{W}})^{-Y}$. Otherwise $e \in D^{-Y}$. Let $p$ be the process to execute $e$, then by claim \ref{claim:IN3-write-phase} we get: $e$ is critical in $(J D)^{-(\overline{W} \cup Y)} = (J^{-\overline{W}} D)^{-Y}$ if an and if it is critical in $J \alpha_p$ if and only if it is critical in $(J D)^{-\overline{W}} = L$.
+	Altogether we get that $e$ is a critical event in $L$ if and only if it is critical in $L^{-Y}$.
+	
+	IN4: Let $e \in L$ be an event by $p$ accessing a remote variable $v$. w.l.o.g $e$ is the first access by $p$ to $v$ in $L$, and as so it is a critical event. If $e \in J^{-\overline{W}}$, then by IN4 we get $owner(v) \notin Act(J^{-\overline{W}}) = W =Act(L)$. Otherwise, $e \in D$, a critical write by $p$. By claim \ref{claim:IN3-write-phase} $e$ is a critical write in $J \alpha_p$, and therefore by condition (2) of Lemma \ref{lemma-new} for $W$ we get $owner(v) \notin W$.
+	
+	IN5: Let $v$ be a variable such that $p = writer(v,L) \in W'$. If $v$ is local to $p$, then by IN4 there is no other process to write to $v$ in $L$, and we done. Assume otherwise, then by IN4 $owner(v) \notin W$. Let $e$ be the last critical write to $v$ in $L$. Notice that $e$ is an event by $p$, since it is the last process to write to $v$ in $L$.
+	If $e \in D$, then by claim \ref{claim:IN3-write-phase} it is critical in $J \alpha_p$. By condition (2) of Lemma \ref{lemma-new}, either any $q \in W$ have a write to $v$ in its $\alpha_q$, and in particular, since $D$ ends with $\alpha_{p_r}$ we get $writer(v,L) = p_r \notin W'$ in contradiction. Therefore, there is no $q \neq p$ in $W$ to access $v$ in $L D$ and IN5 holds ($Accessed(v,L) \cap Act(L) =\{p\}$).
+	If $e \in J^{-\overline{W}}$, then no process but $p$ can write to $v$ in $D$ (since such write is critical, contradicting the fact that $e$ is the last such write). Furthermore, we have $writer(v,J^{-\overline{W}}) = p$, and since $J^{-\overline{W}}$ is a regular execution, by IN5 $p$ is the process in $Act(J^{-\overline{W}}) = W$ to access $v$ in $J^{-\overline{W}}$. Altogether, $p$ is the only process in $W$ to access $v$ in $L = J^{-\overline{W}} D$, and IN5 holds.
 \end{proof}
 
-
-
-
-
-Denote $\overline{W} = Act(J) \setminus W$. Since $J$ is a regular execution, by Lemma \ref{lem: remove-invisibale-processes} with $'E' \leftarrow J$ and $'Y' \leftarrow \overline{W}$, we have an execution $N = J^{\overline{W}}$ such that the following holds:
+Each $p \in W$ commits all the writes in its write buffer along $D$, hence its next event is $EndFence$. We extend $L$ by letting each $p \in W$ execute $EndFence$ in some arbitrary order. We use abuse of notation, and denote the new execution by $L$ as well, since it retains all the properties of the previous $L$. Then $L$ satisfies the following conditions:
 \begin{enumerate}
-	\item $W = Act(J) \setminus \overline{W}$ is an IN-set of N;
-	\item $Act(N) = Act(J) \setminus \overline{W} = W$, and $Fin(N) = Fin(J)$;
-	\item From 1 and 2 it follows that $N$ is a regular execution;
-	\item Each $p \in W$ executes the same critical events in $N$ and in $J$, thus $p$ executes $\ell+s$ critical events in $N$;
+	\item $Act(L) \setminus \{p_r\}$ is an IN-set of $L$;
+	\item Each $p \in Act(L) = W$ execute $\ell+s$ critical events in $J^{-\overline{W}}$ and $t$ critical events along $D$ in $J^{-\overline{W}} D$. Therefore, $p$ executes $\ell+s+t$ critical events in $L$;
+	\item Each $p \in Act(L) = W$ completes $i$ fences in $J^{-\overline{W}}$, and have one more $EndFence$ as its last event in $L$. Thus, $p$ completes $i+1$ fences in $L$ and $mode(p,L) = read$;
+	\item $Fin(L) = Fin(J) = Fin(H_i)$;
+	\item $|Act(L)| \geq |P_k|/2$.
 \end{enumerate}
 
-We extend $N$ by letting each process $p \in W$ perform its run $\alpha_p$ in some arbitrary order. Denote this extension by $D$, and let $p_r \in W$ be the last process to perform its $\alpha_p$ in $D$. First notice the $D$ is indeed an extension of $N$: for any $p \in W$ we have $J \mid p = N \mid p$. Therefore, in both executions $p$ has the same writes, $\alpha_p$, in its write buffer. Moreover, since all processes performs only writes, we can order them in any way to get an extension, as writes of one process does not affect writes of other.
-
-
-
-
-
-
-
-
-
-
-
-\begin{claim-subsection}
-	Each $p \in W$ executes exactly $t$ critical writes in $\alpha_p$ at the execution $N D$
-\end{claim-subsection}
-
-\begin{proof}
-	Consider some $p \in W$, and consider some $e \in \alpha_p$, a write to a remote variable $v$. Assume $e$ is a critical write in $J \alpha_p$. Since $J \alpha_p \preceq N D$ and $(J \alpha_p) \mid p = (N D) \mid p$, by Claim \ref{claim: maintain-criticalness} it follows that $e$ is a critical event in the execution $N D$.
-	
-	On the other hand, assume $e$ is not critical in $J \alpha_p$. w.l.o.g. we can assume $e$ is the first write in $\alpha_p$ to $v$, since any subsequent write to $v$ is not critical in both $J \alpha_p$ and in $N D$. This follows from the fact that in both executions we let $p$ perform $\alpha_p$ without interleaving any other events, thus only the first write to a variable can be critical. Since $e$ is the first write to $v$ in $\alpha_p$, and it is not critical in $J \alpha_p$, we can conclude that $writer(v,J) = p$. In such case, there is no other $q \in W$ writing to $v$ in its $\alpha_q$. Assume towards a contradiction there is such $q$. First notice that $p$ have a critical write to $v$ in $J$ (the first such write), a regular execution, therefore by IN4 $owner(v) \notin Act(J) \supseteq W$. As a result $q \neq owner(v)$, therefore the first write of $q$ to $v$ in $\alpha_q$ is critical in $J \alpha_q$. By condition (2) of Lemma \ref{lemma-new}, either there is no $q' \neq q$ in $W$ to access $v$ in $J \alpha_q$, contradicting the face that $p \in W$ write to $v$. Or that any $q' \in W$ have a critical write to $v$ along $\alpha_{q'}$ in the execution $J \alpha_{q'}$, contradicting the fact that $p \in W$ does not satisfy it (as $p = writer(v,J)$).
-	
-	Notice that $p = writer(v,N)$, since we only removed events by processes different then $p$ from $J$ in order to construct $N$. Moreover, any $q \neq p$ in $W$ have no write to $v$ in $\alpha_q$. Seeing that in $D$ we only allow
-	
-	On the other hand, assume $e$ is critical in $(N D)$. Notice that $e$ is the first write in $\alpha_p$ to $v$, since $p$ performs $\alpha_p$ as a solo run (without interleaving other process's events), therefore only the first write to a remote variable can be critical. Let $e'$ be the last write to $v$ before $e$ in $N D$, and let $q$ be the process executing it. 
-	
-	Notice that $e$ is the first write in $\alpha_p$ to $v$, since this is a solo run by $p$, and once $p$ writes to $v$, the following writes (if there is such) are not considered critical. Denote $q = writer(v,J)$, then by Lemma \ref{lemma-new} we get $q \notin W$. If $q \notin \overline{W}$, then we have $q = writer(N,v)$. Otherwise, since $J$ is a regular execution, by IN5 $q$ is the only process in $Act(J)$ to write to $v$ in $J$. Thus, after removing the events by $q$ we get $writer(N,v) \notin W$. In both cases we get that $e$ is a critical write to $v$ in $N \alpha_p$. 
-\end{proof}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-\newpage
-\begin{align*}
-Z_1 &= \{p \in P_{k-1} \mid e_p = EndFence\} \\
-Z_2 &= \{p \in P_{k-1} \mid e_p \text{ is a commit write event}\} \\
-V_{next} &= \{v \in V \mid \exists p \in Z_2 \text{ such that } e_p \text{ remotely writes v}\}
-\end{align*}
-It follows that $ = Z_1 \cup Z_2$ and $Z_1 \cap Z_2 = \emptyset$, thus $n = |Z_1|+|Z_2|$.
-
-
-
-In the course of the write phase we construct a sequence of executions $J_0,J_1,\ldots,J_t, L_0$. Denote $\delta = \ell+s$.
-
-\begin{lemma} \label{write-phase-lemma}
-	At each step during the write phase we have an execution $J_k$ such that $J_k$ can be written as $\alpha \beta$, and the following conditions holds:
-	\begin{enumerate}[(1)]
-		\item $\alpha$ is a regular execution in which every $p \in Act(J_k)$ executed $\delta$ critical events.
-		\item $\beta$ is an extension in which all processes are executing a (single) fence, such that each $p \in Act(J_k)$ committed $k$ critical writes in $\beta$.
-		\item For any $v \in V$ such that there exists a critical write to $v$ in $\beta$ by some process $p$ the following holds:
-		\begin{enumerate}
-			\item $writer(v,\alpha) \notin Act(J_k)$.
-			\item $owner(v) \notin Act(J_k)$.
-			\item Either $p$ is the only process in $Act(J_k)$ to commit a write to $v$ in $\beta$, or that any process in $Act(J_k)$ committed a write to $v$ in $\beta$.
-		\end{enumerate}
-		\item Each $p\in Act(J_k)$ completed $i$ fences in $J_k$, and $mode(p, J_k) = write$;
-		\item $Fin(J_k) = Fin(H_i)$;
-		\item $|Act(J_k)| \geq \sqrt{|Act(J_{k-1})|}/4(\delta+k)$.
-	\end{enumerate}
-\end{lemma}
-
-First notice that $J_0$ satisfies all the conditions in Lemma \ref{write-phase-lemma} by choosing $\alpha = J_0$ and $\beta = \langle \rangle$, since $J_0$ is a regular execution. Assume we already constructed $J_{k-1}$ satisfying the conditions of Lemma \ref{write-phase-lemma}. We denote $J=J_{k-1},\ n=|Act(J_{k-1})|$, and $J = \alpha \beta$ the composition of $J$ by Lemma \ref{write-phase-lemma}, throughout the rest of this section in which we define the construction of the write phase, and prove Lemma \ref{write-phase-lemma}.
-
-\subsubsection{Construction: stage 1}
-For $p \in Act(J)$, since $p$ is executing a fence after $J$ it can continue and execute commit write events independently of other processes. We extend $J$ in the following manner: we let each $p \in Act(J)$ (in an arbitrary order) run until it reaches its next special event $e_p$. Such an event must exist, since $p$ is executing a fence. Denote this extension by $\gamma$. Then $J \gamma$ is an execution and the following hold:
-\begin{enumerate}
-	\item $\gamma$ contains no transition events, thus $Act(J \gamma) = Act(J)$ and $Fin(J \gamma) = Fin(J) = Fin(H_i)$.
-	\item Each $p \in Act(J)$ executed $\delta+k-1$ critical events in $J \gamma$.
-	\item $\gamma$ contains no fence events, thus each $p \in Act(J \gamma)$ completed $i$ fences in $J \gamma$.
-	\item For any $p \in Act(J)$, since $\gamma$ contains no fence events, $mode(p,J \gamma) = mode(p,J) = write$. Therefore $e_p$ is either a commit write event or an $EndFence$ event.
-	
-	%Moreover, as $e_p$ is a special event in $J F' e_p$, for some prefix $F'$ of $F$, and since we extend $F'$ with events by processes other than $p$ to form $F$, by claim \ref{claim: maintain-criticalness} we have that $e_p$ is a special event in $J F e_p$, i.e. $p$ is about to execute a special event $e_p$ after $J F$.
-\end{enumerate}
-
-We define:
-\begin{align*}
-Z_1 &= \{p \in Act(J) \mid e_p = EndFence\} \\
-Z_2 &= \{p \in Act(J) \mid e_p \text{ is a commit write event}\} \\
-V_{next} &= \{v \in V \mid \exists p \in Z_2 \text{ such that } e_p \text{ remotely writes v}\}
-\end{align*}
-It follows that $Act(J) = Z_1 \cup Z_2$ and $Z_1 \cap Z_2 = \emptyset$, thus $n = |Z_1|+|Z_2|$.
-
-\subsubsection*{\hspace{5mm} Case I: $\bf |Z_1| \geq n/2$}
-We define $W = Z_1$.
-
-\subsubsection*{\hspace{5mm} Case II: $\bf |Z_2| > n/2$ and $\bf |V_{next}| \geq \sqrt{|Z_2|}$}
-For each $v \in V_{next}$, we select an arbitrary $p \in Z_2$ such that $e_p = write(v)$. Denote the set of these processes by $Z$. Then, $|Z|=|V_{next}| \geq \sqrt{|Z_2|}$.
-\newline We construct an undirected graph $\mathcal{G}$ as follows: the vertices of $\mathcal{G}$ are the processes in $Z$. Consider $p \in Z$, and denote $e_p = write(v)$. For $q \in Z$, we add an edge $\{p,q\}$ in $\mathcal{G}$ if either
-\begin{inparaenum}[\itshape a\upshape)]
-	\item $v$ is local to $q$; or
-	\item $writer(v,\alpha) = q$.
-	%there exists a critical event $e \in J F$ by $q$ such that $e$ remotely accesses $v$.
-\end{inparaenum}
-\\ Since each variable $v$ is local to at most one process, and has at most a single process as $writer(v,\alpha)$, at most two new edges are introduced by each process, and therefore the average degree in $\mathcal{G}$ is at most 4. By Theorem \ref{th: turan}, there exists an independent set $W \subseteq Z$ in $\mathcal{G}$ such that:
-
-$$ |W| \geq \frac{|Z|}{5} \geq \frac{\sqrt{|Z_2|}}{5} \geq \frac{\sqrt{n/2}}{5} \geq \frac{\sqrt{n}}{10} $$
-
-\subsubsection*{\hspace{5mm} Case III: $\bf |Z_2| > |Y|/2$ and $\bf |V_{next}| < \sqrt{|Z_2|}$}
-By the pigeonhole principle, there exists a variable $v$ and a set $W \subseteq Z_2$ of size $|W| \geq \sqrt{|Z_2|} \geq \sqrt{n/2}$, such that $e_p$ is a critical commit write to $v$ for any $p \in W$.
-
-\subsubsection{Construction: stage 2}
-Stage 1 defines a set $W \subseteq Act(J \gamma)$. Denote $\overline{W} = Act(J \gamma) \setminus W$, and $N = (J \gamma)^{-\overline{W}} = (\alpha \beta \gamma)^{-\overline{W}}$. Then the following hold:
-\begin{enumerate}
-	\item $Act(N) = Act(J \gamma) \setminus \overline{W} = W$ and $Fin(N) = Fin(J \gamma) = Fin(H_i)$.
-	\item $\alpha$ is a regular execution, and $\overline{W} \subseteq Act(\alpha)$. By Lemma \ref{lem: remove-invisibale-processes} we get that $\alpha^{\overline{w}}$ is a regular execution and each $p \in Act(N)$ executed $\delta$ critical events in $\alpha^{\overline{w}}$.
-	\item $Act(N) = Act(J F) \setminus \overline{W} = W$ and $Fin(N) = Fin(J F) = Fin(H_i)$.
-	\item By IN3, each $p \in Act(N)$ executed the same critical events in $N$ and in $J F$, thus $p$ executed $\delta+k-1$ critical events in $N$.
-	\item For any $p\in Act(N)$, as $N \mid p = (J F) \mid p$, $p$ completed $i$ fences in $N$ and $mode(p,N) = write$.
-	\item Each $p \in Act(N)$ is about to execute $e_p$ after $N$.
-\end{enumerate}
-
-We extend $N$ by letting each process $p \in W$ execute its next event $e_p$ in an increasing ID order. Denote this extension by $D$, and define $J_k = N D$. Notice that no event in $D$ is a transition event, thus $Act(J_k) = Act(N) = W$ and $Fin(J_k) = Fin(N) = Fin(H_i)$.
-
-We now analyze the resulting execution, $J_k$, according to the cases defined in stage 1.
-\subsubsection*{\hspace{5mm} Case I}
-Define $t = k-1$ and $L_0= J_k$. We have an execution $L_0 = N D$ where in $D$ each process in $Act(L_0)$ executes a single $EndFence$ event. The following conditions hold:
-\begin{enumerate}
-	\item $N$ is a semi-regular execution. It is easy to verify that fence events do not violate any of IN1-IN4, thus $L_0$ is a semi-regular execution as well;
-	\item $N$ is an ordered execution.
-	\item $D$ contains no critical events in $N D$, thus each $p \in Act(L_0)$ executes $\delta+t$ critical events in $L_0$;
-	\item Each $p \in Act(L_0)$ completes $i$ fences in $N$, and the only event by $p$ in $D$ is $EndFence$. Therefore $p$ completes $i+1$ fences in $L_0$ and $mode(p,L_0) = read$;
-	\item $Fin(L_0) = Fin(H_i)$;
-	\item $|Act(L_0)| = |W| \geq |Act(J_t)|/2$.
-\end{enumerate}
-
-We are done with the write phase, and we proceed to the regularization phase.
-
-\subsubsection*{\hspace{5mm} Case II + III}
-By our construction, $D$ is a sequence of commit write events by processes in $W$ in an increasing ID order.
-
-\begin{claim-subsection} \label{claim: writer-v-not-in-W}
-	Let $e_p \in D$ be a commit write event and denote $e_p = write(v)$. Then $writer(v,N) \notin W$.
-\end{claim-subsection}
-
-\begin{proof}
-	Since $J F$ is an ordered execution, one of (a)-(c) holds for $v$ in $J F$.
-	
-	If (a) holds, then $writer(v,J F) \notin Act(J F)$. Thus after removing events by processes in $\overline{W}$ we still have $writer(v,N) = writer(v,J F) \notin Act(J F)$. In particular, $writer(v,N) \notin W$.
-	
-	If (b) holds, then $writer(v,J F) = q$ for some $q \in Act(J F)$, and this is the only process in $Act(J F)$ to access $v$. Notice that $p \neq q$, as $e_p$ is critical in $J F e_p$. Assume towards a contradiction that $q \in W$. If case III holds, then $e_q$ accesses the same variable as $e_p$, that is, $e_q$ is a commit write to $v$, contradicting the fact that $e_q$ is critical in $J F e_q$. If case II holds, then either $q = owner(v)$, or $q$ remotely accessed $v$ in $J F$, and the first such event is critical. In both cases, $\mathcal{G}$ contains an edge $\{p,q\}$, contradicting the fact that $W$ is an independent set. Hence we have $q \in \overline{W}$, and after removing the events by $q$ there is no access to $v$ by any process in $Act(J F)$. In particular, $writer(v,N) \notin W$.
-	
-	If (c) holds, then $p$ already committed a write to $v$ during the current fence it is executing in $J F$, and $p$ is about to commit a write to $v$ after $J F$, contradicting the fact that a process is allowed to commit a write to a variable at most once during a single fence execution. Thus, (c) does not hold for $v$.
-\end{proof}
-
-Consider $p \in Act(J_k)$. Claim \ref{claim: writer-v-not-in-W} implies that $e_p$ is critical in $N e_p$. As the only event $p$ executes in $D$ is $e_p$, we get $(N e_p) \mid p = J_k \mid p$. Clearly $N e_p \preceq J_k$, thus, by Claim \ref{claim: maintain-criticalness}, $e_p$ is critical in $J_k$, that is, $D$ consists of critical commit writes in $J_k = N D$ by the processes in $W$ in an increasing ID order.
-
-\begin{claim-subsection} \label{J_k-semi-regular}
-	$J_k$ is a semi-regular execution.
-\end{claim-subsection}
-
-\begin{proof}
-	$N$ is a semi-regular execution, therefore IN1-IN4 hold for $W$ in $N$.
-	
-	IN1: $D$ consists of commit writes only, thus no process changes its awareness set during $D$, that is $AW(p,J_k) = AW(p,N)$ for any process $p$, and IN1 holds in $J_k$.
-	
-	IN2: $D$ contains no transition events, thus for any $p \in W$: $status(p,J_k) = status(p,N) = entry$.
-	
-	IN3: Consider $X \subseteq Act(J_k)$. IN3 holds in $N$, thus it is enough to consider an event $e_p \in D^{-X}$. If $e_p$ is an $EndFence$ event, then it is non-critical in both $J_k$ and $J_k^{-X}$. Otherwise, $e_p$ is a critical write in $J_k$ to some variable $v$ by process $p \in W$. Denote $D = D_1 e_p D_2$. By claim \ref{claim: writer-v-not-in-W}, $writer(v,N) \notin W$, thus after removing events by processes in $X$ we still have $writer(v,N^{-X}) = writer(v,N) \notin W$. As $e_p$ is the only event by $p$ in $D$, we get that there is no event by $p$ in $D_1$, and thus in $D_1^{-X}$. Hence, either $D_1^{-X}$ contains a commit write to $v$ by a process different from $p$, and thus $writer(v,(N D_1)^{-X}) \neq p$, or there is no commit write to $v$ in $D_1$, and thus $writer(v, (N D_1)^{-X}) = writer(v, N^{-X}) \neq p$. In both cases, we get that $e_p$ is a critical write in $J_k^{-X}$.
-		
-	IN4: Consider an event $e \in J_k$ by process $p$ accessing a remote variable $v$. If $e \in N$, then, by IN4, $owner(v) \notin Act(N) = Act(J_k)$ and we are done. Thus assume $e \in D$. We prove the claim for each case separately. Notice that $p \in W$, since $e \in D$.
-	\\ Case II: If $owner(v) \in Act(J_k) = W$, then $\mathcal{G}$ contains an edge $\{p,owner(v)\}$, contradicting the fact that $W$ is an independent set in $\mathcal{G}$. Therefore $owner(v) \notin Act(J_k)$.
-	\\ Case III: all the events in $D$ commit writes to the same variable $v$. Each $q \in Act(J_k) = W$ commits a critical write to $v$ in $D$, hence $q \neq owner(v)$, so $owner(v) \notin Act(J_k)$.
-\end{proof}
-
-\begin{claim-subsection} \label{J_k-ordered}
-	$J_k$ is an ordered execution.
-\end{claim-subsection}
-
-\begin{proof}
-	First, consider a variable $v$ such that $v$ is not accessed in $D$. Since $N$ is an ordered execution, one of the following holds for $v$:
-	\begin{enumerate} [(a)]
-		\item $writer(v,N) \notin Act(N)$, thus $writer(v,J_k) = writer(v,N) \notin Act(J_k)$.
-		\item $writer(v,N) = p$ for some $p \in Act(N)$, and $p$ is the only process in $Act(N)$ to access $v$ in $N$. Since there is no access of $v$ in $D$, $writer(v,J_k) = writer(v,N) = p$, and $p$ is the only process in $Act(J_k)$ to access $v$ in $J_k$.
-		\item There is a sequence $C$ in $N$, such that $C$ is a sequence of successive commit writes to $v$ by all the processes in $Act(N)$ in an increasing ID order. Therefore $C$ is such a sequence in $J_k$ as well.
-		\\ Moreover, any process $p \in Act(N)$ is executing a fence in $N$ in which it committed its write in $C$. Since $p$ executes a single write event $e_p$ is $D$, $p$ is executing the same fence in $J_k$. That is, $p$ is executing in $J_k$ the fence in which it committed its write in $C$.
-	\end{enumerate}
-	Consider now a variable $v$ that is accessed in $D$. We prove the claim for each case separately.
-	
-	Case II: By the definition of $W$, each event in $D$ is a commit write to a different variable, thus there is a unique event $e_p \in D$ accessing $v$, namely $writer(v,J_k) = p \in Act(J_k)$. Assume there is another process $q \in Act(J_k)$ that accessed $v$ in $J_k$. Since $e_p$ is the only event in $D$ to access $v$, $q$ accessed $v$ in $N$, and thus in $J F$. Either $q = owner(v)$ or $q$ executed a critical event accessing $v$ in $J F$ (the first such event). In both cases, $\mathcal{G}$ contains an edge $\{p,q\}$, contradicting the fact that $W = Act(J_k)$ is an independent set. Therefore $p$ is the only process in $Act(J_k)$ to access $v$ in $J_k$.
-	
-	Case III: By the definition of $W$, $D$ is a sequence of successive commit write events by all the processes in $Act(J_k)$, in an increasing ID order, all of which to the same variable $v$. Moreover, each $p \in Act(J_k)$ is executing a fence in $J_k$ and the last event by $p$ is the commit write to $v$ in $D$, that is, it executed this event during the current fence it is executing.
-\end{proof}
-
-We now prove that $J_k, 1 \leq k \leq t,$ satisfies all the conditions of Lemma \ref{write-phase-lemma}:
-\begin{enumerate}[(1)]
-	\item By Claims \ref{J_k-semi-regular} and \ref{J_k-ordered}, $J_k$ is a semi-regular ordered execution;
-	\item Each $p \in Act(J_k)$ executes $\delta+k-1$ critical events in $N$, and a single critical event $e_p$ in $D$, thus $p$ executes $\delta+k$ critical events in $J_k$.
-	\item Consider $p \in Act(J_k)$. $p$ completes $i$ fences in $N$ and $mode(p,N) = write$. The only event by $p$ in $D$ is a commit write, thus $p$ completes $i$ fences in $J_k$ and $mode(p,J_k) = write$;
-	\item $Fin(J_k) = Fin(H_i)$;
-	\item $|Act(J_k)| = |W| \geq \sqrt{n}/4(\delta+k)$.
-\end{enumerate}
+This conclude the write phase, and we proceed to the regularization phase. We now give an upper bound on the number of steps in the read and write phases.
 
 \begin{claim-section} \label{claim: write-upper-bound}
 	The number of steps in the read and write phases is bounded by $f(i+1)-\ell$. In other words: $\ell+s+t \leq f(i+1)$.
@@ -542,7 +337,7 @@ Hence, at most $i+1$ processes issue events in $J'_k$, i.e. the total contention
 
 
 
-
+\newpage
 \subsection{Regularization phase}
 We have a semi-regular execution $L_0$. Moreover, $L_0 = N D$ where $N$ is an ordered execution and $D$ is a sequence of $EndFence$ events by the processes in $Act(L_0)$. Let $p_{max}$ be the process with the largest ID in $Act(L_0)$, and define $W_0 = Act(L_0) \setminus \{p_{max}\}$.
 
