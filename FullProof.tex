@@ -339,13 +339,48 @@ Using Lemma \ref{lem: remove-invisibale-processes} with $'E' \leftarrow L_0$ and
 
 \newpage
 \subsection{Regularization phase}
+The write phase construct an execution $L$ such that each process in $Act(L)$ completes $i+1$ fences. Moreover, $Act(L)$ can be written as $Q \cup \{p_r\}$ where $Q$ is an IN-set of $L$. The regularization phase will be used to let $p_r$ complete its pass, such that we get a regular execution.
+
+By Lemma \ref{lem: remove-invisibale-processes} with $'E' \leftarrow L$ and $'Y' \leftarrow Q$ we get an execution $L^{-Q}$ such that the following holds:
+\begin{enumerate}
+	\item $Act(L^{-Q}) = Act(L) \setminus Q = \{p_r\}$;
+	\item $Fin(L^{-Q}) = Fin(L) = Fin(H_i)$, and therefore $|Fin(L^{-Q})| = i$.
+\end{enumerate}
+
+Let $\alpha$ be a solo run of $p_r$ starting from $L^{-Q}$ until it finish its passage. Notice that such an extension exists by the progress property. Let $m$ be the number of critical events along $\alpha$ in the execution $L^{-Q} \alpha$. We denote by $Q^-$ the set of processes $q \in Q$ such that there exist $e \in \alpha$, a critical event in $L^{-Q} \alpha$ accessing variable $v$, such that either $q = owner(v)$ or $q = writer(v,L)$. First notice that if $q = owner(v) \in Q$, then since $Q$ is an IN-set of $L$, by IN4 there exists no process $p \neq q$ in $Act(L)$ to access $v$ in $L$, and in particular either $writer(v,L) = p$ or $writer(v,L) = \perp$.
+As a result, each critical event in $\alpha$ can add at most one more process to $Q^-$, i.e. $|Q^-| \leq m$.
+
+Define $H_{i+1} = L^{-Q^-} \alpha$. We prove that $H_{i+1}$ is a regular execution.
+
+\begin{claim-subsection}
+	$H_{i+1}$ is a regular execution.
+\end{claim-subsection}
+
+\begin{proof}
+	We first prove $H_{i+1}$ is an execution. Denote $Q^+ = Q \setminus Q^-$, i.e. $Q = Q^+ \cup Q^-$. By Lemma \ref{lem: remove-invisibale-processes} with $'E' \leftarrow L$ and $'Y' \leftarrow Q^-$ we get that $L^{-Q^-}$ is an execution such that $Act(L^{-Q^-}) = Act(L) \setminus Q^- = Q^+ \cup \{p_r\}$. Furthermore, $Q \setminus Q^- = Q^+$ is an IN-set of $L^{-Q^-}$.
+	
+	We now show that $\alpha$ is an extension of $L^{-R}$. We do so by proving that for each variable $v$ accessed in $\alpha$ the last write to $v$ in $L^{-R}$ and $L^{-Q}$ is the same event. It follows that $p_r$ will read the same values from the same variables after both executions. Hence, $\alpha$ is an extension of $L^{-Q}$ results it is also an extension of $L^{-R}$.
+	
+	Let $v$ be a variable $p_r$ access in $\alpha$. 
+	
+	Assume towards a contradiction there is an event $e \in \alpha$ accessing a variable $v$ such that the last event to write $v$ in $L^{-R}$ and $L^{-Q}$ is different. w.l.o.g. $e$ is the first event in $\alpha$ to access $v$. Since $L^{-Q}$ is a sub execution of $L^{-R}$, where all process but $Q'$ are executing the same events, it follows that the last write to $v$ in $L^{-R}$ is by some process $q \in Q'$. Denote this write by $e'$. $Q'$ is an IN-set of $L^{-R}$, therefore 
+\end{proof}
+
+
+
+
+
+
+
+
+
+\newpage
 In the regularization phase we construct a sequence of executions $L_0,L_1, \ldots, L_m, H_{i+1}$. Denote $\ell_{i+1} = \ell+s+t$.
 
 \begin{lemma} \label{regularization-phase-lemma}
 	In each step, we have an execution $L_k$ such that the following conditions hold:
 	\begin{enumerate}[(1)]
-		\item $Act(L_k)$ can be written as $W_k \cup \{p_r\}$ (where $p_r \notin W_k$);
-		\item $W_k$ is an IN-set of $L_k$;
+		\item $Act(L_k) = W_k \cup \{p_r\}$ where $W_k$ is an IN-set of $L_k$;
 		\item $p_r$ executes $\ell_{i+1}+k$ critical events in $L_k$;
 		\item Each $p \in W_k$ executes $\ell_{i+1}$ critical events in $L_k$;
 		\item Each $p \in W_k$ completes $i+1$ fences in $L_k$ and $mode(p,L_k) = read$;
