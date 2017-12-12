@@ -347,7 +347,21 @@ By Lemma \ref{lem: remove-invisibale-processes} with $'E' \leftarrow L$ and $'Y'
 	\item $Fin(L^{-Q}) = Fin(L) = Fin(H_i)$, and therefore $|Fin(L^{-Q})| = i$.
 \end{enumerate}
 
-Let $\alpha$ be a solo run of $p_r$ starting from $L^{-Q}$ until it finish its passage. Notice that such an extension exists by the progress property. Let $m$ be the number of critical events along $\alpha$ in the execution $L^{-Q} \alpha$. We denote by $Q^-$ the set of processes $q \in Q$ such that there exist $e \in \alpha$, a critical event in $L^{-Q} \alpha$ accessing variable $v$, such that either $q = owner(v)$ or $q = writer(v,L)$. First notice that if $q = owner(v) \in Q$, then since $Q$ is an IN-set of $L$, by IN4 there exists no process $p \neq q$ in $Act(L)$ to access $v$ in $L$, and in particular either $writer(v,L) = p$ or $writer(v,L) = \perp$.
+Let $\alpha$ be a solo run of $p_r$ starting from $L^{-Q}$ until it finish its passage. Notice that such an extension exists by the progress property. Let $m$ be the number of critical events along $\alpha$ in the execution $L^{-Q} \alpha$.
+We denote by $Q^-$ the set of processes $q \in Q$ such that there exist $e \in \alpha$, a critical event in $L^{-Q} \alpha$ accessing variable $v$, such that either $q = owner(v)$ or $q = writer(v,L)$.
+We would like to extend $L$ with $\alpha$, but it might be that a solo run of $p_r$ after $L$ and $L^{-Q}$ is different. However, it is enough to erase the processes in $Q^-$ from $L$ to guarantee that each variable $p_r$ accessed in $\alpha$ have the same last write in both $L^{-Q^-}$ and in $L^{-Q}$, and therefore $\alpha$ is also a solo run of $p_r$ after $L^{-Q}$.
+
+Denote $Q = Q^- \cup Q^+$ a disjoint union, that is, $Q^+ = Q \setminus Q^-$. By Lemma \ref{lem: remove-invisibale-processes} with $'E' \leftarrow L$ and $'Y' \leftarrow Q^-$ we get that $L^{-Q^-}$ is an execution such that $Act(L^{-Q^-}) = Q^+ \cup \{p_r\}$ and $Q^+$ is an IN-set of $L^{-Q^-}$.
+
+\begin{claim-subsection}
+	For any variable $v$ accessed in $\alpha$: $writer(v,L^{-Q^-}) \notin Q$.
+\end{claim-subsection}
+
+\begin{proof}
+	Assume towards a contradiction there is a variable $v$ such that $p_r$ access $v$ and $q = writer(v,L^{-Q^-}) \in Q$. It follows that $q \in Q^+$. Since 
+\end{proof}
+
+First notice that if $q = owner(v) \in Q$, then since $Q$ is an IN-set of $L$, by IN4 there exists no process $p \neq q$ in $Act(L)$ to access $v$ in $L$, and in particular either $writer(v,L) = p$ or $writer(v,L) = \perp$.
 As a result, each critical event in $\alpha$ can add at most one more process to $Q^-$, i.e. $|Q^-| \leq m$.
 
 Define $H_{i+1} = L^{-Q^-} \alpha$. We prove that $H_{i+1}$ is a regular execution.
@@ -357,13 +371,33 @@ Define $H_{i+1} = L^{-Q^-} \alpha$. We prove that $H_{i+1}$ is a regular executi
 \end{claim-subsection}
 
 \begin{proof}
-	We first prove $H_{i+1}$ is an execution. Denote $Q^+ = Q \setminus Q^-$, i.e. $Q = Q^+ \cup Q^-$. By Lemma \ref{lem: remove-invisibale-processes} with $'E' \leftarrow L$ and $'Y' \leftarrow Q^-$ we get that $L^{-Q^-}$ is an execution such that $Act(L^{-Q^-}) = Act(L) \setminus Q^- = Q^+ \cup \{p_r\}$. Furthermore, $Q \setminus Q^- = Q^+$ is an IN-set of $L^{-Q^-}$.
+	We first prove $H_{i+1}$ is an execution. Denote $Q^+ = Q \setminus Q^-$, i.e. $Q = Q^+ \cup Q^-$, a disjoint union. By Lemma \ref{lem: remove-invisibale-processes} with $'E' \leftarrow L$ and $'Y' \leftarrow Q^-$ we get that $L^{-Q^-}$ is an execution such that $Act(L^{-Q^-}) = Act(L) \setminus Q^- = Q^+ \cup \{p_r\}$. Furthermore, $Q \setminus Q^- = Q^+$ is an IN-set of $L^{-Q^-}$.
 	
-	We now show that $\alpha$ is an extension of $L^{-R}$. We do so by proving that for each variable $v$ accessed in $\alpha$ the last write to $v$ in $L^{-R}$ and $L^{-Q}$ is the same event. It follows that $p_r$ will read the same values from the same variables after both executions. Hence, $\alpha$ is an extension of $L^{-Q}$ results it is also an extension of $L^{-R}$.
+	In order to prove that $\alpha$ is an extension of $L^{-Q^-}$ we will prove that for any variable $v$ accessed in $\alpha$, the last write to $v$ in $L^{-Q^-}$ and in $L^{-Q}$ is the same event. As a result, $p_r$ reads the same values from the same variables if running solo after both $L^{-Q^-}$ and $L^{-Q}$. Since $\alpha$ is a solo run of $p_r$ starting from $L^{-Q}$ it is also a solo run starting from $L^{-Q^-}$, and we done.
 	
-	Let $v$ be a variable $p_r$ access in $\alpha$. 
+	Consider some $v$ that was accessed in $\alpha$. If $writer(v,L) = \perp$, then there is no write to $v$ in both $L^{-Q^-}$ and $L^{-Q}$, and we done. Thus assume $q = writer(v,L)$. We consider two different cases.
+	\\ $q \notin Q$, that is, the last write to $v$ in $L$ is by process not in $Q$. Since on both $L^{-Q^-}$ and $L^{-Q}$ we remove events by processes from $Q$ only, and $q$ executes the same events on both, then the last write to $v$ in both executions is the same last write to $v$ by $q$ in $L$.
+	\\ $q \in Q$. In such case, by IN5 we get that $q$ is the only process in $Act(L)$ to access $v$ in $L$. Moreover, $p_r \neq owner(v)$, otherwise $q$ access in $L$ a variable local to $p_r \in Act(L)$, contradicting IN4. We get that $p_r$ first access to $v$, a remote variable, is in $\alpha$, and thus it is a critical event in $L^{-Q} \alpha$, and $q \in Q^-$ by its definition.
+	To summarise, $q \in Q^-$ is the only process in $Act(L)$ to write to $v$ in $L$. As in both executions, $L^{-Q^-}$ and $L^{-Q}$ we remove the events of $q$, we get that the only processes to write to $v$ (if any) are the ones not in $Act(L)$. These processes performs the same events on both execution, and therefore the last write to $v$ in $L^{-Q}$ is the same as in $L^{-Q^-}$.
 	
-	Assume towards a contradiction there is an event $e \in \alpha$ accessing a variable $v$ such that the last event to write $v$ in $L^{-R}$ and $L^{-Q}$ is different. w.l.o.g. $e$ is the first event in $\alpha$ to access $v$. Since $L^{-Q}$ is a sub execution of $L^{-R}$, where all process but $Q'$ are executing the same events, it follows that the last write to $v$ in $L^{-R}$ is by some process $q \in Q'$. Denote this write by $e'$. $Q'$ is an IN-set of $L^{-R}$, therefore 
+	We now prove that $H_{i+1}$ is a regular execution. As $Act(L^{-Q^-}) = Q^+ \cup \{p_r\}$, and in $\alpha$ we let $p_r$ finish its passage, we have $Act(H_{i+1}) = Q^+$. Notice that $Q^+$ is an in set of $L^{-Q^-}$. We prove it is also an IN-set of $H_{i+1}$.
+	
+	IN1: for any $p \in P$ we have $AW(p,L^{-Q^-}) \cap Q^+ \subseteq \{p\}$. If $p \neq p_r$ it does not take any steps in $\alpha$, and IN1 follows. In addition, $\alpha$ is an extension of $L^{-Q}$, where no process in $Q^+$ take steps, therefore $p_r$ does not become aware of any process in $Q^+$. As such, and since $p_r$ executes the exact same events in $H_{i+1}$ and in $L^{-Q^-} \alpha$, we have $AW(p_r, H_{i+1}) \cap Q^+ \subseteq \{p_r\}$, and we done.
+	
+	IN2: for any $p \in Q^+$ we have $status(p,L^{-Q^-}) = entry$. Since $p$ takes no steps in $\alpha$ we get $status(p,H_{i+1}) = entry$ as well.
+	
+	IN3: consider $Y \subseteq Q^+$. Then $H_{i+1}^{-Y} = (L^{-Q^-})^{-Y} \alpha$.
+	Using IN3 with $L^{-Q^-}$, for any $e \in (L^{-Q^-})^{-Y}$: $e$ is a critical event in $(L^{-Q^-})^{-Y}$ if and only if it is a critical event in $L^{-Q^-}$. Since $(L^{-Q^-})$ is a prefix of $H_{i+1}$ it holds also with $H_{i+1}$.
+	\\ For $e \in \alpha$ accessing a variable $v$, following the above proof for $H_{i+1}$ being an execution, the last event to write to $v$ in $L^{-Q}$ and in $L^{-Q^-}$ is the same. In particular, denote $q = writer(v,L^{-Q^-})$, then $q \notin Q$. Since we remove only events by processes in $q$ we get $q = writer(v,(L^{-Q^-})^{-Y})$.
+	Now, notice that $e$ is a critical read in $H_{i+1}$ if and only if it is a critical read in $H_{i+1}^{-Y}$. This follow from the fact that a critical read is the first remote read of some variable by $p_r$, and it executes the exact same events on both executions.
+	Otherwise, it is a critical write in $H_{i+1}$ if and only if it is the first write by $p_r$ to $v$ in $\alpha$ and $p_r \neq writer(v,L^{-Q^-}) = q$ (since $\alpha$ is a solo run by $p_r$, and any subsequent write to $v$ is not critical). This happens if and only if $e$ is the first write 
+	\\ For $e \in \alpha$, first notice that $e$ is a critical read in $H_{i+1}$ if and only if it is a critical read in $H_{i+1}^{-Y}$. This follow from the fact that a critical read is the first remote read of some variable by $p_r$, and it executes the exact same events on both executions.
+	Assume $e$ is a critical write in $H_{i+1}^{-Y}$. By claim \ref{claim: maintain-criticalness}, since $H_{i+1}^{-Y} \preceq H_{i+1}$ and $p$ executes the same events on both, it follows that $e$ is a critical write in $H_{i+1}$. It remains to prove the other direction.
+	Assume $e$ is a critical write in $H_{i+1}$ to some $v$. Following the above proof for $H_{i+1}$ being an execution, since $p$ access $v$ in $\alpha$, then the last event to write to $v$ in $L^{-Q}$ and in $L^{-Q^-}$ is the same. In particular, denote $q = writer(v,L^{-Q^-})$, then $q \notin Q$. We remove only events by processes in $Q$, thus the last write to $v$ in $(L^{-Q^-})^-{Y}$ is still $q$.  Since $\alpha$ is a solo run by $p_r$, and $e \in \alpha$ is a solo run it follows that $e$ is the first write by $p_r$ to $v$ in $\alpha$.
+	
+	Moreover, $e$ is critical in $H_{i+1}$ because $q = writer(v,L^{-Q^-}) \neq p_r$. For proving 
+	
+	
 \end{proof}
 
 
