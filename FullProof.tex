@@ -87,22 +87,17 @@ In the read phase we have a sequence of sets $Act(H) = P_0 \supseteq P_1 \supset
 	At each step of the read phase we have a set $P_k \subseteq Act(H)$ such that each process $p \in P_k$ has a prefix $\beta_p$ of $\alpha_p$ and the following holds:
 	\begin{enumerate} [(1)]
 		\item Each $p \in P_k$ executes exactly $k$ critical reads along $\beta_q$ in the execution $H_p \beta_q$;
-		\item Let $e \in \beta_p$ be a critical read in $H_p \beta_p$ by some process $p \in P_k$ to some variable $v$. Then:
+		\item Let $e \in \beta_p$ be a critical read in $H_p \beta_p$ by some process $p \in P_k$ to some variable $v$. Then the following holds:
 		\begin{enumerate}[(a)]
 			\item $owner(v) \notin P_k$;
 			\item $writer(v,H) \notin P_k$;
 		\end{enumerate}
-	\item $|P_k| \geq |P_{k-1}|/10$.
+	\item $|P_k| \geq |P_{k-1}|/6$.
 	\end{enumerate}
 \end{lemma}
 
 First notice that $P_0=Act(H)$ satisfies all the above conditions with $\beta_p=\langle \rangle$ for any $p \in Act(H)$. Assume we already constructed $P_{k-1}$ satisfying the conditions of Lemma \ref{lemma:read-new}. For any $p \in P_{k-1}$ we denote by $\beta_p$ the prefix as promised by Lemma \ref{lemma:read-new} throughout the rest of this section, in which we define the construction of the write phase, and prove Lemma \ref{lemma:read-new}.
 
-Before going into the details of the construction, we first prove a claim which states that indeed, giving a set of processes $P'$ such that their $\alpha_p$ satisfies condition (2) of Lemma \ref{lemma:read-new}, then erasing processes not in $P'$ from $H$ and afterwards extend it using $\alpha_p$ of processes in $P'$ in any order results an execution. Giving a set $P'$ we denote by $\alpha(P')$ the execution fragment in which we concatenate the fragments $\alpha_p$ of processes in $P'$ in some order.
-
-\begin{claim-subsection}
-	Let $P' \subseteq Act(H)$ be a set such that condition (2) of Lemma \ref{lemma:read-new} holds for $P'$ with $\alpha_p$. Then $H^{-Act(H) \setminus P'} \alpha(P')$ is an execution.
-\end{claim-subsection}
 
 \subsubsection{Construction: stage 1}
 For any $p \in P_{k-1}$ we let $p$ perform a solo run starting from $H_p \beta_p$ until its next event $e_p$ is a critical read, or that $p$ has finish executing $\alpha_p$ and its next event is $f_p$. Denote this extension by $\gamma_p$. Notice that $\beta_p \gamma_p$ is indeed a prefix of $\alpha_p$ by its definition.
@@ -121,15 +116,28 @@ We construct an undirected graph $\mathcal{G}$ as follows: the vertices of $\mat
 
 Since $H$ is a regular execution, if $q = owner(v) \in Z \subseteq Act(H)$, by IN3 it follows that no process other then $q$ access $v$ in $H$, and in particular either $q = writer(v,H)$ or $writer(v,H) = \perp$.
 As a result, each $p$ introduce at most one new edge to $\mathcal{G}$, and the average degree in $\mathcal{G}$ is at most 2. By Theorem \ref{th: turan}, there exists an independent set $P_k \subseteq Z$ in $\mathcal{G}$ such that:
-$$|P_k| \geq \frac{|Z|}{3} \geq \frac{|P_{k-1}|/2}{3} = \dfrac{|P_{k-1}|}{6}$$
+$$|P_k| \geq |Z|/3 \geq |P_{k-1}|/6$$
+
+We now prove that $P_k$ satisfies all the conditions of Lemma \ref{lemma:read-new}, where for each $p \in P_k$ we choose $\beta_p' = \beta_p \gamma_p e_p$ to be the prefix of $\alpha_p$.
+
+\begin{claim-subsection}
+	$P_k$ satisfies Lemma \ref{lemma:read-new}.
+\end{claim-subsection}
+
+\begin{proof}
+	Consider $p \in P_k$. Then $p$ executes $k-1$ critical reads along $\beta_p$ in the execution $H_p \beta_p$. We extended it such that $p$ have one more critical read $e_p$, and thus $p$ executes $k$ critical reads along $\beta_p'$ in $H_p \beta_p'$.
+	
+	Let $e \in \beta_p'$ be a critical read in $H_p \beta_p'$ by some $p \in P_k$ to some variable $v$. If $e \in \beta_p$, by condition (2) for $P_{k-1}$, and using the fact that $P_k \subseteq P_{k-1}$ we get $owner(v) \notin P_k$ and $writer(v,H) \notin P_k$. Otherwise $e = e_p$. Consider $q \in P_k \subseteq Z$ different then $p$. If $q = owner(v)$ or $q = writer(v,H)$, then there is an edge $\{p,g\}$ in $\mathcal{G}$, contradicting the fact that $p,q \in P_k$, an independent set of $\mathcal{G}$. Therefore, condition (2) holds.
+	
+	By our construction $|P_k| \geq |P_{k-1}|/6$.
+	
+\end{proof}
+
+This finish the inductive step of the read phase. At the last step we have large enough set of processes that have finish executing $\alpha_p$. In this case, we move to stage 3, where we define how to use this set in order to construct the execution for the write phase.
 
 
 
-
-
-
-
-
+\subsubsection{Construction: stage 3}
 
 
 
