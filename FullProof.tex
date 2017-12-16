@@ -103,7 +103,7 @@ For any $p \in P_{k-1}$ we let $p$ perform a solo run starting from $H_p \beta_p
 Let $Z$ be the set of all processes that have not finished executing $\alpha_p$, that is, $Z = \{p \in P_{k-1} \mid \beta_p \gamma_p \neq \alpha_p\}$.
 
 If $|Z|<|P_{k-1}|/2$, i.e., at least half of the processes in $P_{k-1}$ have finished executing $\alpha_p$, then we define $s=k-1$ and $Q = P_{k-1} \setminus Z$, and we move to stage 3 of the read phase.
-By its definition, each process $p \in Q$ executes $s$ critical writes along $\alpha_p$ in the execution $H_p \alpha_p$. Moreover, it is easy to verify that condition (2) of Lemma \ref{lemma:read-new} holds for $Q$ with $\alpha_p$, since it holds for $Q \subseteq P_{k-1}$ with $\beta_p$, and $\alpha_p = \beta_p \gamma_p$ where $\gamma_p$ contains no critical reads.
+By its definition, each process $p \in Q$ executes $s$ critical reads along $\alpha_p$ in the execution $H_p \alpha_p$. Moreover, it is easy to verify that condition (2) of Lemma \ref{lemma:read-new} holds for $Q$ with $\alpha_p$, since it holds for $Q \subseteq P_{k-1}$ with $\beta_p$, and $\alpha_p = \beta_p \gamma_p$ where $\gamma_p$ contains no critical reads.
 
 Otherwise $|Z| \geq |P_{k-1}|/2$ and we move to stage 2 of the read phase.
 
@@ -140,27 +140,24 @@ This finish the inductive step of the read phase. At the last step we have large
 
 We have a set $Q \subseteq Act(H)$ satisfying condition (2) of Lemma \ref{lemma:read-new} with $\alpha_p$, such that each $p \in Q$ executes $s$ critical reads along $\alpha_p$ in the execution $H_p \alpha_p$.
 
-Using Lemma \ref{lem: remove-invisibale-processes} with $'E' \leftarrow H$ and $'Y' \leftarrow Act(H) \setminus Q$ we have an execution $H' = H^{-Act(H) \setminus Q}$ such that $Act(H') = Q$ and $Fin(H') = Fin(H)$. Moreover, $Q$ is an IN-set of $H'$, that is, $H'$ is a regular execution.
-We would like to extend $H'$ with the runs $\alpha_q$ of processes in $Q$. For that, we first prove that if $q \in Q$ is accessing a variable $v$ in $\alpha_q$, then the last write to $v$ in $H'$ and in $H_p$ is the same. Since all the events in $\alpha_q$ are reads, it means that $q$ reads the same values from the same variable after both execution, and therefore $\alpha_q$ is also an extension of $H'$.
+Using Lemma \ref{lem: remove-invisibale-processes} with $'E' \leftarrow H$ and $'Y' \leftarrow Act(H) \setminus Q$ we have an execution $H_Q = H^{-Act(H) \setminus Q}$ such that $Act(H_Q) = Q$ and $Fin(H_Q) = Fin(H)$. Moreover, $Q$ is an IN-set of $H_Q$, that is, $H_Q$ is a regular execution.
+We would like to extend $H_Q$ with the runs $\alpha_q$ of processes in $Q$. For that, we first prove that if $q \in Q$ is accessing a variable $v$ in $\alpha_q$, then the last write to $v$ in $H_Q$ and in $H_p$ is the same. Since all the events in $\alpha_q$ are reads, it means that $q$ reads the same values from the same variable if it performs a solo run after $H_Q$, and therefore $\alpha_q$ is also an extension of $H_Q$.
 
 \begin{claim-subsection}
-	For any $q \in Q$, and an event $e \in \alpha_q$ accessing a variable $v$ we have $writer(v,H') = writer(v,H_q)$.
+	For any $q \in Q$, and an event $e \in \alpha_q$ accessing a variable $v$ we have $writer(v,H_Q) = writer(v,H_q)$.
 \end{claim-subsection}
 
 \begin{proof}
-	Consider $q \in Q$ and $e \in \alpha$ accessing a variable $v$.
-	Denote $p = writer(v,H_q)$, and $p' = writer(v,H')$, and assume towards a contradiction that $p \neq p'$. Since $H_q$ can be constructed from $H'$ by erasing all processes in $Q$ except for $q$, it follows that $p' \in Q$ different then $q$, otherwise it executes the same events in $H'$ and $H_q$, and since it is the last to write to $v$ in $H'$, after erasing processes different then $p'$ it is still the last process to write to $v$ in $H_q$ in contradiction.
+	Consider $q \in Q$ and $e \in \alpha$ accessing a variable $v$, and denote $p = writer(v,H)$.
 	
+	If $p \notin Act(H)$ or that $p = q$, since we erase processes from $H$ different then $p$, that is, $p$ executes the same events on the resulting execution, it is still the last process to write to $v$. As a result, $p = writer(v,H_q)$ and $p = writer(v,H_Q)$.
 	
-	
-	If $q = owner(v)$, since $q \in Act(H)$, a regular execution, by IN4 $q$ is the only process in $H$ to access $v$. Therefore $q$ is the only process to access $v$ in both, $H'$ and $H_q$, as well.
-	
-	Assume $q \neq owner(v)$, and denote $p = writer(v,H)$. If $p \notin Act(H) \setminus Q$, then after erasing any subset of processed in $Q \setminus \{q\}$ from $H$, we get an execution in which $p$ is still the last process to write to $v$, i.e., $p = writer(v,H') = writer(v,H_q)$.
-	
-	By IN4, if $p = owner(v)$ it is the only process in $Act(H)$ to access $v$ in $H$, and since $\{p,q\}$ is an edge in 
+	Otherwise $p \in Act(H)$ different then $q$. Notice that by IN5 for $H$, $p$ is the only process in $Act(H)$ to access $v$ in $H$. In particular, $q$ does not access $v$ in $H$, and by IN4 $q \neq owner(v)$. Therefore, the first read of $v$ by $q$ is in $\alpha_q$, and thus it is a critical read in $H_q \alpha_q$. By condition (2) of Lemma \ref{lemma:read-new} we get $p \notin Q$. Now, since $p$ is the only process in $Act(H)$ to access $v$, after erasing $p$ we have $p' = writer(v,H^{-p}) \notin Act(H)$. Both $H_q$ and $H_Q$ can be constructed from $H^{-p}$ by erasing more processes different then $p'$ (processes from $Act(H)$). From the same reason as before, as long as we do not erase $p'$, it is still the last process to write to $v$, that is $p' = writer(v,H_q)$ and $p' = writer(v,H_Q)$.
 \end{proof}
 
+Notice that the above claim only states that the last process to write to $v$ in $H_q$ and $H_Q$ is the same. However, since any process taking steps in $H_q$ is executing the exact same events in $H_Q$ it follows that its last write to $v$ in both is the same event, and therefore $v$ have the same content after both execution. Using this observation we can conclude that $\alpha_q$ is an extension $H_Q$ for any $q \in Q$, since $q$ reads the same values from the same variables as in the solo run $\alpha_q$ after $H_q$.
 
+Furthermore, we can extend $H_Q$ with all the $\alpha_q$ of processes in $Q$ in any order, as these runs does not contain writes to shared memory, and therefore an execution of one $\alpha_q$ does not affect an execution of a different $\alpha_p$ following it. Let $D$ be such an extension, that is, $D$ contains all $\alpha_q$ of processes in $Q$, one after the other, in some arbitrary order. Denote $F_Q = H_Q D$, then $F_Q$ is an execution. We now prove it is regular.
 
 
 
