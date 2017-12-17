@@ -15,7 +15,7 @@ Quoting from \cite{DBLP:conf/podc/GolabHHW07}: "In a write-through protocol, to 
 
 Our model assumes that each variable is permanently local to \emph{at most} a single process (and remote to all others) and thus applies to both DSM and CC systems.
 For variable $v$, we denote by $owner(v)$ the process to which $v$ is local. We write $owner(v) = \perp$ if $v$ is remote to all processes, which is always the case in the CC model.
-Notice that accessing a remote variable does not necessary generates an RMR (depends on the model), but simply implies that the variable is not part of the process's private segment (if there is such).
+Notice that accessing a remote variable does not necessary generates an RMR (depending on the model), but simply implies that the variable is not part of the process's private segment (if there is such).
 
 
 An \emph{event} $e$ is a read or write operation by some $p \in P$ issued to a variable $v \in V$.
@@ -157,24 +157,3 @@ number of critical events incurred by a process during a single passage.
 
 Observe that whether an event is considered critical depends on the particular execution that contains the event, and specifically on the process that executes the event and the prefix of the execution preceding the event. Consequently, when saying that an event is (or is not) critical , the execution containing the event must be specified.
 
-We now define the notion of a \emph{special} event. This is an extension to the notion of a critical event, used for capturing events of importance for our construction.
-
-\begin{definition}
-	Let $E$ be an execution such that $E$ can be written as $E_1 e E_2$. We say that $e$ is a \emph{special event} in $E$ if one of the following holds:
-	\begin{description}
-		\item[Critical event:] $e$ is a critical event in $E$.
-		\item[Transition event:] $e$ is one of $Enter_p$, $CS_p$ or $Exit_p$.
-		\item[Fence event:] $e$ is one of BeginFence or EndFence.
-	\end{description}
-\end{definition}
-
-
-We say that two events $e$ and $f$ are \emph{congruent}, and write $e \sim f$, if $e$ and $f$ are executed by the same process and either $e = f$ or both apply the same operation to the same variable.
-Informally, two events are congruent if they either execute the same transition or fence event, or if both are reads or both are writes of the same variable $v$ (although the values they both read or write may differ).
-
-\begin{comment}%%% This fact is not used and I also don't understand its current phrasing...
-As a special event depends only on the prefix of the execution preceding it, the type of operation, and the remote variable it accesses (if any), we have:
-\begin{fact}
-	Let $E=E_1 e E_2$ be an execution fragment, where $e$ is a special event in $E$. Then for any $f \sim e$, $f$ is a special event in $E_1 f E_2$.
-\end{fact}
-\end{comment}

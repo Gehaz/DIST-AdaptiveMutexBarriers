@@ -28,11 +28,10 @@ IN1 ensures that no process is aware of any invisible process (other than itself
 % (thereby extending the execution with local events without changing the IN-set).
 Let $p$ be an invisible process that is visible on some variable $v$; IN5 ensures that if we need to erase $p$ from the execution, no other invisible process becomes visible on $v$. Note that any subset of an IN-set is itself an IN-set.
 
-Our proofs mostly consider ``regular'' executions. Informally, these are executions where all active processes are invisible and in their entry sections. As we soon explain, sometimes we relax this requirement and permit ``semi-regular'' executions.
+The proof mostly consider ``regular'' executions. Informally, these are executions where all active processes are invisible and in their entry section.
 	
-\begin{definition} \label{def: regular-and-semi-regular}
+\begin{definition} \label{defenition: regular-execution}
 	An execution $E$ is \emph{regular} if $Act(E)$ is an IN-set of $E$.
-	\\ If $Act(E)$ satisfies properties IN1-IN4 in $E$, we say that $E$ is a \emph{semi-regular} execution.
 \end{definition}
 
 Our construction starts with an execution $H_0$ where every process $p$ executes the $Enter_p$ event only. We then inductively construct longer and longer executions $H_i$, for $i>0$. In execution $H_i$, exactly $i$ processes complete a passage through the CS and all active processes complete exactly $i$ fences and issue exactly $l_i$ critical events, for some $l_i \leq f(i)$. Our goal is to extend the execution so that as many processes as possible perform an additional fence.
@@ -80,7 +79,7 @@ For $k>0$, $J_k$ is an extension of $J_{k-1}$ in which we let each process run u
 
 Our construction of write phases is similar to a construction by Kim and Anderson \cite{DBLP:journals/dc/KimA12}, but unlike it, we consider fence complexity in addition to RMR complexity. Moreover, in our construction unlike in \cite{DBLP:journals/dc/KimA12}, writes committed during the same write phase are scheduled such that the process with the highest ID is visible on \textit{all} of the phase' high-contention variables, if any; this is guaranteed by the second part of Condition (1) above and is essential for obtaining our tradeoff.
 
-Technically, this requires that some intermediate executions constructed during the write phase are allowed to be semi-regular but not regular: they violate invariant IN5 of Definition \ref{def: regular-and-semi-regular}, since the last writer of high-contention variables is only allowed to finish its passage at the end of the phase. Ensuring the regularity of these intermediate executions would have required a large subset of processes to finish their passage (one per every high-contention write), which would weaken our complexity tradeoff.
+Technically, this requires that some intermediate executions constructed during the write phase are allowed to be semi-regular but not regular: they violate invariant IN5 of Definition \ref{defenition: regular-execution}, since the last writer of high-contention variables is only allowed to finish its passage at the end of the phase. Ensuring the regularity of these intermediate executions would have required a large subset of processes to finish their passage (one per every high-contention write), which would weaken our complexity tradeoff.
 
 Processes do not gain new information in the course of a write phase, since they only commit writes. Using the same argumentation as for the read phase, if a sufficient number of active processes start the phase, eventually a sufficiently large subset of these processes complete another fence (resulting in execution $L_0$) and the write phase terminates (an explicit bound is given in Claim
 \ref{claim: write-upper-bound}).
@@ -154,7 +153,7 @@ Let $\mathcal{A}$ be an $N$-process $f$-adaptive implementation of a mutual-excl
 \end{corollary}
 
 \begin{proof}
-	By Theorem \ref{main-theorem}, it suffices to prove that for $i = \Omega(\log \log N)$ the inequality $f(i) \leq \dfrac{N^{2^{-f(i)}}} {f(i)! \cdot 4^{f(i)+2i}}$ holds, thus there exists an execution $E$ and a process $p$ that executes $i = \Omega(\log \log N)$ fences during a single passage/operation in $E$.
+	By Theorem \ref{main-theorem}, it suffices to prove that for $i = \Omega(\log \log N)$ the inequality $f(i) \leq \dfrac{N^{2^{-f(i)}}} {f(i)! \cdot 4^{f(i)+2i}}$ holds, thus there exists an execution $H$ and a process $p$ that executes $i = \Omega(\log \log N)$ fences during a single passage/operation in $H$.
 	
 	\begin{equation*}
 		\begin{array}{rcl}
@@ -183,7 +182,7 @@ Let $\mathcal{A}$ be an  $N$-process $f$-adaptive implementation of a mutual-exc
 \end{corollary}
 
 \begin{proof}
-	By Theorem \ref{main-theorem}, it suffices to prove that, for some $i = \Omega(\log \log \log N)$, the inequality $f(i) \leq \dfrac{N^{2^{-f(i)}}} {f(i)! \cdot 4^{f(i)+2i}}$ holds, thus there exists an execution $E$ and a process $p$ such that $p$ executes $i = \Omega(\log \log \log N)$ fences during a single passage/operation in $E$.
+	By Theorem \ref{main-theorem}, it suffices to prove that, for some $i = \Omega(\log \log \log N)$, the inequality $f(i) \leq \dfrac{N^{2^{-f(i)}}} {f(i)! \cdot 4^{f(i)+2i}}$ holds, thus there exists an execution $H$ and a process $p$ such that $p$ executes $i = \Omega(\log \log \log N)$ fences during a single passage/operation in $H$.
 	
 	\begin{equation*}
 	\begin{array}{rcl}
