@@ -259,7 +259,7 @@ This finish the inductive step of the write phase. At the last step we have larg
 We have a set $Q \subseteq Act(F)$ satisfying condition (2) of Lemma \ref{lemma: write-phase} with $\alpha_q$, such that each $q \in Q$ executes $t$ critical writes along $\alpha_q$ in the execution $F \alpha_q$.
 We extend $F$ by letting each process $q \in Q$ perform its run $\alpha_q$ in some arbitrary way. Denote this extension by $D$, and let $p_r \in Q$ be the last process to perform its $\alpha_q$ in $D$. First notice the $D$ is indeed an extension of $F$ - since all processes performs only writes, we can order them in any way to get an extension, as writes of one process does not affect writes of other.
 
-The following claim states that if an event in $\alpha_q$ is critical in $F \alpha_q$, then it is so the case in $F D$, event if we erase processes different then $q$. Later, we would like to erase all processes not in $Q$. This claim will be used to count the number of critical events in the resulting execution, as well as proving that IN3 holds for it.
+The following claim states that if an event in $\alpha_q$ is critical in $F \alpha_q$, then it is also the case in $F D$, even if we erase processes different then $q$. Later, we would like to erase all processes not in $Q$. This claim will be used to count the number of critical events in the resulting execution, as well as proving that IN3 holds for it.
 
 \begin{claim-subsection} \label{claim: IN3-write-phase}
 	For any $Y \subseteq Act(F)$, $q \in Q \setminus Y$, and $e \in \alpha_q$ the following holds:
@@ -343,6 +343,7 @@ Let $\alpha$ be a solo run of $p_r$ starting from $G^{-Q}$ until it finish its p
 We would like to extend $G$ with $\alpha$, but it might be that a solo run of $p_r$ after $G$ and $G^{-Q}$ is different. However, it is enough to erase the processes in $Q^-$ from $G$ to guarantee that $\alpha$ is also a solo run of $p_r$ after $G^{-Q^-}$.
 
 Denote $Q = Q^- \cup Q^+$ a disjoint union, that is, $Q^+ = Q \setminus Q^-$. By Lemma \ref{lemma: erase-invis-procs} with $'E' \leftarrow G$ and $'Y' \leftarrow Q^-$ we have an execution $G^{-Q^-}$ such that $Act(G^{-Q^-}) = Q^+ \cup \{p_r\}$ and $Q^+$ is an IN-set of $G^{-Q^-}$.
+
 
 \begin{claim-subsection} \label{claim: v-access-in-alpha}
 	For any variable $v$ accessed in $\alpha$: $writer(v,G^{-Q^-}) \notin Q$.
@@ -489,7 +490,7 @@ $$|Act(H_i)| \geq \frac{N^{2^{-\ell_i}}}{\ell_i! \cdot 4^{\ell_i+2i}} \geq
 \frac{N^{2^{-f(i)}}}{f(i)! \cdot 4^{f(i)+2i}} \geq f(i) \geq 1
 $$
 This implies that our construction results in an execution $H_i$, in which there is a process $p \in Act(H_i)$ and, by the properties of $H_i$, $p$ is in a middle of a passage in which it executed (and completed) $i$ fences.
-Moreover, from Lemma \ref{lemma: erase-invis-procs}, we are able to erase all active processes but $p$ from $H_i$ and obtain an execution $H$, in which $p$ executes $i$ fences in the course of a single passage, and the total contention of $H$ is $i+1$, that is, the number of fences $p$ executes is linear in the total contention of the execution.
+Moreover, using Lemma \ref{lemma: erase-invis-procs} we are able to erase all active processes but $p$ from $H_i$ and obtain an execution $H$, in which $p$ executes $i$ fences in the course of a single passage, and the total contention of $H$ is $i+1$, that is, the number of fences $p$ executes is linear in the total contention of the execution.
 \end{proof}
 
 

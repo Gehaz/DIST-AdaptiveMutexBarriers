@@ -19,14 +19,14 @@
 	A \emph{one-time} mutual exclusion algorithm is a ME algorithm that allows each process to complete a passage at most once. Since our proofs consider executions in which each process is allowed to complete a passage at most once, our results can be applied to one-time mutual exclusion algorithms.
 	
 	\begin{lemma} \label{lem: ME-using-object}
-		Let $\mathcal{C}$ be a weak obstruction-free object of one of one the following types: counter, stack or queue. Then, for any $N \in \mathbb{N}$, there exists an $N$-process one-time mutual exclusion algorithm $\mathcal{A}$, using $\mathcal{C}$ and read/write variables, such that each passage through the CS invokes a single ($fetch \& increment$, $dequeue$, or $pop$ respectively) operation on $\mathcal{C}$, and that has the same RMR and fence complexities (in both DSM and CC models) as the operation it invokes, up to a constant additive factor.
+		Let $\mathcal{C}$ be a weak obstruction-free object of one of the following types: counter, stack or queue. Then, for any $N \in \mathbb{N}$, there exists an $N$-process one-time mutual exclusion algorithm $\mathcal{A}$, using $\mathcal{C}$ and read/write variables, such that each passage through the CS invokes a single ($fetch \& increment$, $dequeue$, or $pop$ respectively) operation on $\mathcal{C}$, and has the same RMR and fence complexities (in both DSM and CC models) as the operation it invokes, up to a constant additive factor.
 	\end{lemma}
 	
 	\begin{proof}
 		We first prove the lemma for an $N$-limited-use counter (hence also for a regular counter), by presenting Algorithm \ref{ME-algorithm} for an $N$-process one-time mutual exclusion.
 		
 		\begin{algorithm}[b]
-			\caption{One-time mutual exclusion from counter.}
+			\caption{One-time mutual exclusion from counter}
 			\label{ME-algorithm}
 			\begin{enumerate}[\textbf{Shared Data:}]
 				\parskip0pt

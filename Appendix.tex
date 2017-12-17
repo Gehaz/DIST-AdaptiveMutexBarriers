@@ -28,25 +28,6 @@
 
 
 
-
-\begin{lemma-repeat} {lem: sub-execution}
-	Let $E$ be an execution and let $p \in P$ be a process such that $p \notin AW(q,E)$ for any $q \neq p$. Then $E^{-p}$ is an execution.
-\end{lemma-repeat}
-
-\begin{proof}
-	We prove the claim by induction on the number of events in $E^{-p}$. The base case $E^{-p} = \langle \rangle$ is trivial. For the induction, let $E^{-p} = F f$ such that $E = E_1 f E_2$, $F = E_1^{-p}$, and $E_2$ is a (possibly empty) solo execution by $p$. Assume that $F$ is an execution, and let $q$ be the process that executes $f$.
-	
-	Process $q$ executes the same events in $E_1$ and in $F$, thus it is in the same state after both executions and about to execute the same event $f$. If $f$ is a transition or fence event, then $Ff$ is clearly an execution. This is the case also if $f$ is a write event. Otherwise, assume $f = read(v)$. The following two cases exist.
-\begin{itemize}
-\item Event $f$ reads a copy of $v$ from $q$'s write buffer in execution $E$. In this case, since $q$ is in the same state after $F$ and $E_1$, it will read the same value from its write buffer after $F$.
-\item Otherwise, $f$ reads $v$ from the shared memory. Since $p \notin AW(q,E)$, the last process that commits a write to $v$ before $f$ in $E_1$ is not $p$. Hence, since all the processes except $p$ execute the same events in $E_1$ and in $F$, $v$ has the same writer and value after both executions. Consequently, $f$ reads the same value in $Ff$ and in $E_1 f$, so $Ff$ is an execution.
-\end{itemize}
-\end{proof}
-
-
-
-
-
 \begin{lemma-repeat} {lemma: erase-invis-procs}
 	Let $E$ be an execution, $\mathit{INV}$ be an IN-set of $E$ and $Y \subseteq \mathit{INV}$.
 	\newline Define $F = E^{-Y}$. Then the following hold:
@@ -62,45 +43,35 @@
 \begin{proof}  \mbox{}
 	
 	We first prove the claim for the case $Y = \{p\}$, a single process.
-\begin{enumerate}
 	
-\item
-	Consider $q \in P$ different from $p$. Since $p \in INV$, by IN1 $q$ is not aware of $p$ in $E$, i.e. $p \notin AW(q,E)$. By Lemma \ref{lem: sub-execution} $E^{-p}$ is an execution.
+	1. The ability to erase $p$ from $E$ and get an execution follows from IN1, as there is no other process in the system that is aware of $p$. This implies that $p$ never writes to a variable that some other process read, and hence removing the events of $p$ does not effect the events of other processes. More formally, the following claim can be proven easily by induction on the length of $E$:
+	Let $E$ be an execution and let $p \in P$ be a process such that $p \notin AW(q,E)$ for any $q \neq p$. Then $E^{-p}$ is an execution.
 	
-\item
-	We removed the events of $p \in Act(E)$, thus $Act(E') = Act(E) \setminus \{p\}$ and $Fin(E') = Fin(E)$.
+	2. We remove the events of $p \in Act(E)$ only, while the rest of the processes are executing the same events in both $F$ and $E$. Therefore $Act(F) = Act(E) \setminus \{p\}$ and $Fin(F) = Fin(E)$.
 	
-\item
-	We prove $INV \setminus \{p\}$ is an IN-set of $E'$:
+	3. We now prove $INV \setminus \{p\}$ is an IN-set of $F$.
+	\\ IN1: Consider $q \neq p$. Since $E \mid q = F \mid q$, we have $AW(q,F) = AW(q,E)$. By IN1, $AW(q,E) \cap INV \subseteq \{q\}$, in particular $AW(q,F) \cap (INV \setminus \{p\}) \subseteq \{q\}$. $p$ executes no events in $F$, thus $AW(p,F) = \emptyset$ and IN1 holds for $p$ as well.
+	\\ IN2: For any $q \in INV \setminus \{p\}$, we have $F \mid q = E \mid q$, thus $status(q,F) = status(q,E) = entry$.	
+	\\ IN3: Consider $Z \subseteq INV \setminus \{p\}$, and $e \in F^{-Z} = E^{-(Z \cup \{p\})}$. Notice that $e \in E, E^{-p}, F^{-(Z \cup \{p\})}$.  Since $Z, \{p\} \subseteq INV$ and $INV$ is an IN-set of $E$, by IN3 applied to $E$ we have: $e$ is a critical event in $E^{-Z \cup \{p\}} = F^{-Z}$ if and only if $e$ is a critical event in $E$ if and only if $e$ is a critical event in $E^{-p} = F$.
+	\\ IN4: Consider an event $e \in F$ by some process $q$ accessing a remote variable $v$. Since $e \in E$ also, by IN4 $owner(v) \notin Act(E)$, and thus $owner(v) \notin Act(F) \subseteq Act(E)$.
+	\\ IN5: Assume $|Accessed(v,F) \cap Act(F)| > 1$ for some $v$. Since $F \preceq E$ and $Act(F) \subseteq Act(E)$ we get $|Accessed(v,E) \cap Act(E)| > 1$, and by IN5 $writer(v,E) \notin INV$. The only events removed are by $p \in INV$, and in particular we do not remove the events of $writer(v,E)$. Hence $writer(v,F) = writer(v,E) \notin INV$, and as so $writer(v,F) \notin INV \setminus \{p\}$.
 	
-	IN1: Consider $q \neq p$. Since $E \mid q = E' \mid q$, we have $AW(q,E) = AW(q,E')$. By IN1, $AW(q,E) \cap INV \subseteq \{q\}$, in particular $AW(q,E') \cap INV \setminus \{p\} \subseteq \{q\}$. $p$ executes no events in $E'$, thus $AW(p,E') = \emptyset$ and IN1 holds for $p$ in $E'$.
+	4. Follows directly from IN4 for $E$ and the fact that $p \in INV$.
 	
-	IN2: For any $q \in INV \setminus \{p\}$, we have $E' \mid q = E \mid q$, thus $status(q,E') = status(q,E) = entry$.
-	
-	IN3: Consider $Z \subseteq INV \setminus \{p\}$, and $e \in E^{'-Z} = E^{-Z \cup \{p\}}$. Notice that $e \in E, E^{-p}, E^{'-Z}$.  Since $Z, \{p\} \subseteq INV$ and $INV$ is an IN-set of $E$, by IN3 applied to $E$ we have: $e$ is a critical event in $E^{-Z \cup \{p\}} = E^{'-Z}$ if and only if $e$ is a critical event in $E$ if and only if $e$ is a critical event in $E' = E^{-p}$.
-	
-	IN4: Consider an event $e \in E'$ by process $q$ accessing a remote variable $v$. Since $e \in E$ accesses a remote variable $v$, by IN4 $owner(v) \notin Act(E)$, and thus $owner(v) \notin Act(E') \subseteq Act(E)$.
-	
-	IN5: Assume $|Accessed(v,E') \cap Act(E')| > 1$ for some $v$. Since $E' \preceq E$ and $Act(E') \subseteq Act(E)$ we get $|Accessed(v,E) \cap Act(E)| > 1$, and by IN5 applied to $E$, $writer(v,E) \notin INV$. The only events removed are by $p \in INV$, thus $writer(v,E') = writer(v,E) \notin INV$, and in particular $writer(v,E') \notin INV \setminus \{p\}$.
-	
-\item
-	Follows directly from IN4 for $E$ and the fact that $p \in INV$.
-	
-\end{enumerate}	
 
-	For the general case we prove the claim by induction on $|Y|$. The base case $|Y| = 1$ has just been proven. Assume we proved the claim for any $|Y|=n$, and consider $Y \subseteq INV$ such that $|Y| = n+1$. Fix an arbitrary $p \in Y$, and denote $Z = Y \setminus \{p\}$. Then $Z \subseteq INV$ and $|Z|=n$. Denote $F_Z = E^{-Z}$, then by induction hypothesis:
+	For the general case we prove the claim by induction on $|Y|$. The base case $|Y| = 1$ has been proven above. Assume we proved the claim for any $|Y|=n$, and consider $Y \subseteq INV$ such that $|Y| = n+1$. Fix an arbitrary $q \in Y$, and denote $Z = Y \setminus \{q\}$. Then $Z \subseteq INV$ and $|Z|=n$. Denote $F_Z = E^{-Z}$, then by induction hypothesis:
 	\begin{enumerate}
 		\item $F_Z$ is an execution;
-		\item $Act(F_Z) = Act(E) \setminus Z$, and $Fin(F_Z) = Fin(E)$;
+		\item $Act(F_Z) = Act(E) \setminus Z$ and $Fin(F_Z) = Fin(E)$;
 		\item $INV \setminus Z$ is an IN-set of $F_Z$;
-		\item Each $q \in Act(F_Z)$ executed the same critical events in $F_Z$ and in $E$;
+		\item Each $p \in Act(F_Z)$ executes the same critical events in $F_Z$ and in $E$;
 	\end{enumerate}
-	Notice that $F = F_Z^{-p}$ and $p \in INV \setminus Z$, thus using the induction base with $F_Z$ and $\{p\}$ we get:
+	Notice that $F = F_Z^{-q}$ and $q \in INV \setminus Z$, thus using the induction base with $F_Z$ and $\{q\}$ we get:
 	\begin{enumerate}
 		\item $F$ is an execution;
-		\item $Act(F) = Act(F_Z) \setminus \{p\} = Act(E) \setminus Y$, and $Fin(F) = Fin(F_Z) = Fin(E)$;
-		\item $(INV \setminus Z) \setminus \{p\} = INV \setminus Y$ is an IN-set of $F$;
-		\item Each $q \in Act(F)$ executed the same critical events in $F$ and in $F_Z$, and thus the same critical events in $F$ and in $E$.
+		\item $Act(F) = Act(F_Z) \setminus \{q\} = Act(E) \setminus Y$, and $Fin(F) = Fin(F_Z) = Fin(E)$;
+		\item $(INV \setminus Z) \setminus \{q\} = INV \setminus Y$ is an IN-set of $F$;
+		\item Each $p \in Act(F)$ executes the same critical events in $F$ and in $F_Z$, and thus the same critical events in $F$ and in $E$.
 	\end{enumerate}
 \end{proof}
 
