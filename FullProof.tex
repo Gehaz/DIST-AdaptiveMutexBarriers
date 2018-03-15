@@ -51,10 +51,10 @@ First notice that $H_0$ satisfies all the above conditions with $\ell_0 = 0$. As
 \subsection{Read phase} \label{subsec:read-phase}
 
 Consider $p \in Act(H)$. $H$ is a regular execution, thus by Lemma \ref{lemma: erase-invis-procs} with $'E' \leftarrow H$ and $'Y' \leftarrow Act(H) \setminus \{p\}$ we have an execution $H_p = H^{-Act(H) \setminus \{p\}}$. That is, $H_p$ is the execution $H$ where we erase all active processes but $p$. It follows that $Act(H_p) = \{p\}$.
-By the progress property there is a solo extension of $H_p$ by $p$ until it finish its passage. Since $mode(p,H_p) = read$ and $status(p,H_p) = enter$ it follows that $p$ performs this solo run until it either start a fence, of it finish the entry section. Let $\alpha_p$ be this prefix, that is, a solo extension of $H_p$ by $p$ until its next event $f_p$ is either $BeginFence$ or $CS_p$.
+By the progress property there is a solo extension of $H_p$ by $p$ until it finish its passage. Since $mode(p,H_p) = read$ and $status(p,H_p) = enter$ it follows that $p$ performs this solo run until it either starts a fence, of it finishes the entry section. Let $\alpha_p$ be that prefix, i.e., a solo extension of $H_p$ by $p$ until its next event $f_p$ is either $BeginFence$ or $CS_p$.
 By its definition, $p$ only allowed to read from the shared memory along $\alpha_p$, as all writes are stored in the write buffer, and the scheduler delay their commits to the next fence instruction.
 
-We would like to extend $H$ with the different $\alpha_p$ in some order. However, it might be that a solo run of $p$ starting from $H$ is different then $\alpha_p$ - in a solo starting from $H$ $p$ may read a variable last written to by a process in $Act(H) \setminus \{p\}$, and therefore perform a different run. In order to overcome this problem, the read phase will construct a set of processes $P'$ out of $Act(H)$ such that processes in this set do not collide, that is, no process in $P'$ reads a variable in $\alpha_p$ such that a different process in $P'$ is visible on this variable in $H$. This will allow us to erase all processes not in $P'$ from $H$ and then extend it with the runs $\alpha_p$ of processes in $P'$ in any order that we want, as these runs do not collide. We construct this set in an inductive manner.
+We would like to extend $H$ with the different $\alpha_p$ in some order. However, it might be that a solo run of $p$ starting from $H$ is different then $\alpha_p$ - in a solo run starting from $H$ $p$ may read a variable last written to by a process in $Act(H) \setminus \{p\}$, and therefore perform a different run. In order to overcome this problem, the read phase will construct a set of processes $P'$ out of $Act(H)$ such that processes in this set do not collide, that is, no process in $P'$ reads a variable in $\alpha_p$ such that a different process in $P'$ is visible on this variable in $H$. This will allow us to erase all processes not in $P'$ from $H$ and then extend it with the runs $\alpha_p$ of processes in $P'$ in any order, as these runs do not collide. We construct the set $P'$ in an inductive manner.
 
 In the read phase we have a sequence of sets $Act(H) = P_0 \supseteq P_1 \supseteq \ldots P_s$ satisfying the Lemma below.
 
@@ -75,7 +75,7 @@ First notice that $P_0=Act(H)$ satisfies all the above conditions with $\beta_p=
 
 
 \subsubsection{Construction: stage 1}
-For any $p \in P_{k-1}$ we let $p$ perform a solo run starting from $H_p \beta_p$ until its next event $e_p$ is a critical read, or that $p$ has finish executing $\alpha_p$ and its next event is $f_p$. Denote this extension by $\gamma_p$. Notice that $\beta_p \gamma_p$ is indeed a prefix of $\alpha_p$ by its definition.
+For any $p \in P_{k-1}$ we let $p$ perform a solo run starting from $H_p \beta_p$ until its next event $e_p$ is a critical read, or that $p$ has finish executing $\alpha_p$ (and its next event is $f_p$). Denote this extension by $\gamma_p$. Notice that $\beta_p \gamma_p$ is indeed a prefix of $\alpha_p$ by its definition.
 Let $Z$ be the set of all processes that have not finished executing $\alpha_p$, that is, $Z = \{p \in P_{k-1} \mid \beta_p \gamma_p \neq \alpha_p\}$.
 
 If $|Z|<|P_{k-1}|/2$, i.e., at least half of the processes in $P_{k-1}$ have finished executing $\alpha_p$, then we define $s=k-1$ and $Q = P_{k-1} \setminus Z$, and we move to stage 3 of the read phase.
@@ -86,7 +86,7 @@ Otherwise $|Z| \geq |P_{k-1}|/2$ and we move to stage 2 of the read phase.
 
 \subsubsection{Construction: stage 2}
 
-We have a set $Z \subseteq P_{k-1}$ such the for each $p \in Z$, the next event by $p$ after $H_p \beta_p \gamma_p$ is a critical read $e_p$ (it did not finish executing $\alpha_p$, and the only events in $\alpha_p$ to shared memory are read).
+We have a set $Z \subseteq P_{k-1}$ such that the next event by each $p \in Z$ after $H_p \beta_p \gamma_p$ is a critical read $e_p$ (as it did not finish executing $\alpha_p$, and the only events in $\alpha_p$ to shared memory are read).
 We construct an undirected graph $\mathcal{G}$ as follows: the vertices of $\mathcal{G}$ are the processes in $Z$. Consider $p \in Z$ and denote $e_p = read(v)$. We add an edge $\{p,q\}$ if there exists $q \in Z$ such that either $q = owner(v)$ or $writer(v, H) = q$.
 
 Since $H$ is a regular execution, if $q = owner(v) \in Z \subseteq Act(H)$, by IN3 it follows that no process other then $q$ access $v$ in $H$, and in particular either $q = writer(v,H)$ or $writer(v,H) = \perp$.
