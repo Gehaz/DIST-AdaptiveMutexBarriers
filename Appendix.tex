@@ -44,19 +44,19 @@
 	
 	We first prove the claim for the case $Y = \{p\}$, a single process.
 	
-	1. The ability to erase $p$ from $E$ and get an execution follows from IN1, as there is no other process in the system that is aware of $p$. This implies that $p$ never writes to a variable that some other process read, and hence removing the events of $p$ does not effect the events of other processes. More formally, the following claim can be proven easily by induction on the length of $E$:
+	1. The ability to erase $p$ from $E$ and get an execution follows from \ref{IN-set:AW}, as there is no other process in the system that is aware of $p$. This implies that $p$ never writes to a variable that some other process read, and hence removing the events of $p$ does not effect the events of other processes. More formally, the following claim can be proven easily by induction on the length of $E$:
 	Let $E$ be an execution and let $p \in P$ be a process such that $p \notin AW(q,E)$ for any $q \neq p$. Then $E^{-p}$ is an execution.
 	
 	2. We remove the events of $p \in Act(E)$ only, while the rest of the processes are executing the same events in both $F$ and $E$. Therefore $Act(F) = Act(E) \setminus \{p\}$ and $Fin(F) = Fin(E)$.
 	
 	3. We now prove $INV \setminus \{p\}$ is an IN-set of $F$.
-	\\ IN1: Consider $q \neq p$. Since $E \mid q = F \mid q$, we have $AW(q,F) = AW(q,E)$. By IN1, $AW(q,E) \cap INV \subseteq \{q\}$, in particular $AW(q,F) \cap (INV \setminus \{p\}) \subseteq \{q\}$. $p$ executes no events in $F$, thus $AW(p,F) = \emptyset$ and IN1 holds for $p$ as well.
-	\\ IN2: For any $q \in INV \setminus \{p\}$, we have $F \mid q = E \mid q$, thus $status(q,F) = status(q,E) = entry$.	
-	\\ IN3: Consider $Z \subseteq INV \setminus \{p\}$, and $e \in F^{-Z} = E^{-(Z \cup \{p\})}$. Notice that $e \in E, E^{-p}, F^{-(Z \cup \{p\})}$.  Since $Z, \{p\} \subseteq INV$ and $INV$ is an IN-set of $E$, by IN3 applied to $E$ we have: $e$ is a critical event in $E^{-Z \cup \{p\}} = F^{-Z}$ if and only if $e$ is a critical event in $E$ if and only if $e$ is a critical event in $E^{-p} = F$.
-	\\ IN4: Consider an event $e \in F$ by some process $q$ accessing a remote variable $v$. Since $e \in E$ also, by IN4 $owner(v) \notin Act(E)$, and thus $owner(v) \notin Act(F) \subseteq Act(E)$.
-	\\ IN5: Assume $|Accessed(v,F) \cap Act(F)| > 1$ for some $v$. Since $F \preceq E$ and $Act(F) \subseteq Act(E)$ we get $|Accessed(v,E) \cap Act(E)| > 1$, and by IN5 $writer(v,E) \notin INV$. The only events removed are by $p \in INV$, and in particular we do not remove the events of $writer(v,E)$. Hence $writer(v,F) = writer(v,E) \notin INV$, and as so $writer(v,F) \notin INV \setminus \{p\}$.
+	\\ \ref{IN-set:AW}: Consider $q \neq p$. Since $E \mid q = F \mid q$, we have $AW(q,F) = AW(q,E)$. By \ref{IN-set:AW}, $AW(q,E) \cap INV \subseteq \{q\}$, in particular $AW(q,F) \cap (INV \setminus \{p\}) \subseteq \{q\}$. $p$ executes no events in $F$, thus $AW(p,F) = \emptyset$ and \ref{IN-set:AW} holds for $p$ as well.
+	\\ \ref{IN-set:entry-status}: For any $q \in INV \setminus \{p\}$, we have $F \mid q = E \mid q$, thus $status(q,F) = status(q,E) = entry$.	
+	\\ \ref{IN-set:erase-processes}: Consider $Z \subseteq INV \setminus \{p\}$, and $e \in F^{-Z} = E^{-(Z \cup \{p\})}$. Notice that $e \in E, E^{-p}, F^{-(Z \cup \{p\})}$.  Since $Z, \{p\} \subseteq INV$ and $INV$ is an IN-set of $E$, by \ref{IN-set:erase-processes} applied to $E$ we have: $e$ is a critical event in $E^{-Z \cup \{p\}} = F^{-Z}$ if and only if $e$ is a critical event in $E$ if and only if $e$ is a critical event in $E^{-p} = F$.
+	\\ \ref{IN-set:owner}: Consider an event $e \in F$ by some process $q$ accessing a remote variable $v$. Since $e \in E$ also, by \ref{IN-set:owner} $owner(v) \notin Act(E)$, and thus $owner(v) \notin Act(F) \subseteq Act(E)$.
+	\\ \ref{IN-set:last-writer}: Assume $|Accessed(v,F) \cap Act(F)| > 1$ for some $v$. Since $F \preceq E$ and $Act(F) \subseteq Act(E)$ we get $|Accessed(v,E) \cap Act(E)| > 1$, and by \ref{IN-set:last-writer} $writer(v,E) \notin INV$. The only events removed are by $p \in INV$, and in particular we do not remove the events of $writer(v,E)$. Hence $writer(v,F) = writer(v,E) \notin INV$, and as so $writer(v,F) \notin INV \setminus \{p\}$.
 	
-	4. Follows directly from IN4 for $E$ and the fact that $p \in INV$.
+	4. Follows directly from \ref{IN-set:owner} for $E$ and the fact that $p \in INV$.
 	
 
 	For the general case we prove the claim by induction on $|Y|$. The base case $|Y| = 1$ has been proven above. Assume we proved the claim for any $|Y|=n$, and consider $Y \subseteq INV$ such that $|Y| = n+1$. Fix an arbitrary $q \in Y$, and denote $Z = Y \setminus \{q\}$. Then $Z \subseteq INV$ and $|Z|=n$. Denote $F_Z = E^{-Z}$, then by induction hypothesis:

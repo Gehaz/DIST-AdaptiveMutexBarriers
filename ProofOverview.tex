@@ -11,22 +11,25 @@ Given an execution $E$, we define two sets of processes. \emph{Active processes}
 \label{def:inv}
 	Let $E$ be an execution and $\mathit{INV}$ be a set of processes such that $\mathit{INV} \subseteq Act(E)$. We say that $\mathit{INV}$ is an \emph{invisible set} (IN-set), and we call a process in $\mathit{INV}$ an invisible process, if the following conditions hold:
 	\begin{enumerate}
-		\item[\bf IN1:] $\forall p \in P: \quad AW(p,E) \cap \mathit{INV} \subseteq \{p\}$
+		\renewcommand{\theenumi}{IN\arabic{enumi}}
+		\renewcommand{\labelenumi}{\textbf{\theenumi:}}
+		
+		\item \label{IN-set:AW} $\forall p \in P: \quad AW(p,E) \cap \mathit{INV} \subseteq \{p\}$
 		\\ Informally, no process is aware of any invisible process other than itself.
-		\item[\bf IN2:] $\forall p \in \mathit{INV}: \quad status(p, E) = entry$.
+		\item \label{IN-set:entry-status} $\forall p \in \mathit{INV}: \quad status(p, E) = entry$.
 		\\informally, all invisible processes are in the entry section.
-		\item[\bf IN3:] $\forall Y \subseteq \mathit{INV}$, and for any $e \in E^{-Y}$: e is a critical event in $E^{-Y}$ if and only if e is a critical event in E.
+		\item \label{IN-set:erase-processes} $\forall Y \subseteq \mathit{INV}$, and for any $e \in E^{-Y}$: e is a critical event in $E^{-Y}$ if and only if e is a critical event in E.
 		\\ Informally, erasing invisible processes does not affect the criticality of remaining events.
-		\item[\bf IN4:] For event $e \in E$ by process $p$, if $p$ accesses a remote variable $v$ in $e$ then $owner(v) \notin Act(E)$.
+		\item \label{IN-set:owner} For event $e \in E$ by process $p$, if $p$ accesses a remote variable $v$ in $e$ then $owner(v) \notin Act(E)$.
 		\\ Informally, if a process $p$ accesses a remote variable $v$ local to some process $q$, then $q$ is not an active process.
-		\item[\bf IN5:] $\forall v \in V:$ If $|Accessed(v,E) \cap Act(E)| > 1$ then $writer(v,E) \notin \mathit{INV}$.
+		\item \label{IN-set:last-writer} $\forall v \in V:$ If $|Accessed(v,E) \cap Act(E)| > 1$ then $writer(v,E) \notin \mathit{INV}$.
 		\\ Informally, if variable $v$ has been accessed by more than a single active process, then $v$ was not last written by an invisible process.
 	\end{enumerate}
 \end{definition}
 	
-IN1 ensures that no process is aware of any invisible process (other than itself). This property allows us to erase any invisible process, that is, to remove its events from the execution. IN2 ensures that all invisible processes are in their entry section, trying to gain access to the critical section. IN3 ensures that erasing invisible processes does not affect the number of critical events executed so far by processes that remain active. IN4 ensures that no process can become aware of an invisible process by reading a variable local to it.
+\ref{IN-set:AW} ensures that no process is aware of any invisible process (other than itself). This property allows us to erase any invisible process, that is, to remove its events from the execution. \ref{IN-set:entry-status} ensures that all invisible processes are in their entry section, trying to gain access to the critical section. \ref{IN-set:erase-processes} ensures that erasing invisible processes does not affect the number of critical events executed so far by processes that remain active. \ref{IN-set:owner} ensures that no process can become aware of an invisible process by reading a variable local to it.
 % (thereby extending the execution with local events without changing the IN-set).
-Let $p$ be an invisible process that is visible on some variable $v$; IN5 ensures that if we need to erase $p$ from the execution, no other invisible process becomes visible on $v$. Note that any subset of an IN-set is itself an IN-set.
+Let $p$ be an invisible process that is visible on some variable $v$; \ref{IN-set:last-writer} ensures that if we need to erase $p$ from the execution, no other invisible process becomes visible on $v$. Note that any subset of an IN-set is itself an IN-set.
 
 The proof mostly consider ``regular'' executions. Informally, these are executions where all active processes are invisible and in their entry section.
 	
@@ -79,7 +82,7 @@ For $k>0$, $J_k$ is an extension of $J_{k-1}$ in which we let each process run u
 
 Our construction of write phases is similar to a construction by Kim and Anderson \cite{DBLP:journals/dc/KimA12}, but unlike it, we consider fence complexity in addition to RMR complexity. Moreover, in our construction unlike in \cite{DBLP:journals/dc/KimA12}, writes committed during the same write phase are scheduled such that the process with the highest ID is visible on \textit{all} of the phase' high-contention variables, if any; this is guaranteed by the second part of Condition (1) above and is essential for obtaining our tradeoff.
 
-Technically, this requires that some intermediate executions constructed during the write phase are allowed to be semi-regular but not regular: they violate invariant IN5 of Definition \ref{defenition: regular-execution}, since the last writer of high-contention variables is only allowed to finish its passage at the end of the phase. Ensuring the regularity of these intermediate executions would have required a large subset of processes to finish their passage (one per every high-contention write), which would weaken our complexity tradeoff.
+Technically, this requires that some intermediate executions constructed during the write phase are allowed to be semi-regular but not regular: they violate invariant \ref{IN-set:last-writer} of Definition \ref{defenition: regular-execution}, since the last writer of high-contention variables is only allowed to finish its passage at the end of the phase. Ensuring the regularity of these intermediate executions would have required a large subset of processes to finish their passage (one per every high-contention write), which would weaken our complexity tradeoff.
 
 Processes do not gain new information in the course of a write phase, since they only commit writes. Using the same argumentation as for the read phase, if a sufficient number of active processes start the phase, eventually a sufficiently large subset of these processes complete another fence (resulting in execution $L_0$) and the write phase terminates (an explicit bound is given in Claim
 \ref{claim: write-upper-bound}).
